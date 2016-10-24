@@ -1,0 +1,15 @@
+
+<div class="Frm animated bounceInLeft">
+  <form class="" name="myForm">
+    <label class="miEstilo">Login</label><br><br>
+    <input type="email" id="correo" name="email" ng-model="usuario.email" placeholder="Ingrese su email" value=""><br>
+    <input type="password" id="clave" minlength="7" ng-model="usuario.password" placeholder="clave" required="true" value=""><br>
+    <button class="button-green" id="login" ng-click="Login()" ng-disabled="myForm.$invalid"><span>Login </span></button><br><br>
+    <button class="btn btn-github" ng-click="loginFirebaseYgitHub()"><a class="fa fa-github"></a> Login con GitHub</button>
+    <!--<button class="btn btn-github" ng-click="authenticate('github')"><a class="fa fa-github"></a> Login con GitHub</button>-->
+  </form>
+</div>
+<h1>Estado: {{myForm.$valid}}</h1>
+
+    
+  
