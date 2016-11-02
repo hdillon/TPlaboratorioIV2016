@@ -1,5 +1,5 @@
 
-var app = angular.module('TPInmobiliaria', ['ui.router', 'TPInmobiliaria.controllers']);
+var app = angular.module('TPInmobiliaria', ['ui.router', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controladorUsuario', 'TPInmobiliaria.services']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
   
