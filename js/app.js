@@ -13,14 +13,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 url : '/usuario',
                 abstract:true,
                 templateUrl : 'vistas/abstractaUsuario.html',
-                controller : 'ControlUsuario'
+                controller : 'ControlUsuarios'
             })
       .state('usuario.login', {
                 url: '/login',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/usuarioLogin.html',
-                        controller : 'ControlUsuario'
+                        controller : 'ControlAccesoUsuarios'
                     }
                 }
             })
@@ -29,7 +29,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/usuarioRegistrarse.html',
-                        controller : 'ControlUsuario'
+                        controller : 'ControlAccesoUsuarios'
                     }
                 }
             })
