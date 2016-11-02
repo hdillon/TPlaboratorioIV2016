@@ -14,19 +14,19 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#services">Services</a>
+                    <li ng-if="flagLogueado">
+                        <a href="#services">Venta</a>
                     </li>
-                    <li>
-                        <a href="#contact">Contact</a>
+                    <li ng-if="flagLogueado">
+                        <a href="#contact">Alquiler</a>
                     </li>
-                    <li ng-if="true">
+                    <li ng-if="!flagLogueado">
                         <a href="#/usuario/login" >Login</a>
                     </li>
-                    <li>
+                    <li ng-if="!flagLogueado">
                         <a href="#/usuario/registrarse" >Registrarse</a>
                     </li>
-                    <li ng-if="true">
+                    <li ng-if="flagLogueado">
                         <a href="#/usuario/login" >Logout</a>
                     </li>
                 </ul>

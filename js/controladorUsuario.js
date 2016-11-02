@@ -5,7 +5,7 @@ app.controller('ControlUsuarios', function($scope, $http, $state) {
 
 });
 
-app.controller('ControlAccesoUsuarios', function($scope, $http, $state, Usuario) {
+app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
 	$scope.usuario={};
 	$scope.usuario.nombre;
 	$scope.usuario.apellido;
@@ -16,11 +16,20 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, Usuario)
 
 	$scope.Login = function(){
 		console.info("user", $scope.usuario);
-
-		Usuario.setEmail($scope.usuario.email);
-		Usuario.setPassword($scope.usuario.password);
-		Usuario.setEstaLogueado(true);
-	}
+	    $auth.login($scope.usuario)
+	    .then(function(response) {
+	        console.info("correcto", response);
+	        if($auth.isAuthenticated()){
+	          console.info("token", $auth.getPayload());
+	      	  $state.go('inicio');
+	      	}
+	        else
+	          console.info("no token", $auth.getPayload());
+	    })
+	    .catch(function(response) {
+	        console.info("incorrecto", response);
+	    });
+  	}
 
 	$scope.Registrarse = function(){
 		console.info("user", $scope.usuario);
