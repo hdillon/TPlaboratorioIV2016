@@ -38,6 +38,40 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
+
+      .state('inmueble', {
+                url : '/inmuebles',
+                abstract:true,
+                templateUrl : 'vistas/abstractaInmueble.html',
+                controller : 'ControlInmuebles'
+            })
+      .state('inmueble.venta', {
+                url: '/venta',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/inmueble/inmuebleVenta.html',
+                        controller : 'ControlVentaInmueble'
+                    }
+                }
+            })
+      .state('inmueble.alquiler', {
+                url: '/alquiler',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/inmueble/inmuebleAlquiler.html',
+                        controller : 'ControlAlquilerInmueble'
+                    }
+                }
+            })
+      .state('inmueble.grilla', {
+                url: '/grilla',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/inmueble/inmuebleAlquiler.html',
+                        controller : 'ControlAlquilerInmueble'
+                    }
+                }
+            })
       
              $urlRouterProvider.otherwise('/inicio');
 });
