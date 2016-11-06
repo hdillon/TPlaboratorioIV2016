@@ -8,9 +8,10 @@ class Persona
 	public $nombre;
  	public $apellido;
   	public $email;
+  	public $password;
   	public $telefono;
   	public $foto;
-  	public $tipo;
+  	public $perfil;
   	public $estado;
 
 //--------------------------------------------------------------------------------//
@@ -33,6 +34,10 @@ class Persona
 	{
 		return $this->email;
 	}
+	public function GetPassword()
+	{
+		return $this->password;
+	}
 	public function GetTelefono()
 	{
 		return $this->telefono;
@@ -41,9 +46,9 @@ class Persona
 	{
 		return $this->foto;
 	}
-	public function GetTipo()
+	public function Getperfil()
 	{
-		return $this->tipo;
+		return $this->perfil;
 	}
 	public function GetEstado()
 	{
@@ -66,6 +71,10 @@ class Persona
 	{
 		$this->email = $valor;
 	}
+	public function SetPassword($valor)
+	{
+		$this->password = $valor;
+	}
 	public function SetTelefono($valor)
 	{
 		$this->telefono = $valor;
@@ -74,9 +83,9 @@ class Persona
 	{
 		$this->foto = $valor;
 	}
-	public function SetTipo($valor)
+	public function Setperfil($valor)
 	{
-		$this->tipo = $valor;
+		$this->perfil = $valor;
 	}
 	public function SetEstado($valor)
 	{
@@ -92,9 +101,10 @@ class Persona
 			$this->apellido = $obj->apellido;
 			$this->nombre = $obj->nombre;
 			$this->email = $email;
+			$this->password = $password;
 			$this->telefono = $obj->telefono;
 			$this->foto = $obj->foto;
-			$this->tipo = $tipo;
+			$this->perfil = $perfil;
 			$this->estado = $obj->estado;
 		}
 	}
@@ -111,15 +121,23 @@ class Persona
 //--METODO DE CLASE
 	public static function TraerUnaPersona($idParametro) 
 	{	
-
-
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where id =:id");
 		$consulta->bindValue(':id', $idParametro, PDO::PARAM_INT);
 		$consulta->execute();
 		$personaBuscada= $consulta->fetchObject('persona');
-		return $personaBuscada;	
-					
+		return $personaBuscada;				
+	}
+
+	public static function TraerPersonaLogin($email, $pass) 
+	{	
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where email =:email and password =:password");
+		$consulta->bindValue(':email', $email, PDO::PARAM_STR);
+		$consulta->bindValue(':password', $pass, PDO::PARAM_STR);
+		$consulta->execute();
+		$personaBuscada= $consulta->fetchObject('persona');
+		return $personaBuscada;				
 	}
 	
 	public static function TraerTodasLasPersonas()
@@ -149,8 +167,9 @@ class Persona
 				set nombre=:nombre,
 				apellido=:apellido,
 				telefono=:telefono,
+				password=:password,
 				foto=:foto,
-				tipo=:tipo,
+				perfil=:perfil,
 				estado=:estado
 				WHERE id=:id");
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
@@ -158,8 +177,9 @@ class Persona
 			$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 			$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
 			$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_STR);
+			$consulta->bindValue(':password', $persona->password, PDO::PARAM_STR);
 			$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
-			$consulta->bindValue(':tipo', $persona->tipo, PDO::PARAM_STR);
+			$consulta->bindValue(':perfil', $persona->perfil, PDO::PARAM_STR);
 			$consulta->bindValue(':estado', $persona->estado, PDO::PARAM_STR);
 			return $consulta->execute();
 	}
@@ -171,13 +191,14 @@ class Persona
 	public static function InsertarPersona($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,telefono,foto,tipo,estado)values(:nombre,:apellido,:email,:telefono,:foto,:tipo,:estado)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,telefono,foto,perfil,estado)values(:nombre,:apellido,:email,:password,:telefono,:foto,:perfil,:estado)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
 		$consulta->bindValue(':email', $persona->email, PDO::PARAM_INT);
+		$consulta->bindValue(':password', $persona->password, PDO::PARAM_INT);
 		$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_INT);
 		$consulta->bindValue(':foto',$persona->foto, PDO::PARAM_STR);
-		$consulta->bindValue(':tipo',$persona->tipo, PDO::PARAM_STR);
+		$consulta->bindValue(':perfil',$persona->perfil, PDO::PARAM_STR);
 		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();

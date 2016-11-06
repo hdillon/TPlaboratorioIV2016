@@ -5,9 +5,10 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `apellido` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `telefono` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `foto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tipo` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  `perfil` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `estado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 

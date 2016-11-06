@@ -1,5 +1,5 @@
 
-var app = angular.module('TPInmobiliaria', ['ui.router', 'satellizer', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controladorUsuario', 'TPInmobiliaria.services']);
+var app = angular.module('TPInmobiliaria', ['ui.router', 'satellizer', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controladorUsuario', 'TPInmobiliaria.controladorSucursal', 'TPInmobiliaria.services']);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
 
@@ -38,6 +38,23 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
+
+      .state('sucursal', {
+                url : '/sucursal',
+                abstract:true,
+                templateUrl : 'vistas/abstractaSucursal.html',
+                controller : 'ControlSucursales'
+            })
+      .state('sucursal.altasucursales', {
+                url: '/altasucursales',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/sucursal/sucursalAlta.html',
+                        controller : 'ControlAltaSucursal'
+                    }
+                }
+            })
+
 
       .state('inmueble', {
                 url : '/inmuebles',

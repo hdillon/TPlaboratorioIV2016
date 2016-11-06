@@ -7,12 +7,15 @@ app.controller('ControlUsuarios', function($scope, $http, $state) {
 
 app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
 	$scope.usuario={};
-	$scope.usuario.nombre;
-	$scope.usuario.apellido;
-	$scope.usuario.telefono;
-	$scope.usuario.email;
-	$scope.usuario.password;
-	$scope.usuario.password2;
+	$scope.usuario.nombre = "Horacio";
+	$scope.usuario.apellido = "Dillon";
+	$scope.usuario.telefono = 42273011;
+	$scope.usuario.email = "h@gmail.com";
+	$scope.usuario.password = "123456";
+	$scope.usuario.foto = "foto.jpg";
+	$scope.usuario.perfil = "cliente";
+	$scope.usuario.estado = "activo";
+	$scope.usuario.password2 = "123456";
 
 	$scope.Login = function(){
 		console.info("user", $scope.usuario);
@@ -33,6 +36,14 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
 
 	$scope.Registrarse = function(){
 		console.info("user", $scope.usuario);
+
+	    $http.post('http://localhost:8080/TPlaboratorioIV2016/ws/alta/' + JSON.stringify($scope.usuario))
+	    .success(function(data, status, headers, config) {
+	        console.info("FUNCIONA: " , data);
+	      }).error(function(data, status, headers, config) {
+	         console.info("FALLA: " , data);
+	    });
+	  
 	}
 
 	$scope.Traer=function(){
