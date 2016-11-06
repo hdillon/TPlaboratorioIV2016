@@ -1,5 +1,5 @@
 <?php
-require_once"accesoDatos.php";
+require_once"AccesoDatos.php";
 class Persona
 {
 //--------------------------------------------------------------------------------//
@@ -7,8 +7,11 @@ class Persona
 	public $id;
 	public $nombre;
  	public $apellido;
-  	public $dni;
+  	public $email;
+  	public $telefono;
   	public $foto;
+  	public $tipo;
+  	public $estado;
 
 //--------------------------------------------------------------------------------//
 
@@ -26,13 +29,25 @@ class Persona
 	{
 		return $this->nombre;
 	}
-	public function GetDni()
+	public function Getemail()
 	{
-		return $this->dni;
+		return $this->email;
+	}
+	public function GetTelefono()
+	{
+		return $this->telefono;
 	}
 	public function GetFoto()
 	{
 		return $this->foto;
+	}
+	public function GetTipo()
+	{
+		return $this->tipo;
+	}
+	public function GetEstado()
+	{
+		return $this->estado;
 	}
 
 	public function SetId($valor)
@@ -47,25 +62,40 @@ class Persona
 	{
 		$this->nombre = $valor;
 	}
-	public function SetDni($valor)
+	public function Setemail($valor)
 	{
-		$this->dni = $valor;
+		$this->email = $valor;
+	}
+	public function SetTelefono($valor)
+	{
+		$this->telefono = $valor;
 	}
 	public function SetFoto($valor)
 	{
 		$this->foto = $valor;
 	}
+	public function SetTipo($valor)
+	{
+		$this->tipo = $valor;
+	}
+	public function SetEstado($valor)
+	{
+		$this->estado = $valor;
+	}
 //--------------------------------------------------------------------------------//
 //--CONSTRUCTOR
-	public function __construct($dni=NULL)
+	public function __construct($email=NULL)
 	{
-		if($dni != NULL){
-			$obj = Persona::TraerUnaPersona($dni);
+		if($email != NULL){
+			$obj = Persona::TraerUnaPersona($email);
 			
 			$this->apellido = $obj->apellido;
 			$this->nombre = $obj->nombre;
-			$this->dni = $dni;
+			$this->email = $email;
+			$this->telefono = $obj->telefono;
 			$this->foto = $obj->foto;
+			$this->tipo = $tipo;
+			$this->estado = $obj->estado;
 		}
 	}
 
@@ -73,7 +103,7 @@ class Persona
 //--TOSTRING	
   	public function ToString()
 	{
-	  	return $this->apellido."-".$this->nombre."-".$this->dni."-".$this->foto;
+	  	return $this->apellido."-".$this->nombre."-".$this->email."-".$this->foto;
 	}
 //--------------------------------------------------------------------------------//
 
@@ -84,8 +114,7 @@ class Persona
 
 
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		//$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where id =:id");
-		$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerUnaPersona(:id)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where id =:id");
 		$consulta->bindValue(':id', $idParametro, PDO::PARAM_INT);
 		$consulta->execute();
 		$personaBuscada= $consulta->fetchObject('persona');
@@ -96,8 +125,7 @@ class Persona
 	public static function TraerTodasLasPersonas()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
-		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL TraerTodasLasPersonas() ");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona");
 		$consulta->execute();			
 		$arrPersonas= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
 		return $arrPersonas;
@@ -106,8 +134,7 @@ class Persona
 	public static function BorrarPersona($idParametro)
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");	
-		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL BorrarPersona(:id)");	
+		$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");
 		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
 		$consulta->execute();
 		return $consulta->rowCount();
@@ -121,14 +148,19 @@ class Persona
 				update persona 
 				set nombre=:nombre,
 				apellido=:apellido,
-				foto=:foto
+				telefono=:telefono,
+				foto=:foto,
+				tipo=:tipo,
+				estado=:estado
 				WHERE id=:id");
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
-			//$consulta =$objetoAccesoDato->RetornarConsulta("CALL ModificarPersona(:id,:nombre,:apellido,:foto)");
 			$consulta->bindValue(':id',$persona->id, PDO::PARAM_INT);
 			$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 			$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
+			$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_STR);
 			$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
+			$consulta->bindValue(':tipo', $persona->tipo, PDO::PARAM_STR);
+			$consulta->bindValue(':estado', $persona->estado, PDO::PARAM_STR);
 			return $consulta->execute();
 	}
 
@@ -139,12 +171,14 @@ class Persona
 	public static function InsertarPersona($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,dni,foto)values(:nombre,:apellido,:dni,:foto)");
-		//$consulta =$objetoAccesoDato->RetornarConsulta("CALL InsertarPersona (:nombre,:apellido,:dni,:foto)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,telefono,foto,tipo,estado)values(:nombre,:apellido,:email,:telefono,:foto,:tipo,:estado)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
-		$consulta->bindValue(':dni', $persona->dni, PDO::PARAM_INT);
+		$consulta->bindValue(':email', $persona->email, PDO::PARAM_INT);
+		$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_INT);
 		$consulta->bindValue(':foto',$persona->foto, PDO::PARAM_STR);
+		$consulta->bindValue(':tipo',$persona->tipo, PDO::PARAM_STR);
+		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	
@@ -162,7 +196,7 @@ class Persona
 		$persona->id = "4";
 		$persona->nombre = "rogelio";
 		$persona->apellido = "agua";
-		$persona->dni = "333333";
+		$persona->email = "333333";
 		$persona->foto = "333333.jpg";
 
 		//$objetJson = json_encode($persona);
@@ -171,14 +205,14 @@ class Persona
 		$persona2->id = "5";
 		$persona2->nombre = "Bañera";
 		$persona2->apellido = "giratoria";
-		$persona2->dni = "222222";
+		$persona2->email = "222222";
 		$persona2->foto = "222222.jpg";
 
 		$persona3 = new stdClass();
 		$persona3->id = "6";
 		$persona3->nombre = "Julieta";
 		$persona3->apellido = "Roberto";
-		$persona3->dni = "888888";
+		$persona3->email = "888888";
 		$persona3->foto = "888888.jpg";
 
 		$arrayDePersonas[]=$persona;

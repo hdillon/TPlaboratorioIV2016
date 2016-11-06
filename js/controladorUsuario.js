@@ -35,6 +35,18 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
 		console.info("user", $scope.usuario);
 	}
 
+	$scope.Traer=function(){
+    $http.get('http://localhost:8080/TPlaboratorioIV2016/ws/personas')
+    .then(function(respuesta) {       
+      console.info("RESPUESTA", respuesta);
+           $scope.ListadoPersonas = respuesta.data;
+           console.log(respuesta.data);
+      },function errorCallback(response) {
+           $scope.ListadoPersonas= [];
+          console.log( response); 
+     });
+  }
+
 
 })
 
