@@ -1,5 +1,5 @@
 
-var app = angular.module('TPInmobiliaria', ['ui.router', 'satellizer', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controladorUsuario', 'TPInmobiliaria.controladorSucursal', 'TPInmobiliaria.services']);
+var app = angular.module('TPInmobiliaria', ['ui.router', 'satellizer', 'angularFileUpload', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controladorUsuario', 'TPInmobiliaria.controladorSucursal', 'TPInmobiliaria.services']);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
 
