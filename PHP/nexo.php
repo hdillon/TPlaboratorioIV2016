@@ -7,6 +7,9 @@ if ( !empty( $_FILES ) )
     $ruta = "..". DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
     move_uploaded_file( $temporal, $ruta );
     echo "correcto";
+}else
+{
+	echo "_FILES = empty";
 }
 
 if(isset($_GET['accion']))
