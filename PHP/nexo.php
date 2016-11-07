@@ -32,55 +32,55 @@ if(isset($_GET['accion']))
 	{
 		case "borrar":
 		{
-			if($respuesta->datos->persona->foto!="pordefecto.png")
+			if($respuesta->datos->sucursal->foto!="pordefecto.png")
 			{
-				unlink("../fotos/".$respuesta->datos->persona->foto);
+				unlink("../fotos/".$respuesta->datos->sucursal->foto);
 			}
-			Persona::BorrarPersona($respuesta->datos->persona->id);
+			sucursal::Borrarsucursal($respuesta->datos->sucursal->id);
 			break;
 		}
 		case "insertar":
 		{
-			if($respuesta->datos->persona->foto!="pordefecto.png")
+			if($respuesta->datos->sucursal->foto!="pordefecto.png")
 			{
 				$milliseconds = round(microtime(true) * 1000);
-				$rutaVieja="../fotos/".$respuesta->datos->persona->foto;
-				$rutaNueva=$milliseconds."-".$respuesta->datos->persona->dni.".".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
+				$rutaVieja="../fotos/".$respuesta->datos->sucursal->foto;
+				$rutaNueva=$milliseconds."-".$respuesta->datos->sucursal->dni.".".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
 				copy($rutaVieja, "../fotos/".$rutaNueva);
 				unlink($rutaVieja);
-				$respuesta->datos->persona->foto=$rutaNueva;
+				$respuesta->datos->sucursal->foto=$rutaNueva;
 			}
-			Persona::InsertarPersona($respuesta->datos->persona);
+			sucursal::Insertarsucursal($respuesta->datos->sucursal);
 			break;
 		}
 		case "buscar":
 		{
-			echo json_encode(Persona::TraerUnaPersona($respuesta->datos->id));
+			echo json_encode(sucursal::TraerUnasucursal($respuesta->datos->id));
 			break;
 		}
 		case "modificar":
 		{
-			if($respuesta->datos->persona->foto!="pordefecto.png")
+			if($respuesta->datos->sucursal->foto!="pordefecto.png")
 			{
-				$rutaVieja="../fotos/".$respuesta->datos->persona->foto;
-				$rutaNueva=$respuesta->datos->persona->dni.".".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
+				$rutaVieja="../fotos/".$respuesta->datos->sucursal->foto;
+				$rutaNueva=$respuesta->datos->sucursal->dni.".".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
 				copy($rutaVieja, "../fotos/".$rutaNueva);
 				unlink($rutaVieja);
-				$respuesta->datos->persona->foto=$rutaNueva;
+				$respuesta->datos->sucursal->foto=$rutaNueva;
 			}
-			Persona::ModificarPersona($respuesta->datos->persona);
+			Sucursal::ModificarSucursal($respuesta->datos->sucursal);
 			break;
 		}
 		case "uploadFoto":
 		{
-			if($respuesta->datos->persona->foto!="pordefecto.png")
+			if($respuesta->datos->sucursal->foto!="pordefecto.png")
 			{
 				$milliseconds = round(microtime(true) * 1000);
-				$rutaVieja="../fotos/".$respuesta->datos->persona->foto;
-				$rutaNueva=$milliseconds."-".$respuesta->datos->persona->dni.".".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
+				$rutaVieja="../fotos/".$respuesta->datos->sucursal->foto;
+				$rutaNueva=$milliseconds."-".$respuesta->datos->sucursal->nombre.".".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
 				copy($rutaVieja, "../fotos/".$rutaNueva);
 				unlink($rutaVieja);
-				$respuesta->datos->persona->foto=$rutaNueva;
+				$respuesta->datos->sucursal->foto=$rutaNueva;
 			}
 			break;
 		}

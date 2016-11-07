@@ -21,7 +21,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, FileUploader) {
 	    //OBTENGO EL NOMBRE DE LA FOTO EN EL MOMENTO DEL UPLOAD:
 	    console.info("ITEM", item._file.name);
 	    $scope.sucursal.foto = item._file.name;
-	    $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",persona:$scope.sucursal}})
+	    $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",sucursal:$scope.sucursal}})
    	    .then(function(respuesta) {         
 		     console.info("respuesta", respuesta.data);
 		     //$scope.persona.foto = "pordefecto.jpg";
