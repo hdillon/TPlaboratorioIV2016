@@ -5,16 +5,28 @@ app.controller('ControlSucursales', function($scope, $http, $state) {
 
 })
 
-app.controller('ControlAltaSucursal', function($scope, $http, FileUploader) {
+app.controller('ControlAltaSucursal', function($scope, $http, FileUploader, ServicioSucursal) {
 
 	$scope.sucursal = {};
 	$scope.sucursal.nombre = "Sucursal 1";
 	$scope.sucursal.direccion = "Calle falsa 123";
-	$scope.sucursal.foto;
+  $scope.sucursal.email = "suc@suc.com";
+  $scope.sucursal.telefono = 123456;
+	$scope.sucursal.foto = "fototest.jpg";
 	$scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
 
 	$scope.AltaSucursal = function(){
 		alert("alta sucursal");
+    
+
+    ServicioSucursal.altaSucursal($scope.sucursal).then(
+      function(respuesta){
+        console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
+      },
+      function(error){
+        console.info("ERROR! (ctrl alta sucursal): ", error);
+      }
+    );
 	}
 
 	$scope.subidorDeArchivos.onSuccessItem=function(item, response, status, headers){

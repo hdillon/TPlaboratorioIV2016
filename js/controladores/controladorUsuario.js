@@ -43,7 +43,6 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
 	      }).error(function(data, status, headers, config) {
 	         console.info("FALLA: " , data);
 	    });
-	  
 	}
 
 	$scope.Traer=function(){

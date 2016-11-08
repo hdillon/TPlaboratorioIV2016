@@ -8,6 +8,7 @@ header('Access-Control-Allow-Origin: *');
  */
 require 'vendor/autoload.php';
 require '../PHP/clases/Personas.php';
+require '../PHP/clases/Sucursales.php';
 
 /**
  * Step 2: Instantiate a Slim application
@@ -84,10 +85,13 @@ $app->delete('/personas/{id}', function ($request, $response, $args) {
     //var_dump($args);
     return $response;
 });
-/**
- * Step 4: Run the Slim application
- *
- * This method should be called last. This executes the Slim application
- * and returns the HTTP response to the HTTP client.
- */
+
+$app->post('/sucursal/alta/{objeto}', function ($request, $response, $args) {
+    $sucursal = json_decode($args['objeto']);
+    $datos = Sucursal::InsertarSucursal($sucursal);
+    $response->write($datos);
+
+    return $response;
+});
+
 $app->run();

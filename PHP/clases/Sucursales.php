@@ -5,6 +5,7 @@ class Sucursal
 	public $id;
 	public $nombre;
  	public $direccion;
+ 	public $email;
   	public $telefono;
   	public $foto;
 
@@ -21,6 +22,10 @@ class Sucursal
 	public function GetDireccion()
 	{
 		return $this->direccion;
+	}
+	public function GetEmail()
+	{
+		return $this->email;
 	}
 	public function GetTelefono()
 	{
@@ -43,6 +48,10 @@ class Sucursal
 	{
 		$this->direccion = $valor;
 	}
+	public function SetEmail($valor)
+	{
+		$this->email = $valor;
+	}
 	public function SetTelefono($valor)
 	{
 		$this->telefono = $valor;
@@ -61,6 +70,7 @@ class Sucursal
 
 			$this->nombre = $obj->nombre;
 			$this->direccion = $direccion;
+			$this->email = $email;
 			$this->telefono = $obj->telefono;
 			$this->foto = $obj->foto;
 		}
@@ -102,6 +112,7 @@ class Sucursal
 				update sucursal 
 				set nombre=:nombre,
 				direccion=:direccion,
+				email=:email,
 				telefono=:telefono,
 				foto=:foto
 				WHERE id=:id");
@@ -109,6 +120,7 @@ class Sucursal
 			$consulta->bindValue(':id',$sucursal->id, PDO::PARAM_INT);
 			$consulta->bindValue(':nombre',$sucursal->nombre, PDO::PARAM_STR);
 			$consulta->bindValue(':direccion', $sucursal->direccion, PDO::PARAM_STR);
+			$consulta->bindValue(':email', $sucursal->email, PDO::PARAM_STR);
 			$consulta->bindValue(':telefono', $sucursal->telefono, PDO::PARAM_STR);
 			$consulta->bindValue(':foto', $sucursal->foto, PDO::PARAM_STR);
 			return $consulta->execute();
@@ -121,9 +133,10 @@ class Sucursal
 	public static function InsertarSucursal($sucursal)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal (nombre,direccion,telefono,foto)values(:nombre,:direccion,:telefono,:foto,)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal (nombre,direccion,email,telefono,foto)values(:nombre,:direccion,:email,:telefono,:foto)");
 		$consulta->bindValue(':nombre',$sucursal->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':direccion', $sucursal->direccion, PDO::PARAM_STR);
+		$consulta->bindValue(':email', $sucursal->email, PDO::PARAM_STR);
 		$consulta->bindValue(':telefono', $sucursal->telefono, PDO::PARAM_INT);
 		$consulta->bindValue(':foto',$sucursal->foto, PDO::PARAM_STR);
 		$consulta->execute();		
