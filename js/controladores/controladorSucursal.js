@@ -47,6 +47,48 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
     // Configuracion del idioma.
     i18nService.setCurrentLang('es');
 
+    //Exprot cfg------------------------------------
+    $scope.gridOptions.exporterLinkLabel = 'get your csv here';
+    $scope.gridOptions.exporterPdfDefaultStyle = {fontSize: 9};
+    $scope.gridOptions.exporterPdfTableStyle = {margin: [30, 30, 30, 30]};
+    $scope.gridOptions.exporterPdfTableHeaderStyle = {fontSize: 10, bold: true, italics: true, color: 'red'};
+    $scope.gridOptions.exporterPdfOrientation = 'portrait';
+    $scope.gridOptions.exporterPdfPageSize = 'LETTER';
+    $scope.gridOptions.exporterPdfMaxGridWidth = 500;
+    $scope.export_column_type = 'all';
+    $scope.export_row_type = 'all';
+    $scope.export_format = 'csv';
+
+    $scope.gridOptions.exporterHeaderFilter = function( displayName ) { 
+      if( displayName === 'Name' ) { 
+        return 'Person Name'; 
+      } else { 
+        return displayName;
+      } 
+    };
+
+    $scope.gridOptions.exporterFieldCallback = function( grid, row, col, input ) {
+      if( col.name == 'gender' ){
+        switch( input ){
+          case 1:
+            return 'female';
+            break;
+          case 2:
+            return 'male';
+            break;
+          default:
+            return 'unknown';
+            break;
+        }
+      } else {
+        return input;
+      }
+    };
+    $scope.gridOptions.onRegisterApi = function(gridApi){ 
+      $scope.gridApi = gridApi;
+    };
+
+    //Exprot cfg------------------------------------
 
     $scope.marker = new google.maps.Marker({
         title: 'default'
@@ -74,13 +116,13 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
 
     function columnDefs () {
       return [
-        { field: 'id', name: '#', width: 45},
+        { field: 'id', name: 'ID', width: 45},
         { field: 'nombre', name: 'sucursal',
           enableFiltering: false
         },
         { field: 'data', name: 'data'},
         { name: 'Mapa',
-          cellTemplate:'<center><button type="button"  data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal()">Mapa</button></center>', width: 75
+          cellTemplate:'<center><button type="button" data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal()">Mapa</button></center>', width: 75
         },
         { field: 'fecha', name: 'fecha'
           ,type: 'date'
@@ -115,6 +157,15 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
         });
 
       });
+    }
+
+    $scope.export = function(){
+      if ($scope.export_format == 'csv') {
+        var myElement = angular.element(document.querySelectorAll(".custom-csv-link-location"));
+        $scope.gridApi.exporter.csvExport( $scope.export_row_type, $scope.export_column_type, myElement );
+      }else if ($scope.export_format == 'pdf') {
+        $scope.gridApi.exporter.pdfExport( $scope.export_row_type, $scope.export_column_type );
+      }
     }
 
 });
