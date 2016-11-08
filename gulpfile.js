@@ -38,6 +38,27 @@ gulp.task('minify-css', ['less'], function() {
         }))
 });
 
+gulp.task('less2', function() {
+    return gulp.src('less/style.less')
+        .pipe(less())
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(gulp.dest('css'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
+});
+
+// Minify compiled CSS
+gulp.task('minify-css', ['less2'], function() {
+    return gulp.src('css/ui-grid.css')
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('css'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
+});
+
 // Minify JS
 gulp.task('minify-js', function() {
     return gulp.src('js/grayscale.js')
