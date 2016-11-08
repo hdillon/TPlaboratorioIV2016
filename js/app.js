@@ -1,5 +1,21 @@
 
-var app = angular.module('TPInmobiliaria', ['ui.router', 'satellizer', 'angularFileUpload', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controllers', 'TPInmobiliaria.controladorUsuario', 'TPInmobiliaria.controladorSucursal', 'TPInmobiliaria.services']);
+var app = angular.module('TPInmobiliaria', [
+    'ui.router', 
+    'satellizer', 
+    'angularFileUpload', 
+    'TPInmobiliaria.controllers', 
+    'TPInmobiliaria.controllers', 
+    'TPInmobiliaria.controladorUsuario', 
+    'TPInmobiliaria.controladorSucursal', 
+    'TPInmobiliaria.services', 
+    'TPInmobiliaria.servicioSucursal',
+    'ui.grid',
+    'ui.grid.pagination',
+    'ui.grid.resizeColumns',
+    'ui.grid.selection',
+    'ui.grid.exporter',
+    'ui.grid.edit'
+    ]);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
 
@@ -51,6 +67,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     'contenido': {
                         templateUrl: 'vistas/sucursal/sucursalAlta.html',
                         controller : 'ControlAltaSucursal'
+                    }
+                }
+            })
+      .state('sucursal.grilla', {
+                url: '/grilla',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/sucursal/sucursalGrilla.html',
+                        controller : 'ControlGrillaSucursal'
                     }
                 }
             })
