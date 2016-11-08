@@ -34,7 +34,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, FileUploader) {
 
 })
 
-app.controller('ControlGrillaSucursal', function($scope, $http, $state, ServicioSucursal, uiGridConstants, i18nService) {
+app.controller('ControlGrillaSucursal', function($scope, $http, $state, ServicioSucursal, uiGridConstants, i18nService, NgMap) {
     $scope.titulo = "Configuracion Campos";
     // Objeto de configuracion de la grilla.
     $scope.gridOptions = {};
@@ -47,27 +47,73 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
     // Configuracion del idioma.
     i18nService.setCurrentLang('es');
 
+
+    $scope.marker = new google.maps.Marker({
+        title: 'default'
+      });
+    $scope.mapa = {};
+    $scope.mapa.latitud = '-34.662716';
+    $scope.mapa.longitud = '-58.365113';
+
 /*
     data.data().then(function(rta){
       // Cargo los datos en la grilla.
       $scope.gridOptions.data = rta;
     });
-*/
+*/  
+
+//TODO: SACAR HARDCODED ARRAY
+    var myArray = Array();
+    myArray[0] = JSON.parse('{"id":1,"nombre":"Sucursal 1", "data" : "dataa", "fecha" : "01-01-2000"}');
+    myArray[1] = JSON.parse('{"id":2,"nombre":"Sucursal 2", "data" : "dataa", "fecha" : "02-02-2000"}');
+    myArray[2] = JSON.parse('{"id":2,"nombre":"Sucursal 3", "data" : "dataa", "fecha" : "03-03-2000"}');
+    $scope.gridOptions.data = myArray;
+
     console.log(uiGridConstants);
 
     function columnDefs () {
       return [
         { field: 'id', name: '#', width: 45},
-        { field: 'nombre', name: 'sucursal'
-          ,enableFiltering: false
+        { field: 'nombre', name: 'sucursal',
+          enableFiltering: false
         },
         { field: 'data', name: 'data'},
-        { field: 'data', name: 'data'},
+        { name: 'Mapa',
+          cellTemplate:'<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal()">Mapa</button>'
+        },
         { field: 'fecha', name: 'fecha'
           ,type: 'date'
           ,cellFilter: "date: 'dd-MM-yyyy'"
         }
       ];
+    }
+
+    $scope.mostrarMapaModal = function(){
+    $scope.ModalHeader = "Nombre Sucursal";
+
+      NgMap.getMap("miMapaModal").then(function(map) {
+        console.log(map.getCenter());
+        console.log(map);
+
+        var myLatLng = {lat: Number("-34.603914"), lng: Number("-58.3829876")};
+        //elimino el marker anterior del mapa
+        $scope.marker.setMap(null);
+
+        $scope.marker = new google.maps.Marker({
+          position: myLatLng,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          title: "Sucursal Nombre"
+        });
+
+        $scope.marker.setMap(map);
+
+        $("#myModal").on("shown.bs.modal", function(e) {
+        google.maps.event.trigger(map, "resize");
+         map.setCenter(myLatLng);// Set here center map coordinates
+        });
+
+      });
     }
 
 });

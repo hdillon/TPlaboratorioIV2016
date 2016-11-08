@@ -3,6 +3,7 @@ var app = angular.module('TPInmobiliaria', [
     'ui.router', 
     'satellizer', 
     'angularFileUpload', 
+    'ngMap',
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controladorUsuario', 
