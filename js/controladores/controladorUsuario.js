@@ -5,7 +5,7 @@ app.controller('ControlUsuarios', function($scope, $http, $state) {
 
 });
 
-app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
+app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioUsuario) {
 	$scope.usuario={};
 	$scope.usuario.nombre = "Horacio";
 	$scope.usuario.apellido = "Dillon";
@@ -35,15 +35,16 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth) {
   	}
 
 	$scope.Registrarse = function(){
-		console.info("user", $scope.usuario);
-
-	    $http.post('http://localhost:8080/TPlaboratorioIV2016/ws/alta/' + JSON.stringify($scope.usuario))
-	    .success(function(data, status, headers, config) {
-	        console.info("FUNCIONA: " , data);
-	      }).error(function(data, status, headers, config) {
-	         console.info("FALLA: " , data);
-	    });
+	    ServicioUsuario.altaPersona($scope.usuario).then(
+	      function(respuesta){
+	        console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
+	      },
+	      function(error){
+	        console.info("ERROR! (ctrl alta usuario): ", error);
+	      }
+	    );
 	}
+
 
 	$scope.Traer=function(){
     $http.get('http://localhost:8080/TPlaboratorioIV2016/ws/personas')

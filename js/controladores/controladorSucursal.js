@@ -16,9 +16,6 @@ app.controller('ControlAltaSucursal', function($scope, $http, FileUploader, Serv
 	$scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
 
 	$scope.AltaSucursal = function(){
-		alert("alta sucursal");
-    
-
     ServicioSucursal.altaSucursal($scope.sucursal).then(
       function(respuesta){
         console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);

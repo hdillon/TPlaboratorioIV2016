@@ -42,7 +42,17 @@ $app->get('/', function ($request, $response, $args) {
     return $response;
 });
 
-//TRAER LISTA DE OBJETOS
+//****************************************PERSONAS********************************************//
+
+$app->post('/personas/alta/{objeto}', function ($request, $response, $args) {
+    $persona = json_decode($args['objeto']);
+    $datos = Persona::InsertarPersona($persona);
+    $response->write($datos);
+
+    return $response;
+});
+
+
 $app->get('/personas[/]', function ($request, $response, $args) {
     $datos = Persona::TraerTodasLasPersonas();
     $response->write(json_encode($datos))   ;//INTERNAL SERVER ERROR 500 -> Porque le es6taba devolviendo una referencia a memoria del servidor (hay que pasar un "string" del objeto transformado a json!!)
@@ -62,14 +72,9 @@ $app->post('/alta/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::InsertarPersona($persona);
     $response->write($datos);
-    //$response->write("Welcome to Slim!");
-
-    //$datos = Persona::InsertarPersona();
-
     return $response;
 });
 
-// /* PUT: Para editar recursos */
 $app->put('/modificar/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::ModificarPersona($persona);
@@ -78,7 +83,6 @@ $app->put('/modificar/{objeto}', function ($request, $response, $args) {
     return $response;
 });
 
-// /* DELETE: Para eliminar recursos */
 $app->delete('/personas/{id}', function ($request, $response, $args) {
     $datos = Persona::BorrarPersona($args['id']);
     $response->write("borrar !: ");
@@ -86,6 +90,7 @@ $app->delete('/personas/{id}', function ($request, $response, $args) {
     return $response;
 });
 
+//****************************************SUCURSALES********************************************//
 $app->post('/sucursal/alta/{objeto}', function ($request, $response, $args) {
     $sucursal = json_decode($args['objeto']);
     $datos = Sucursal::InsertarSucursal($sucursal);
