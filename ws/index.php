@@ -55,7 +55,7 @@ $app->post('/personas/alta/{objeto}', function ($request, $response, $args) {
 
 $app->get('/personas[/]', function ($request, $response, $args) {
     $datos = Persona::TraerTodasLasPersonas();
-    $response->write(json_encode($datos))   ;//INTERNAL SERVER ERROR 500 -> Porque le es6taba devolviendo una referencia a memoria del servidor (hay que pasar un "string" del objeto transformado a json!!)
+    $response->write(json_encode($datos));//INTERNAL SERVER ERROR 500 -> Porque le es6taba devolviendo una referencia a memoria del servidor (hay que pasar un "string" del objeto transformado a json!!)
     //$response->write("Lista de usuarios");
     
     return $response;
@@ -95,6 +95,13 @@ $app->post('/sucursal/alta/{objeto}', function ($request, $response, $args) {
     $sucursal = json_decode($args['objeto']);
     $datos = Sucursal::InsertarSucursal($sucursal);
     $response->write($datos);
+
+    return $response;
+});
+
+$app->get('/sucursales[/]', function ($request, $response, $args) {
+   $datos = Sucursal::TraerTodasLasSucursales();
+    $response->write(json_encode($datos));
 
     return $response;
 });

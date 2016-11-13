@@ -43,7 +43,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, FileUploader, Serv
 
 })
 
-app.controller('ControlGrillaSucursal', function($scope, $http, $state, ServicioSucursal, uiGridConstants, i18nService, NgMap) {
+app.controller('ControlGrillaSucursal', function($scope, $http, $state, ServicioSucursal, uiGridConstants, i18nService, NgMap, ServicioSucursal) {
     $scope.titulo = "Configuracion Campos";
     // Objeto de configuracion de la grilla.
     $scope.gridOptions = {};
@@ -106,21 +106,22 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
     $scope.mapa.latitud = '-34.662716';
     $scope.mapa.longitud = '-58.365113';
 
-/*
-    data.data().then(function(rta){
+
+    ServicioSucursal.traerSucursales().then(function(rta){
       // Cargo los datos en la grilla.
-      $scope.gridOptions.data = rta;
+      console.info("rta", rta.data);
+      $scope.gridOptions.data = rta.data;
     });
-*/  
+
 
 //TODO: SACAR HARDCODED ARRAY ************************
-    var myArray = Array();
+   /* var myArray = Array();
     myArray[0] = JSON.parse('{"id":1,"nombre":"Sucursal 1", "data" : "dataa", "fecha" : "01-01-2000"}');
     myArray[1] = JSON.parse('{"id":2,"nombre":"Sucursal 2", "data" : "dataa", "fecha" : "02-02-2000"}');
     myArray[2] = JSON.parse('{"id":3,"nombre":"Sucursal 3", "data" : "dataa", "fecha" : "03-03-2000"}');
     $scope.gridOptions.data = myArray;
 
-    console.log(uiGridConstants);
+    console.log(uiGridConstants);*/
 //TODO: SACAR HARDCODED ARRAY ***********************
 
     function columnDefs () {
@@ -129,14 +130,12 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
         { field: 'nombre', name: 'sucursal',
           enableFiltering: false
         },
-        { field: 'data', name: 'data'},
+        { field: 'direccion', name: 'direccion'},
         { name: 'Mapa',
           cellTemplate:'<center><button type="button" data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal()">Mapa</button></center>', width: 75
         },
-        { field: 'fecha', name: 'fecha'
-          ,type: 'date'
-          ,cellFilter: "date: 'dd-MM-yyyy'"
-        }
+        { field: 'email', name: 'email'},
+        { field: 'telefono', name: 'telefono'}
       ];
     }
 

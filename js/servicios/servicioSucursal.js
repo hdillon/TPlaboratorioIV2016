@@ -2,14 +2,14 @@ angular.module('TPInmobiliaria.servicioSucursal', [])
 
 .service('ServicioSucursal', function ($http) {
     this.Nombre="servicio sucursales";
-    var Url="http://localhost:8080/TPlaboratorioIV2016/ws/sucursal/";
+    var Url="http://localhost:8080/TPlaboratorioIV2016/ws/";
 
     function traerURL(Parametro){
         return Url;
     }
 
 	this.altaSucursal = function (sucursal) {
-		return $http.post(traerURL() + "alta/" + JSON.stringify(sucursal)).then(
+		return $http.post(traerURL() + "sucursal/alta/" + JSON.stringify(sucursal)).then(
 		function(respuesta){
 			console.info("RESPUESTA (Servicio Alta Sucursal): ", respuesta);
 			return respuesta; 
@@ -25,6 +25,15 @@ angular.module('TPInmobiliaria.servicioSucursal', [])
     }
 
     this.traerSucursales = function () {
-       return "Sucursales";
+       return $http.get(traerURL() + "sucursales").then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio traerSucursales): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio traerSucursales):", error);
+		return error;
+		});
     }
+
 });
