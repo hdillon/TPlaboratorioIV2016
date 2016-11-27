@@ -4,6 +4,7 @@ var app = angular.module('TPInmobiliaria', [
     'satellizer', 
     'angularFileUpload', 
     'ngMap',
+    'angular-jwt',
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controladorUsuario', 
@@ -52,6 +53,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/usuario/usuarioRegistrarse.html',
+                        controller : 'ControlAccesoUsuarios'
+                    }
+                }
+            })
+      .state('usuario.alta', {
+                url: '/alta',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/usuario/usuarioAlta.html',
                         controller : 'ControlAccesoUsuarios'
                     }
                 }

@@ -11,7 +11,9 @@ $traerPersona = Persona::TraerPersonaLogin($usuario->email, $usuario->password);
 if ($traerPersona != null){
 	
 	$ClaveDeEncriptacion = 'estaEsLaClave';
-	$token["usuario"] = $traerPersona->nombre . ' ' . $traerPersona->apellido;
+	$token["nombre"] = $traerPersona->nombre;
+	$token["apellido"] = $traerPersona->apellido;
+	$token["email"] = $traerPersona->email;
 	$token["perfil"]=$traerPersona->perfil;
 	$token["iat"]=time();
 	$token["exp"]=time()+60;
