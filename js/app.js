@@ -12,6 +12,7 @@ var app = angular.module('TPInmobiliaria', [
     'TPInmobiliaria.services', 
     'TPInmobiliaria.servicioSucursal',
     'TPInmobiliaria.servicioUsuario',
+    'TPInmobiliaria.directivaErrores',
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.resizeColumns',

@@ -2,7 +2,7 @@ angular.module('TPInmobiliaria.servicioSucursal', [])
 
 .service('ServicioSucursal', function ($http) {
     this.Nombre="servicio sucursales";
-    var Url="http://localhost:8080/TPlaboratorioIV2016/ws/";
+    var Url="http://localhost/TPlaboratorioIV2016/ws/";
 
     function traerURL(Parametro){
         return Url;

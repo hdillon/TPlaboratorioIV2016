@@ -1,12 +1,24 @@
 angular.module('TPInmobiliaria.controladorSucursal', [])
 
-app.controller('ControlSucursales', function($scope, $http, $state) {
+app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $auth) {
+  $scope.flagLogueado = false;
 
+  if($auth.isAuthenticated()){
+    $scope.usuario = jwtHelper.decodeToken($auth.getToken());
+      $scope.flagLogueado = true;
+      console.info("usuario", $scope.usuario);
+  }else{
+    $scope.flagLogueado = false;
+  }
+
+  $scope.Desloguear=function(){
+    $auth.logout();
+    $scope.flagLogueado = false;
+  }
 
 })
 
-app.controller('ControlAltaSucursal', function($scope, $http, FileUploader, ServicioSucursal) {
-
+app.controller('ControlAltaSucursal', function($scope, $http, FileUploader, $auth, ServicioSucursal) {
 	$scope.sucursal = {};
 	$scope.sucursal.nombre = "Sucursal 1";
 	$scope.sucursal.direccion = "Calle falsa 123";
