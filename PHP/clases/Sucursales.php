@@ -133,12 +133,13 @@ class Sucursal
 	public static function InsertarSucursal($sucursal)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal (nombre,direccion,email,telefono,foto)values(:nombre,:direccion,:email,:telefono,:foto)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal (nombre,direccion,email,telefono,foto,id_encargado)values(:nombre,:direccion,:email,:telefono,:foto,:id_encargado)");
 		$consulta->bindValue(':nombre',$sucursal->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':direccion', $sucursal->direccion, PDO::PARAM_STR);
 		$consulta->bindValue(':email', $sucursal->email, PDO::PARAM_STR);
 		$consulta->bindValue(':telefono', $sucursal->telefono, PDO::PARAM_INT);
 		$consulta->bindValue(':foto',$sucursal->foto, PDO::PARAM_STR);
+		$consulta->bindValue(':id_encargado',$sucursal->idEncargado, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();			
 	}	

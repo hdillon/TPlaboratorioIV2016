@@ -1,85 +1,69 @@
 angular.module('TPInmobiliaria.controladorUsuario', [])
 
-app.controller('ControlUsuarios', function($scope, $http, $state) {
+app.controller('ControlUsuarios', function($scope, $http, $state, jwtHelper, $auth) {
+	$scope.flagLogueado = false;
 
+	if($auth.isAuthenticated()){
+	$scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+	  $scope.flagLogueado = true;
+	  console.info("usuario", $scope.usuarioLogueado);
+	}else{
+	  $scope.flagLogueado = false;
+	}
+
+	$scope.Desloguear=function(){
+	  $auth.logout();
+	  $scope.flagLogueado = false;
+	}
 
 });
 
-app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioUsuario) {
+app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioUsuario, ServicioSucursal, jwtHelper) {
+	$("#loadingModal").modal('show');
 	$scope.usuario={};
 	$scope.usuario.nombre = "";
 	$scope.usuario.apellido = "";
 	$scope.usuario.telefono ;
 	$scope.usuario.email = "";
 	$scope.usuario.password = "";
+	$scope.usuario.password2 = "";
 	$scope.usuario.foto = "foto.jpg";
 	$scope.usuario.perfil = "";
 	$scope.usuario.estado = "activo";
-	$scope.usuario.password2 = "";
+	$scope.usuario.idLocal;
+	$scope.listaSucursales;
 
-	$scope.Login = function(){
-		console.info("user", $scope.usuario);
-	    $auth.login($scope.usuario)
-	    .then(function(response) {
-	        console.info("correcto", response);
-	        if($auth.isAuthenticated()){
-	          console.info("token", $auth.getPayload());
-	      	  $state.go('inicio');
-	      	}
-	        else
-	          console.info("no token", $auth.getPayload());
-	    })
-	    .catch(function(response) {
-	        console.info("incorrecto", response);
-	    });
-  	}
+	if($auth.isAuthenticated()){
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+      console.info("usuarioLogueado", $scope.usuarioLogueado);
+    }else{
+    $("#loadingModal").modal('hide');
+      $state.go('inicio');
+    }
 
-	$scope.Registrarse = function(){
-	    ServicioUsuario.altaPersona($scope.usuario).then(
-	      function(respuesta){
-	        console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
-	        $state.go('inicio');
-	      },
-	      function(error){
-	        console.info("ERROR! (ctrl alta usuario): ", error);
-	        alert("ERROR AL CREAR USUARIO");
-	      }
-	    );
+    //traigo el listado de sucursales para llenar el select del formulario
+    ServicioSucursal.traerSucursales().then(function(rta){
+      console.info("rta", rta.data);
+      $scope.listaSucursales = rta.data;
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+    });
+
+	$scope.CrearUsuario = function(){
+	  $scope.$broadcast('show-errors-check-validity');
+	  if ($scope.formAltaUsuario.$invalid) { return; }
+	  $scope.usuario.idLocal = Number($scope.usuario.idLocal);
+	  ServicioUsuario.altaPersona($scope.usuario).then(
+      function(respuesta){
+      console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
+      $state.go('inicio');
+      },
+      function(error){
+        console.info("ERROR! (ctrl alta usuario): ", error);
+        alert("ERROR AL CREAR USUARIO");
+      });
 	}
-
-
-	$scope.Traer=function(){
-    $http.get('http://localhost:8080/TPlaboratorioIV2016/ws/personas')
-    .then(function(respuesta) {       
-      console.info("RESPUESTA", respuesta);
-           $scope.ListadoPersonas = respuesta.data;
-           console.log(respuesta.data);
-      },function errorCallback(response) {
-           $scope.ListadoPersonas= [];
-          console.log( response); 
-     });
-  }
-
-  $scope.DatosAdmin=function(){
-	$scope.usuario.email = "admin@gmail.com";
-	$scope.usuario.password = "admin";
-  }
-
-  $scope.DatosEncargado=function(){
-	$scope.usuario.email = "encargado@gmail.com";
-	$scope.usuario.password = "123456";
-  }
-
-  $scope.DatosEmpleado=function(){
-  	$scope.usuario.email = "empleado@gmail.com";
-	$scope.usuario.password = "123456";
-  }
-
-  $scope.DatosCliente=function(){
-  	$scope.usuario.email = "cliente@gmail.com";
-	$scope.usuario.password = "123456";
-  }
-
 
 })
 

@@ -25,6 +25,28 @@ angular.module('TPInmobiliaria.servicioUsuario', [])
     }
 
     this.traerPersonas = function () {
-       return "Personas";
+       return $http.get(traerURL()).then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio traerPersonas): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio traerPersonas):", error);
+		return error;
+		});
     }
+
+    this.traerPersonasSinLocal = function () {
+       return $http.get(traerURL() + "sinlocal/").then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio traerPersonas): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio traerPersonas):", error);
+		return error;
+		});
+    }
+
+
 });

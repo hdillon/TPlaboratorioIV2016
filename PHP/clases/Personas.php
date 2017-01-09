@@ -13,6 +13,7 @@ class Persona
   	public $foto;
   	public $perfil;
   	public $estado;
+  	public $idLocal;
 
 //--------------------------------------------------------------------------------//
 
@@ -21,6 +22,10 @@ class Persona
   	public function GetId()
 	{
 		return $this->id;
+	}
+	public function GetIdLocal()
+	{
+		return $this->idLocal;
 	}
 	public function GetApellido()
 	{
@@ -148,6 +153,16 @@ class Persona
 		$arrPersonas= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
 		return $arrPersonas;
 	}
+
+	public static function TraerTodasLasPersonasSinLocal()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where id not in (SELECT id_encargado as 'id' FROM `sucursal` UNION select id_persona as 'id' from `sucursal_empleado`)");
+		$consulta->execute();			
+		$arrPersonas= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
+		return $arrPersonas;
+	}
+
 	
 	public static function BorrarPersona($idParametro)
 	{	
@@ -191,7 +206,7 @@ class Persona
 	public static function InsertarPersona($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,telefono,foto,perfil,estado)values(:nombre,:apellido,:email,:password,:telefono,:foto,:perfil,:estado)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,telefono,foto,perfil,estado,id_local)values(:nombre,:apellido,:email,:password,:telefono,:foto,:perfil,:estado,:id_local)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
 		$consulta->bindValue(':email', $persona->email, PDO::PARAM_INT);
@@ -200,6 +215,7 @@ class Persona
 		$consulta->bindValue(':foto',$persona->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':perfil',$persona->perfil, PDO::PARAM_STR);
 		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
+		$consulta->bindValue(':id_local',$persona->idLocal, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	

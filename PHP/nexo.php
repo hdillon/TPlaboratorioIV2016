@@ -9,7 +9,7 @@ if ( !empty( $_FILES ) )
     echo "correcto";
 }else
 {
-	echo "_FILES = empty";
+	//echo "_FILES = empty";
 }
 
 if(isset($_GET['accion']))
@@ -81,6 +81,7 @@ if(isset($_GET['accion']))
 				copy($rutaVieja, "../fotos/".$rutaNueva);
 				unlink($rutaVieja);
 				$respuesta->datos->sucursal->foto=$rutaNueva;
+				echo $respuesta->datos->sucursal->foto=$rutaNueva;//le retorno la ruta de la foto que se subío para asociarla a la sucursal
 			}
 			break;
 		}

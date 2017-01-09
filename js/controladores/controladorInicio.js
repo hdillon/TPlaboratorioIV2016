@@ -4,21 +4,21 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	$scope.flagLogueado = false;
 	$scope.loginIncorrecto = false;
 	$scope.registroIncorrecto = false;
-	$scope.usuario={};
-	$scope.usuario.nombre = "";
-	$scope.usuario.apellido = "";
-	$scope.usuario.telefono = 12345678;
-	$scope.usuario.email = "";
-	$scope.usuario.password = "";
-	$scope.usuario.foto = "foto.jpg";
-	$scope.usuario.perfil = "cliente";
-	$scope.usuario.estado = "activo";
-	$scope.usuario.password2 = "";
+	$scope.usuarioLogueado={};
+	$scope.usuarioLogueado.nombre = "";
+	$scope.usuarioLogueado.apellido = "";
+	$scope.usuarioLogueado.telefono = 12345678;
+	$scope.usuarioLogueado.email = "";
+	$scope.usuarioLogueado.password = "";
+	$scope.usuarioLogueado.foto = "foto.jpg";
+	$scope.usuarioLogueado.perfil = "cliente";
+	$scope.usuarioLogueado.estado = "activo";
+	$scope.usuarioLogueado.password2 = "";
 
 	if($auth.isAuthenticated()){
-		$scope.usuario = jwtHelper.decodeToken($auth.getToken());
+		$scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
 	    $scope.flagLogueado = true;
-	    console.info("usuario", $scope.usuario);
+	    console.info("usuarioLogueado", $scope.usuarioLogueado);
 	}else{
 		$scope.flagLogueado = false;
 	}
@@ -26,14 +26,14 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	$scope.goToLogin=function(){
 		$scope.loginIncorrecto = false;
 		 $("#loginModal").modal('show');
-		//$state.go('usuario.login');
+		//$state.go('usuarioLogueado.login');
     }
 
     $scope.goToRegistrarse=function(){
     	$scope.registroIncorrecto = false;
     	$("#loginModal").modal('hide');
     	$("#registrarseModal").modal('show');
-    	//$state.go('usuario.registrarse');
+    	//$state.go('usuarioLogueado.registrarse');
     }
 
 	$scope.Desloguear=function(){
@@ -49,8 +49,8 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 		$scope.$broadcast('show-errors-check-validity');
 	  	if ($scope.formLogin.$invalid) { return; }//Valido que los campos estén correctos antes de intentar loguear
 		$("#loadingModal").modal('show');//Bloqueo la pantalla con un loading hasta que vuelva la respuesta del servidor
-		console.info("user", $scope.usuario);
-	    $auth.login($scope.usuario)
+		console.info("user", $scope.usuarioLogueado);
+	    $auth.login($scope.usuarioLogueado)
 	    .then(function(response) {
 	        console.info("correcto", response);
 	        if($auth.isAuthenticated()){
@@ -76,14 +76,14 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 		$scope.$broadcast('show-errors-check-validity');
 	  	if ($scope.formRegistrarse.$invalid) { return; }//Valido que los campos estén correctos antes de intentar loguear
 		$("#loadingModal").modal('show');//Bloqueo la pantalla con un loading hasta que vuelva la respuesta del servidor
-	    ServicioUsuario.altaPersona($scope.usuario).then(
+	    ServiciousuarioLogueado.altaPersona($scope.usuarioLogueado).then(
 	      function(respuesta){
-	        console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
+	        console.info("RESPUESTA (ctrl alta usuarioLogueado): ", respuesta);
 	        $("#loadingModal").modal('hide');//si el registro fué exitoso oculto el formulario para regresar al inicio
 	        $("#registrarseModal").modal('hide');
 	      },
 	      function(error){
-	        console.info("ERROR! (ctrl alta usuario): ", error);
+	        console.info("ERROR! (ctrl alta usuarioLogueado): ", error);
 	        $("#loadingModal").modal('hide');
 	        $scope.registroIncorrecto = true;
 	      }
@@ -104,23 +104,23 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
   }
 
   $scope.DatosAdmin=function(){
-	$scope.usuario.email = "admin@gmail.com";
-	$scope.usuario.password = "admin";
+	$scope.usuarioLogueado.email = "admin@gmail.com";
+	$scope.usuarioLogueado.password = "admin";
   }
 
   $scope.DatosEncargado=function(){
-	$scope.usuario.email = "encargado@gmail.com";
-	$scope.usuario.password = "123456";
+	$scope.usuarioLogueado.email = "encargado@gmail.com";
+	$scope.usuarioLogueado.password = "123456";
   }
 
   $scope.DatosEmpleado=function(){
-  	$scope.usuario.email = "empleado@gmail.com";
-	$scope.usuario.password = "123456";
+  	$scope.usuarioLogueado.email = "empleado@gmail.com";
+	$scope.usuarioLogueado.password = "123456";
   }
 
   $scope.DatosCliente=function(){
-  	$scope.usuario.email = "cliente@gmail.com";
-	$scope.usuario.password = "123456";
+  	$scope.usuarioLogueado.email = "cliente@gmail.com";
+	$scope.usuarioLogueado.password = "123456";
   }
 
 

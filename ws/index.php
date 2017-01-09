@@ -47,7 +47,7 @@ $app->get('/', function ($request, $response, $args) {
 $app->post('/personas/alta/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::InsertarPersona($persona);
-    $response->write($datos);
+    $response->write(json_encode($datos));
 
     return $response;
 });
@@ -55,6 +55,15 @@ $app->post('/personas/alta/{objeto}', function ($request, $response, $args) {
 
 $app->get('/personas[/]', function ($request, $response, $args) {
     $datos = Persona::TraerTodasLasPersonas();
+    $response->write(json_encode($datos));//INTERNAL SERVER ERROR 500 -> Porque le es6taba devolviendo una referencia a memoria del servidor (hay que pasar un "string" del objeto transformado a json!!)
+    //$response->write("Lista de usuarios");
+    
+    return $response;
+});
+
+
+$app->get('/personas/sinlocal/', function ($request, $response, $args) {
+    $datos = Persona::TraerTodasLasPersonasSinLocal();
     $response->write(json_encode($datos));//INTERNAL SERVER ERROR 500 -> Porque le es6taba devolviendo una referencia a memoria del servidor (hay que pasar un "string" del objeto transformado a json!!)
     //$response->write("Lista de usuarios");
     

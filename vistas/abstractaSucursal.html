@@ -24,7 +24,7 @@
                     <li class="dropdown" ng-if="flagLogueado">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span> 
-                <strong>{{usuario.nombre}}</strong>
+                <strong>{{usuarioLogueado.nombre}}</strong>
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
             <ul class="dropdown-menu">
@@ -37,8 +37,8 @@
                                 </p>
                             </div>
                             <div class="col-lg-8">
-                                <p class="text-left"><strong>{{usuario.nombre}} {{usuario.apellido}}</strong></p>
-                                <p class="text-left small">{{usuario.email}}</p>
+                                <p class="text-left"><strong>{{usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}</strong></p>
+                                <p class="text-left small">{{usuarioLogueado.email}}</p>
                                 <p class="text-left">
                                     <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
                                 </p>
@@ -66,6 +66,16 @@
         </div>
         <!-- /.container -->
     </nav>  
+
+    <!-- Modal Loading -->
+<div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+<div class="modal-content">
+<div class="modal-header">
+<h3 style="margin:0;">Loading...</h3>
+</div><div class="modal-body">
+<div class="progress progress-striped active" style="margin-bottom:0;">
+<div class="progress-bar" style="width: 100%">
+</div></div></div></div></div></div>
 
     <div ui-view name="contenido" animation="slide-left-right"></div>
 	</div>

@@ -4,9 +4,9 @@ app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $a
   $scope.flagLogueado = false;
 
   if($auth.isAuthenticated()){
-    $scope.usuario = jwtHelper.decodeToken($auth.getToken());
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
       $scope.flagLogueado = true;
-      console.info("usuario", $scope.usuario);
+      console.info("usuario", $scope.usuarioLogueado);
   }else{
     $scope.flagLogueado = false;
   }
@@ -18,47 +18,89 @@ app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $a
 
 })
 
-app.controller('ControlAltaSucursal', function($scope, $http, FileUploader, $auth, ServicioSucursal) {
+app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioSucursal, ServicioUsuario) {
+  $("#loadingModal").modal('show');
 	$scope.sucursal = {};
 	$scope.sucursal.nombre = "Sucursal 1";
 	$scope.sucursal.direccion = "Calle falsa 123";
   $scope.sucursal.email = "suc@suc.com";
   $scope.sucursal.telefono = 123456;
-	$scope.sucursal.foto = "fototest.jpg";
+	$scope.sucursal.foto = "";
+  $scope.sucursal.idEncargado;
 	$scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
+  $scope.subidorDeArchivos.queueLimit = 3;
+  $scope.arrayNombresFotos = [];
+  $scope.faltanFotos;
+  $scope.listaPersonas;
+
+  if($auth.isAuthenticated()){
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+      console.info("usuario", $scope.usuarioLogueado);
+  }else{
+    $("#loadingModal").modal('hide');
+      $state.go('inicio');
+  }
+
+  //traigo los usuarios que no tienen un local asignado para llenar los select del formulario
+  ServicioUsuario.traerPersonasSinLocal().then(function(rta){
+      $scope.listaPersonas = rta.data;
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+      
+    });
 
 	$scope.AltaSucursal = function(){
+    $scope.$broadcast('show-errors-check-validity');
+    if ($scope.formAltaSucursal.$invalid) { return; }
+    if ($scope.arrayNombresFotos.length < 3) {//si no cargó las 3 fotos de la sucursal no lo dejo dar el alta
+      $scope.faltanFotos = true;
+      return; 
+    } 
+    $("#loadingModal").modal('show');
+
+    for (var i = 0; i < $scope.subidorDeArchivos.queue.length; i++) {
+      if (i==0)
+        $scope.sucursal.foto = $scope.arrayNombresFotos[i].data;
+      else
+        $scope.sucursal.foto = $scope.sucursal.foto + ';' + $scope.arrayNombresFotos[i].data;
+    };
+
+    $scope.sucursal.foto = 
     ServicioSucursal.altaSucursal($scope.sucursal).then(
       function(respuesta){
         console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
+        $("#loadingModal").modal('hide');
+        $state.go('sucursal.grilla');
       },
       function(error){
         console.info("ERROR! (ctrl alta sucursal): ", error);
+        $("#loadingModal").modal('hide');
+        alert("error al cargar sucursal");
       }
     );
 	}
 
 	$scope.subidorDeArchivos.onSuccessItem=function(item, response, status, headers){
-	    //OBTENGO EL NOMBRE DE LA FOTO EN EL MOMENTO DEL UPLOAD:
+	    //Obtengo el nombre de la foto al momento del upload
 	    console.info("ITEM", item._file.name);
 	    $scope.sucursal.foto = item._file.name;
 	    $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",sucursal:$scope.sucursal}})
    	    .then(function(respuesta) {         
-		     console.info("respuesta", respuesta.data);
-		     //$scope.persona.foto = "pordefecto.jpg";
-		     //console.info("Ya guardé el archivo.", item, response, status, headers);
+		     console.info("respuesta", respuesta);
+         $scope.arrayNombresFotos.push(respuesta);//guardo en un array los nombres "finales" de las fotos cargadas a la sucursal
   		},function errorCallback(response) {        
-		      console.log( response);   
-		      //$scope.persona.foto = "pordefecto.jpg";        
+		      console.info(response);     
   	    });
     }
 
 })
 
-app.controller('ControlGrillaSucursal', function($scope, $http, $state, ServicioSucursal, uiGridConstants, i18nService, NgMap, ServicioSucursal) {
-    $scope.titulo = "Configuracion Campos";
+app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout, ServicioSucursal, uiGridConstants, i18nService, NgMap, ServicioSucursal) {
+    $("#cargandoGrillaModal").modal('show');
     // Objeto de configuracion de la grilla.
     $scope.gridOptions = {};
+    $scope.gridOptions.enableGridMenu = true;
     $scope.gridOptions.paginationPageSizes = [25, 50, 75];
     // Configuracion de la paginacion
     $scope.gridOptions.paginationPageSize = 25;
@@ -69,13 +111,20 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
     i18nService.setCurrentLang('es');
 
     //Exprot cfg------------------------------------
-    $scope.gridOptions.exporterLinkLabel = 'get your csv here';
+    $scope.gridOptions.exporterCsvFilename = 'ListadoSucursales.csv';
+    $scope.gridOptions.exporterCsvColumnSeparator = ';';
     $scope.gridOptions.exporterPdfDefaultStyle = {fontSize: 9};
-    $scope.gridOptions.exporterPdfTableStyle = {margin: [30, 30, 30, 30]};
+    $scope.gridOptions.exporterPdfTableStyle = {margin: [1, 1, 1, 1]};
+    $scope.gridOptions.exporterPdfHeader = { text: "Listado Sucursales", style: 'headerStyle' };
     $scope.gridOptions.exporterPdfTableHeaderStyle = {fontSize: 10, bold: true, italics: true, color: 'red'};
     $scope.gridOptions.exporterPdfOrientation = 'portrait';
     $scope.gridOptions.exporterPdfPageSize = 'LETTER';
     $scope.gridOptions.exporterPdfMaxGridWidth = 500;
+    $scope.gridOptions.exporterPdfCustomFormatter = function ( docDefinition ) {
+      docDefinition.styles.headerStyle = { fontSize: 22, bold: true, color: '#1E90FF', alignment:'center' };
+      docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+      return docDefinition;
+    };
     $scope.export_column_type = 'all';
     $scope.export_row_type = 'all';
     $scope.export_format = 'csv';
@@ -123,6 +172,10 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
       // Cargo los datos en la grilla.
       console.info("rta", rta.data);
       $scope.gridOptions.data = rta.data;
+      setTimeout(function () {
+          $("#cargandoGrillaModal").modal('hide');
+      }, 1000)
+      
     });
 
 
@@ -139,11 +192,10 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, Servicio
     function columnDefs () {
       return [
         { field: 'id', name: 'ID', width: 45},
-        { field: 'nombre', name: 'sucursal',
-          enableFiltering: false
+        { field: 'nombre', name: 'sucursal'
         },
         { field: 'direccion', name: 'direccion'},
-        { name: 'Mapa',
+        { name: 'Mapa', enableFiltering: false,
           cellTemplate:'<center><button type="button" data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal()">Mapa</button></center>', width: 75
         },
         { field: 'email', name: 'email'},

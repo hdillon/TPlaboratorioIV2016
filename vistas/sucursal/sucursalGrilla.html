@@ -1,8 +1,9 @@
 <div class="container">
     
     <br><br>
-    
+    <center>
     <h3>Gilla Sucursales</h3>
+    </center>
     <div ui-grid="gridOptions" class="myGrid" ui-grid-pagination ui-grid-exporter ui-grid-selection ui-grid-resize-columns>
     </div>
 
@@ -23,35 +24,20 @@
 			  </ng-map>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Cerrar</button>
 	        </div>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 
-	<br>
-	<label>Exportar Grilla:</label><br>
-	<label>¿Que columnas desea exportar?</label>
-      <select ng-model="export_column_type"</select>
-        <option value='all' selected>Todas</option>
-        <option value='visible'>Visibles</option>
-      </select><br>
-      <label>¿Que filas desea exportar?</label>
-      <select ng-model="export_row_type"</select>
-        <option value='all' selected="selected">Todas</option>
-        <option value='visible'>Visibles</option>
-        <option value='selected'>Seleccionadas</option>
-      </select><br>
-      <label>¿En que formato desea exportar?</label>
-      <select ng-model="export_format"</select>
-        <option value='csv' selected="selected">CSV</option>
-        <option value='pdf'>PDF</option>
-      </select><br>
-      <button type="button" class="btn btn-success" ng-click="export()">Exportar</button>
-      <!--<div class="custom-csv-link-location">
-        <label>Your CSV will show below:</label>
-        <span class="ui-grid-exporter-csv-link">&nbsp</span>
-      </div>-->
-
+<!-- Modal Loading -->
+<div class="modal fade" id="cargandoGrillaModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+<div class="modal-content">
+<div class="modal-header">
+<h3 style="margin:0;">Cargando Grilla...</h3>
+</div><div class="modal-body">
+<div class="progress progress-striped active" style="margin-bottom:0;">
+<div class="progress-bar progress-bar-success" style="width: 100%">
+</div></div></div></div></div></div>
 </div>

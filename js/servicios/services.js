@@ -1,61 +1,61 @@
 angular.module('TPInmobiliaria.services', [])
 
-.factory('Usuario', function () {
-        var usuario = {};
-        usuario.nombre;
-        usuario.apellido;
-        usuario.telefono;
-        usuario.email;
-        usuario.password;
-        usuario.estaLogueado = false;
+.factory('UsuarioLogueado', function () {
+        var usuarioLogueado = {};
+        usuarioLogueado.nombre;
+        usuarioLogueado.apellido;
+        usuarioLogueado.telefono;
+        usuarioLogueado.email;
+        usuarioLogueado.password;
+        usuarioLogueado.estaLogueado = false;
 
-        usuario.setNombre = function (value) {
+        usuarioLogueado.setNombre = function (value) {
             this.nombre = value;
         };
 
-        usuario.setApellido = function (value) {
+        usuarioLogueado.setApellido = function (value) {
             this.apellido = value;
         };
 
-        usuario.setTelefono = function (value) {
+        usuarioLogueado.setTelefono = function (value) {
             this.telefono = value;
         };
 
-        usuario.setEmail = function (value) {
+        usuarioLogueado.setEmail = function (value) {
             this.email = value;
         };
 
-        usuario.setPassword = function (value) {
+        usuarioLogueado.setPassword = function (value) {
             this.password = value;
         };
 
-        usuario.setEstaLogueado = function (value) {
+        usuarioLogueado.setEstaLogueado = function (value) {
             this.estaLogueado = value;
         };
 
-        usuario.getNombre = function () {
-            return usuario.nombre;
+        usuarioLogueado.getNombre = function () {
+            return usuarioLogueado.nombre;
         };
 
-        usuario.getApellido = function () {
-            return usuario.apellido;
+        usuarioLogueado.getApellido = function () {
+            return usuarioLogueado.apellido;
         };
 
-        usuario.getTelefono = function () {
-            return usuario.telefono;
+        usuarioLogueado.getTelefono = function () {
+            return usuarioLogueado.telefono;
         };
 
-        usuario.getEmail = function () {
-            return usuario.email;
+        usuarioLogueado.getEmail = function () {
+            return usuarioLogueado.email;
         };
 
-        usuario.getPassword = function () {
-            return usuario.password;
+        usuarioLogueado.getPassword = function () {
+            return usuarioLogueado.password;
         };
 
-        usuario.getEstaLogueado = function () {
-            return usuario.estaLogueado;
+        usuarioLogueado.getEstaLogueado = function () {
+            return usuarioLogueado.estaLogueado;
         };
 
-        return usuario;
+        return usuarioLogueado;
 });

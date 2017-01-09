@@ -15,6 +15,9 @@
       <li ng-if="flagLogueado">
         <a href="#/sucursal/altasucursales">Sucursales</a>
       </li>
+      <li ng-if="flagLogueado">
+        <a href="#/usuario/alta">Usuarios</a>
+      </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li ng-if="!flagLogueado">
@@ -26,7 +29,7 @@
       <li class="dropdown" ng-if="flagLogueado">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span> 
-                <strong>{{usuario.nombre}}</strong>
+                <strong>{{usuarioLogueado.nombre}}</strong>
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
             <ul class="dropdown-menu">
@@ -39,8 +42,8 @@
                                 </p>
                             </div>
                             <div class="col-lg-8">
-                                <p class="text-left"><strong>{{usuario.nombre}} {{usuario.apellido}}</strong></p>
-                                <p class="text-left small">{{usuario.email}}</p>
+                                <p class="text-left"><strong>{{usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}</strong></p>
+                                <p class="text-left small">{{usuarioLogueado.email}}</p>
                                 <p class="text-left">
                                     <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
                                 </p>
@@ -83,13 +86,13 @@
           <form role="form" name="formLogin" id="loginForm">
             <div class="form-group" show-errors>
               <label for="usrname"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-              <input type="email" class="form-control" id="usrname" name="email" ng-model="usuario.email" placeholder="Enter email" required>
+              <input type="email" class="form-control" id="usrname" name="email" ng-model="usuarioLogueado.email" placeholder="Enter email" required>
               <p class="help-block" ng-if="formLogin.email.$error.required">Debe ingresar su email</p>
               <p class="help-block" ng-if="formLogin.email.$error.email">El email ingresado no es válido</p>
             </div>
             <div class="form-group" show-errors>
               <label for="psw"><span class="glyphicon glyphicon-lock"></span> Password</label>
-              <input type="password" class="form-control" id="psw" name="password" ng-model="usuario.password" placeholder="Enter password" required>
+              <input type="password" class="form-control" id="psw" name="password" ng-model="usuarioLogueado.password" placeholder="Enter password" required>
               <p class="help-block" ng-if="formLogin.password.$error.required">Debe ingresar su password</p>
             </div>
             <div class="checkbox">
@@ -128,29 +131,29 @@
           <form role="form" name="formRegistrarse" id="loginForm">
           <div class="form-group" show-errors>
               <label for="nombre"><span class="glyphicon glyphicon-user"></span> Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" ng-model="usuario.nombre" placeholder="Ingrese Nombre" required>
-              <spam class="help-block" ng-if="formLogin.nombre.$error.required">Debe ingresar su nombre</span>
+              <input type="text" class="form-control" id="nombre" name="nombre" ng-model="usuarioLogueado.nombre" placeholder="Ingrese Nombre" required>
+              <spam class="help-block" ng-if="formRegistrarse.nombre.$error.required">Debe ingresar su nombre</span>
             </div>
             <div class="form-group" show-errors>
               <label for="apellido"><span class="glyphicon glyphicon-user"></span> Apellido</label>
-              <input type="text" class="form-control" id="apellido" name="apellido" ng-model="usuario.apellido" placeholder="Ingrese Apellido" required>
-              <p class="help-block" ng-if="formLogin.apellido.$error.required">Debe ingresar su apellido</p>
+              <input type="text" class="form-control" id="apellido" name="apellido" ng-model="usuarioLogueado.apellido" placeholder="Ingrese Apellido" required>
+              <p class="help-block" ng-if="formRegistrarse.apellido.$error.required">Debe ingresar su apellido</p>
             </div>
             <div class="form-group" show-errors>
               <label for="usrname"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-              <input type="email" class="form-control" id="usrname" name="email" ng-model="usuario.email" placeholder="Ingrese Email" required>
-              <p class="help-block" ng-if="formLogin.email.$error.required">Debe ingresar su email</p>
-              <p class="help-block" ng-if="formLogin.email.$error.email">El email ingresado no es válido</p>
+              <input type="email" class="form-control" id="usrname" name="email" ng-model="usuarioLogueado.email" placeholder="Ingrese Email" required>
+              <p class="help-block" ng-if="formRegistrarse.email.$error.required">Debe ingresar su email</p>
+              <p class="help-block" ng-if="formRegistrarse.email.$error.email">El email ingresado no es válido</p>
             </div>
             <div class="form-group" show-errors>
               <label for="psw"><span class="glyphicon glyphicon-lock"></span> Password</label>
-              <input type="password" class="form-control" id="psw" name="password" ng-model="usuario.password" placeholder="Ingrese Password" required>
-              <p class="help-block" ng-if="formLogin.password.$error.required">Debe ingresar su password</p>
+              <input type="password" class="form-control" id="psw" name="password" ng-model="usuarioLogueado.password" placeholder="Ingrese Password" required>
+              <p class="help-block" ng-if="formRegistrarse.password.$error.required">Debe ingresar su password</p>
             </div>
             <div class="form-group" show-errors>
               <label for="psw2"><span class="glyphicon glyphicon-lock"></span> Password</label>
-              <input type="password" class="form-control" id="psw2" name="password2" ng-model="usuario.password2" placeholder="Repetir Password" required>
-              <p class="help-block" ng-if="formLogin.password.$error.required">Debe ingresar su password</p>
+              <input type="password" class="form-control" id="psw2" name="password2" ng-model="usuarioLogueado.password2" placeholder="Repetir Password" required>
+              <p class="help-block" ng-if="formRegistrarse.password.$error.required">Debe ingresar su password</p>
             </div>
               <button ng-click="Registrarse()" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-pencil"></span> Registrarse</button>
               <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
