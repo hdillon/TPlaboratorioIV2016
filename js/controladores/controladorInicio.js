@@ -1,6 +1,6 @@
 angular.module('TPInmobiliaria.controllers', [])
 
-app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http, $auth, ServicioUsuario) {
+app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http, $auth, ServicioABM) {
 	$scope.flagLogueado = false;
 	$scope.loginIncorrecto = false;
 	$scope.registroIncorrecto = false;
@@ -76,7 +76,7 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 		$scope.$broadcast('show-errors-check-validity');
 	  	if ($scope.formRegistrarse.$invalid) { return; }//Valido que los campos estén correctos antes de intentar loguear
 		$("#loadingModal").modal('show');//Bloqueo la pantalla con un loading hasta que vuelva la respuesta del servidor
-	    ServiciousuarioLogueado.altaPersona($scope.usuarioLogueado).then(
+	    ServicioABM.alta("alta/", $scope.usuarioLogueado).then(
 	      function(respuesta){
 	        console.info("RESPUESTA (ctrl alta usuarioLogueado): ", respuesta);
 	        $("#loadingModal").modal('hide');//si el registro fué exitoso oculto el formulario para regresar al inicio

@@ -60,3 +60,26 @@ CONSTRAINT `fk_sucursal_empleado_empleado1`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION)
 ENGINE=InnoDB;
+
+
+
+CREATE TABLE IF NOT EXISTS `inmueble` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `direccion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `precio` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tipo` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `foto` varchar(200) COLLATE utf8_spanish2_ci NOT NULL,
+  `id_sucursal` int(11) NOT NULL,
+  CONSTRAINT `fk_sucursal_sucursal1`
+  FOREIGN KEY (`id_sucursal`)
+  REFERENCES `inmobiliaria`.`sucursal` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+ALTER TABLE `inmueble`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `inmueble`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

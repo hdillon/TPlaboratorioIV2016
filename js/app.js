@@ -6,12 +6,11 @@ var app = angular.module('TPInmobiliaria', [
     'ngMap',
     'angular-jwt',
     'TPInmobiliaria.controllers', 
-    'TPInmobiliaria.controllers', 
+    'TPInmobiliaria.controladorInmueble', 
     'TPInmobiliaria.controladorUsuario', 
     'TPInmobiliaria.controladorSucursal', 
     'TPInmobiliaria.services', 
-    'TPInmobiliaria.servicioSucursal',
-    'TPInmobiliaria.servicioUsuario',
+    'TPInmobiliaria.servicioABM',
     'TPInmobiliaria.directivaErrores',
     'ui.grid',
     'ui.grid.pagination',
@@ -92,38 +91,18 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-
-
       .state('inmueble', {
-                url : '/inmuebles',
+                url : '/inmueble',
                 abstract:true,
                 templateUrl : 'vistas/abstractaInmueble.html',
-                controller : 'ControlInmuebles'
+                controller : 'ControlInmueble'
             })
-      .state('inmueble.venta', {
-                url: '/venta',
+      .state('inmueble.altainmueble', {
+                url: '/altainmueble',
                 views: {
                     'contenido': {
-                        templateUrl: 'vistas/inmueble/inmuebleVenta.html',
-                        controller : 'ControlVentaInmueble'
-                    }
-                }
-            })
-      .state('inmueble.alquiler', {
-                url: '/alquiler',
-                views: {
-                    'contenido': {
-                        templateUrl: 'vistas/inmueble/inmuebleAlquiler.html',
-                        controller : 'ControlAlquilerInmueble'
-                    }
-                }
-            })
-      .state('inmueble.grilla', {
-                url: '/grilla',
-                views: {
-                    'contenido': {
-                        templateUrl: 'vistas/inmueble/inmuebleAlquiler.html',
-                        controller : 'ControlAlquilerInmueble'
+                        templateUrl: 'vistas/inmueble/inmuebleAlta.html',
+                        controller : 'ControlAltaInmueble'
                     }
                 }
             })

@@ -18,7 +18,7 @@ app.controller('ControlUsuarios', function($scope, $http, $state, jwtHelper, $au
 
 });
 
-app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioUsuario, ServicioSucursal, jwtHelper) {
+app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioABM, jwtHelper) {
 	$("#loadingModal").modal('show');
 	$scope.usuario={};
 	$scope.usuario.nombre = "";
@@ -42,7 +42,7 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
     }
 
     //traigo el listado de sucursales para llenar el select del formulario
-    ServicioSucursal.traerSucursales().then(function(rta){
+    ServicioABM.traerSucursales().then(function(rta){
       console.info("rta", rta.data);
       $scope.listaSucursales = rta.data;
       setTimeout(function () {
@@ -54,7 +54,7 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
 	  $scope.$broadcast('show-errors-check-validity');
 	  if ($scope.formAltaUsuario.$invalid) { return; }
 	  $scope.usuario.idLocal = Number($scope.usuario.idLocal);
-	  ServicioUsuario.altaPersona($scope.usuario).then(
+	  ServicioABM.alta("alta/", $scope.usuario).then(
       function(respuesta){
       console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
       $state.go('inicio');

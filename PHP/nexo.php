@@ -85,6 +85,20 @@ if(isset($_GET['accion']))
 			}
 			break;
 		}
+		case "uploadFotoInmueble":
+		{
+			if($respuesta->datos->inmueble->foto!="pordefecto.png")
+			{
+				$milliseconds = round(microtime(true) * 1000);
+				$rutaVieja="../fotos/".$respuesta->datos->inmueble->foto;
+				$rutaNueva=$milliseconds."-inmueble.".PATHINFO($rutaVieja, PATHINFO_EXTENSION);
+				copy($rutaVieja, "../fotos/".$rutaNueva);
+				unlink($rutaVieja);
+				$respuesta->datos->inmueble->foto=$rutaNueva;
+				echo $respuesta->datos->inmueble->foto=$rutaNueva;//le retorno la ruta de la foto que se subío para asociarla al inmueble
+			}
+			break;
+		}
 	}
 	
 	/*else

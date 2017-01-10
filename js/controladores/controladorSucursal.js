@@ -18,16 +18,16 @@ app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $a
 
 })
 
-app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioSucursal, ServicioUsuario) {
+app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM) {
   $("#loadingModal").modal('show');
-	$scope.sucursal = {};
-	$scope.sucursal.nombre = "Sucursal 1";
-	$scope.sucursal.direccion = "Calle falsa 123";
+  $scope.sucursal = {};
+  $scope.sucursal.nombre = "Sucursal 1";
+  $scope.sucursal.direccion = "Calle falsa 123";
   $scope.sucursal.email = "suc@suc.com";
   $scope.sucursal.telefono = 123456;
-	$scope.sucursal.foto = "";
+  $scope.sucursal.foto = "";
   $scope.sucursal.idEncargado;
-	$scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
+  $scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
   $scope.subidorDeArchivos.queueLimit = 3;
   $scope.arrayNombresFotos = [];
   $scope.faltanFotos;
@@ -42,15 +42,14 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
   }
 
   //traigo los usuarios que no tienen un local asignado para llenar los select del formulario
-  ServicioUsuario.traerPersonasSinLocal().then(function(rta){
+  ServicioABM.traerPersonasSinLocal().then(function(rta){
       $scope.listaPersonas = rta.data;
       setTimeout(function () {
           $("#loadingModal").modal('hide');
       }, 1000)
-      
     });
 
-	$scope.AltaSucursal = function(){
+  $scope.AltaSucursal = function(){
     $scope.$broadcast('show-errors-check-validity');
     if ($scope.formAltaSucursal.$invalid) { return; }
     if ($scope.arrayNombresFotos.length < 3) {//si no cargó las 3 fotos de la sucursal no lo dejo dar el alta
@@ -67,7 +66,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
     };
 
     $scope.sucursal.foto = 
-    ServicioSucursal.altaSucursal($scope.sucursal).then(
+    ServicioABM.alta("sucursal/alta/", $scope.sucursal).then(
       function(respuesta){
         console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
         $("#loadingModal").modal('hide');
@@ -79,24 +78,24 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
         alert("error al cargar sucursal");
       }
     );
-	}
+  }
 
-	$scope.subidorDeArchivos.onSuccessItem=function(item, response, status, headers){
-	    //Obtengo el nombre de la foto al momento del upload
-	    console.info("ITEM", item._file.name);
-	    $scope.sucursal.foto = item._file.name;
-	    $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",sucursal:$scope.sucursal}})
-   	    .then(function(respuesta) {         
-		     console.info("respuesta", respuesta);
+  $scope.subidorDeArchivos.onSuccessItem=function(item, response, status, headers){
+      //Obtengo el nombre de la foto al momento del upload
+      console.info("ITEM", item._file.name);
+      $scope.sucursal.foto = item._file.name;
+      $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",sucursal:$scope.sucursal}})
+        .then(function(respuesta) {         
+         console.info("respuesta", respuesta);
          $scope.arrayNombresFotos.push(respuesta);//guardo en un array los nombres "finales" de las fotos cargadas a la sucursal
-  		},function errorCallback(response) {        
-		      console.info(response);     
-  	    });
+      },function errorCallback(response) {        
+          console.info(response);     
+        });
     }
 
 })
 
-app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout, ServicioSucursal, uiGridConstants, i18nService, NgMap, ServicioSucursal) {
+app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout, uiGridConstants, i18nService, NgMap, ServicioABM) {
     $("#cargandoGrillaModal").modal('show');
     // Objeto de configuracion de la grilla.
     $scope.gridOptions = {};
@@ -168,7 +167,7 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout
     $scope.mapa.longitud = '-58.365113';
 
 
-    ServicioSucursal.traerSucursales().then(function(rta){
+    ServicioABM.traerSucursales().then(function(rta){
       // Cargo los datos en la grilla.
       console.info("rta", rta.data);
       $scope.gridOptions.data = rta.data;

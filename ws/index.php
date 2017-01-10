@@ -9,6 +9,7 @@ header('Access-Control-Allow-Origin: *');
 require 'vendor/autoload.php';
 require '../PHP/clases/Personas.php';
 require '../PHP/clases/Sucursales.php';
+require '../PHP/clases/Inmuebles.php';
 
 /**
  * Step 2: Instantiate a Slim application
@@ -114,5 +115,23 @@ $app->get('/sucursales[/]', function ($request, $response, $args) {
 
     return $response;
 });
+
+//****************************************INMUEBLES********************************************//
+$app->post('/inmueble/alta/{objeto}', function ($request, $response, $args) {
+    $inmueble = json_decode($args['objeto']);
+    $datos = Inmueble::InsertarInmueble($inmueble);
+    $response->write($datos);
+
+    return $response;
+});
+
+
+$app->get('/inmuebles[/]', function ($request, $response, $args) {
+   $datos = Inmueble::TraerTodosLosInmuebles();
+    $response->write(json_encode($datos));
+
+    return $response;
+});
+
 
 $app->run();
