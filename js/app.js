@@ -4,7 +4,9 @@ var app = angular.module('TPInmobiliaria', [
     'satellizer', 
     'angularFileUpload', 
     'ngMap',
+    'jkAngularCarousel',
     'angular-jwt',
+    'ngMaterial',
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controladorInmueble', 
     'TPInmobiliaria.controladorUsuario', 
@@ -17,7 +19,8 @@ var app = angular.module('TPInmobiliaria', [
     'ui.grid.resizeColumns',
     'ui.grid.selection',
     'ui.grid.exporter',
-    'ui.grid.edit'
+    'ui.grid.edit',
+    'ui.bootstrap'
     ]);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
@@ -103,6 +106,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     'contenido': {
                         templateUrl: 'vistas/inmueble/inmuebleAlta.html',
                         controller : 'ControlAltaInmueble'
+                    }
+                }
+            })
+      .state('inmueble.catalogo', {
+                url: '/catalogo',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/inmueble/catalogo.html',
+                        controller : 'ControlCatalogoInmueble'
                     }
                 }
             })

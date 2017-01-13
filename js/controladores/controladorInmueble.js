@@ -94,4 +94,47 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
         });
     }
 
+})
+
+app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth) {
+  $scope.flagLogueado = false;
+
+  if($auth.isAuthenticated()){
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+      $scope.flagLogueado = true;
+      console.info("usuario", $scope.usuarioLogueado);
+  }else{
+    $scope.flagLogueado = false;
+  }
+
+  $scope.Desloguear=function(){
+    $auth.logout();
+    $scope.flagLogueado = false;
+  }
+
+  $scope.myInterval = 3000;
+  $scope.slides = [
+    {
+      src: './fotos/1484089174263-inmueble.jpg'
+    },
+    {
+      src: './fotos/1484089174545-inmueble.jpg'
+    },
+    {
+      src: './fotos/1484089174875-inmueble.jpg'
+    }
+  ];
+
+  $scope.slides2 = [
+    {
+      src: './fotos/1484089174263-inmueble.jpg'
+    },
+    {
+      src: './fotos/1484089174545-inmueble.jpg'
+    },
+    {
+      src: './fotos/1484089174875-inmueble.jpg'
+    }
+  ];
+
 });
