@@ -9,6 +9,7 @@ angular.module('TPInmobiliaria.servicioABM', [])
     }
 
 	this.alta = function (ruta, obj) {
+		console.info("Street Figther: ",JSON.stringify(obj));
 		return $http.post(traerURL() + ruta + JSON.stringify(obj)).then(
 		function(respuesta){
 			console.info("RESPUESTA (Servicio Alta): ", respuesta);
@@ -44,14 +45,14 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		});
     }
 
-    this.traerInmuebles = function () {
-       return $http.get(traerURL() + "inmuebles").then(
+    this.traer = function (ruta) {
+       return $http.get(traerURL() + ruta).then(
 		function(respuesta){
-			console.info("RESPUESTA (Servicio traerinmuebles): ", respuesta);
+			console.info("RESPUESTA (Servicio traer): ", respuesta);
 			return respuesta; 
 		},
 		function(error){
-			console.info("ERROR (Servicio traerinmuebles):", error);
+			console.info("ERROR (Servicio traer):", error);
 		return error;
 		});
     }

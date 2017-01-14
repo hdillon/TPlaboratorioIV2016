@@ -7,6 +7,7 @@ var app = angular.module('TPInmobiliaria', [
     'jkAngularCarousel',
     'angular-jwt',
     'ngMaterial',
+    'cl.paging',
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controladorInmueble', 
     'TPInmobiliaria.controladorUsuario', 

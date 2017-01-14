@@ -21,10 +21,12 @@ app.controller('ControlInmueble', function($scope, $http, $state,jwtHelper, $aut
 app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM) {
    $("#loadingModal").modal('show');
   $scope.inmueble = {};
-  $scope.inmueble.descripcion = "Casa 2H";
+  $scope.inmueble.descripcion = "";
   $scope.inmueble.foto = "";
   $scope.inmueble.precio = "";
   $scope.inmueble.direccion = "";
+  $scope.inmueble.ambientes;
+  $scope.inmueble.tipoOferta;
   $scope.inmueble.idSucursal = "";
   $scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
   $scope.subidorDeArchivos.queueLimit = 3;
@@ -62,11 +64,11 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
 
     for (var i = 0; i < $scope.subidorDeArchivos.queue.length; i++) {
       if (i==0)
-        $scope.inmueble.foto = $scope.arrayNombresFotos[i].data;
+        $scope.inmueble.foto = $scope.arrayNombresFotos[i];
       else
-        $scope.inmueble.foto = $scope.inmueble.foto + ';' + $scope.arrayNombresFotos[i].data;
+        $scope.inmueble.foto = $scope.inmueble.foto + ',' + $scope.arrayNombresFotos[i];
     };
-
+    console.info("inmueble:",$scope.inmueble);
     ServicioABM.alta("inmueble/alta/", $scope.inmueble).then(
       function(respuesta){
         console.info("RESPUESTA (ctrl alta inmueble): ", respuesta);
@@ -88,16 +90,16 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
       $http.post('PHP/nexo.php', { datos: {accion :"uploadFotoInmueble",inmueble:$scope.inmueble}})
         .then(function(respuesta) {         
          console.info("respuesta", respuesta);
-         $scope.arrayNombresFotos.push(respuesta);//guardo en un array los nombres "finales" de las fotos cargadas del inmueble
+         $scope.arrayNombresFotos.push(respuesta.data);//guardo en un array los nombres "finales" de las fotos cargadas del inmueble
       },function errorCallback(response) {        
           console.info(response);     
         });
     }
-
 })
 
-app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth) {
+app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth, ServicioABM) {
   $scope.flagLogueado = false;
+  $scope.listaInmuebles = [];
 
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
@@ -112,29 +114,42 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
     $scope.flagLogueado = false;
   }
 
-  $scope.myInterval = 3000;
-  $scope.slides = [
-    {
-      src: './fotos/1484089174263-inmueble.jpg'
-    },
-    {
-      src: './fotos/1484089174545-inmueble.jpg'
-    },
-    {
-      src: './fotos/1484089174875-inmueble.jpg'
-    }
-  ];
+  //traigo las sucursales para llenar el select del formulario
+  ServicioABM.traer("inmuebles").then(function(rta){
+      $scope.listaInmuebles = rta.data;
+      console.info("inmuebles:", $scope.listaInmuebles);
+      for (i = 0; i < $scope.listaInmuebles.length; i++) {
+        $scope.listaInmuebles[i].fotosArray = [];//Cargo un nuevo array con obj de tipo json para que el carousel pueda levantar las fotos 
+        $scope.listaInmuebles[i].foto = $scope.listaInmuebles[i].foto.split(',');
+        for (j = 0; j < $scope.listaInmuebles[i].foto.length; j++) {
+          $scope.listaInmuebles[i].fotosArray.push(JSON.parse("{" + '"src"' + ":" + '"' + "./fotos/" + $scope.listaInmuebles[i].foto[j] + '"' + "}"));
+        }
+      }
+      console.info("inmuebles after transformation:", $scope.listaInmuebles);
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+  });
 
-  $scope.slides2 = [
-    {
-      src: './fotos/1484089174263-inmueble.jpg'
-    },
-    {
-      src: './fotos/1484089174545-inmueble.jpg'
-    },
-    {
-      src: './fotos/1484089174875-inmueble.jpg'
-    }
-  ];
+  //PAGINACIÓN:
+  $scope.currentPage = 0;
+  $scope.pageSize = 4;
 
+  $scope.numberOfPages=function(){
+    return Math.ceil($scope.listaInmuebles.length/$scope.pageSize);                
+  }
+
+  function loadPages() {
+    console.log('Current page is : ' + $scope.paging.current);
+    $scope.currentPage = $scope.paging.current;
+  }
+
+})
+
+
+app.filter('startFrom', function() {
+  return function(input, start) {
+    start = +start; //parse to int
+    return input.slice(start);
+  }
 });

@@ -65,9 +65,11 @@ ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `inmueble` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `descripcion` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `direccion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `precio` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `ambientes` int(11) NOT NULL,
+  `oferta` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `tipo` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `foto` varchar(200) COLLATE utf8_spanish2_ci NOT NULL,
   `id_sucursal` int(11) NOT NULL,

@@ -8,7 +8,6 @@ class Inmueble
  	public $precio;
   	public $tipo;
   	public $foto;
-  	public $idSucursal;
 
 //--------------------------------------------------------------------------------//
 //--GETTERS Y SETTERS
@@ -122,6 +121,8 @@ class Inmueble
 				set descripcion=:descripcion,
 				direccion=:direccion,
 				precio=:precio,
+				ambientes=:ambientes,
+				oferta=:oferta,
 				tipo=:tipo,
 				foto=:foto
 				WHERE id=:id");
@@ -130,6 +131,8 @@ class Inmueble
 			$consulta->bindValue(':descripcion',$inmueble->descripcion, PDO::PARAM_STR);
 			$consulta->bindValue(':direccion', $inmueble->direccion, PDO::PARAM_STR);
 			$consulta->bindValue(':precio', $inmueble->precio, PDO::PARAM_STR);
+			$consulta->bindValue(':ambientes', $inmueble->ambientes, PDO::PARAM_INT);
+			$consulta->bindValue(':oferta', $inmueble->tipoOferta, PDO::PARAM_STR);
 			$consulta->bindValue(':tipo', $inmueble->tipo, PDO::PARAM_STR);
 			$consulta->bindValue(':foto', $inmueble->foto, PDO::PARAM_STR);
 			return $consulta->execute();
@@ -142,10 +145,12 @@ class Inmueble
 	public static function InsertarInmueble($inmueble)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into inmueble (descripcion,tipo,precio,direccion,foto,id_sucursal)values(:descripcion,:tipo,:precio,:direccion,:foto,:id_sucursal)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into inmueble (descripcion,tipo,precio,ambientes,oferta,direccion,foto,id_sucursal)values(:descripcion,:tipo,:precio,:ambientes,:oferta,:direccion,:foto,:id_sucursal)");
 		$consulta->bindValue(':descripcion',$inmueble->descripcion, PDO::PARAM_STR);
 		$consulta->bindValue(':tipo', $inmueble->tipo, PDO::PARAM_STR);
 		$consulta->bindValue(':precio', $inmueble->precio, PDO::PARAM_STR);
+		$consulta->bindValue(':ambientes', $inmueble->ambientes, PDO::PARAM_INT);
+		$consulta->bindValue(':oferta', $inmueble->tipoOferta, PDO::PARAM_STR);
 		$consulta->bindValue(':direccion', $inmueble->direccion, PDO::PARAM_STR);
 		$consulta->bindValue(':foto',$inmueble->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':id_sucursal',$inmueble->idSucursal, PDO::PARAM_INT);
