@@ -2,13 +2,9 @@
 <br><br><br><br><br>
 
  <md-content class="md-padding" >
-
-      <md-card layout="row"
-             layout-sm="column" ng-repeat="inmueble in listaInmuebles | startFrom:currentPage*pageSize | limitTo:pageSize"> 
-             <div flex-gt-sm="33"
-           layout-align="center center"
-           layout="column">
-        <jk-carousel
+      <md-card layout="row" layout-sm="column" ng-repeat="inmueble in listaInmuebles | startFrom:currentPage*pageSize | limitTo:pageSize"> 
+          <div flex-gt-sm="33" layout-align="center center" layout="column">
+        	<jk-carousel
 		        data="inmueble.fotosArray"
 		        item-template-url="'./vistas/inmueble/item-template.html'"
 		        auto-slide="true" 
@@ -16,27 +12,21 @@
 		        max-width="800" 
 		        max-height="500" >
 	        </jk-carousel>
-	        </div>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">{{inmueble.tipo}} {{inmueble.ambientes}} ambientes {{inmueble.oferta}} {{inmueble.precio}}$</span>
-          </md-card-title-text>
-        </md-card-title>
-           <div layout="column" flex>
+	      </div>
+       <div layout="column" flex>
         <md-card-content flex>
-          <p>
+   			<h2 class="md-title text-success">{{inmueble.tipo}} {{inmueble.ambientes}} ambientes {{inmueble.oferta}} {{inmueble.precio}}$</h2>
+          <p class="text-success">
             {{inmueble.descripcion}}
           </p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="end center">
-          <md-button class="send-button md-accent md-raised">Action 1</md-button>
-          <md-button class="send-button md-accent md-raised">Action 2</md-button>
+          <md-button ng-click="reservarInmueble(inmueble)" class="send-button md-accent md-raised">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
+          <md-button class="send-button md-accent md-raised">DETALLE</md-button>
         </md-card-actions>
-         </div>
+       </div>
       </md-card>
-   
   </md-content>
-
 <center>
   <md-button class="send-button md-primary md-raised" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
         << Previous
@@ -46,4 +36,16 @@
         Next >>
     </md-button>
     </center>
+</div>
+
+
+<!-- Modal Loading -->
+<div class="modal fade" id="cargandoCatalogoModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+<div class="modal-content">
+<div class="modal-header">
+<h3 style="margin:0;">Cargando Catálogo...</h3>
+</div><div class="modal-body">
+<div class="progress progress-striped active" style="margin-bottom:0;">
+<div class="progress-bar progress-bar-success" style="width: 100%">
+</div></div></div></div></div></div>
 </div>

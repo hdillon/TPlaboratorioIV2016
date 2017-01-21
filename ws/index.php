@@ -10,6 +10,7 @@ require 'vendor/autoload.php';
 require '../PHP/clases/Personas.php';
 require '../PHP/clases/Sucursales.php';
 require '../PHP/clases/Inmuebles.php';
+require '../PHP/clases/Transacciones.php';
 
 /**
  * Step 2: Instantiate a Slim application
@@ -132,6 +133,38 @@ $app->get('/inmuebles[/]', function ($request, $response, $args) {
 
     return $response;
 });
+
+//****************************************TRANSACCIONES********************************************//
+$app->post('/transaccion/alta/{objeto}', function ($request, $response, $args) {
+    $transaccion = json_decode($args['objeto']);
+    $datos = Transaccion::InsertarTransaccion($transaccion);
+    $response->write($datos);
+
+    return $response;
+});
+
+
+$app->get('/transacciones[/]', function ($request, $response, $args) {
+   $datos = Transaccion::TraerTodasLasTransacciones();
+    $response->write(json_encode($datos));
+
+    return $response;
+});
+
+$app->get('/transacciones/ventasporlocal[/]', function ($request, $response, $args) {
+   $datos = Transaccion::TraerVentasPorLocal();
+    $response->write(json_encode($datos));
+
+    return $response;
+});
+
+$app->get('/transacciones/ventasporempleado/{idSucursal}', function ($request, $response, $args) {
+   $datos = Transaccion::TraerVentasPorEmpleado($args['idSucursal']);
+    $response->write(json_encode($datos));
+
+    return $response;
+});
+
 
 
 $app->run();

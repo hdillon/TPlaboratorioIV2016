@@ -70,7 +70,6 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-
       .state('sucursal', {
                 url : '/sucursal',
                 abstract:true,
@@ -92,6 +91,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     'contenido': {
                         templateUrl: 'vistas/sucursal/sucursalGrilla.html',
                         controller : 'ControlGrillaSucursal'
+                    }
+                }
+            })
+      .state('sucursal.estadisticas', {
+                url: '/estadisticas',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/sucursal/estadisticas.html',
+                        controller : 'ControlEstadisticas'
                     }
                 }
             })
@@ -120,6 +128,6 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 }
             })
       
+      
              $urlRouterProvider.otherwise('/inicio');
 });
-

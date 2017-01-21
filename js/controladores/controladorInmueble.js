@@ -54,6 +54,8 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
     });
 
   $scope.AltaInmueble = function(){
+    $scope.inmueble.idVendedor = $scope.usuarioLogueado.id;
+    console.info("INMUEBLE ALTA: ", $scope.inmueble);
     $scope.$broadcast('show-errors-check-validity');
     if ($scope.formAltaInmueble.$invalid) { return; }
     if ($scope.arrayNombresFotos.length < 3) {//si no cargó las 3 fotos del inmueble no lo dejo dar el alta
@@ -73,7 +75,7 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
       function(respuesta){
         console.info("RESPUESTA (ctrl alta inmueble): ", respuesta);
         $("#loadingModal").modal('hide');
-        $state.go('inicio');
+        $state.go('inmueble.catalogo');
       },
       function(error){
         console.info("ERROR! (ctrl alta inmueble): ", error);
@@ -98,15 +100,17 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
 })
 
 app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth, ServicioABM) {
+  $("#cargandoCatalogoModal").modal('show');
   $scope.flagLogueado = false;
   $scope.listaInmuebles = [];
 
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
       $scope.flagLogueado = true;
-      console.info("usuario", $scope.usuarioLogueado);
   }else{
     $scope.flagLogueado = false;
+    $("#cargandoCatalogoModal").modal('hide');
+      $state.go('inicio');
   }
 
   $scope.Desloguear=function(){
@@ -127,9 +131,33 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
       }
       console.info("inmuebles after transformation:", $scope.listaInmuebles);
       setTimeout(function () {
-          $("#loadingModal").modal('hide');
+          $("#cargandoCatalogoModal").modal('hide');
       }, 1000)
   });
+
+
+  $scope.reservarInmueble=function(inmueble){
+    var objTransaccion = {
+      idVendedor : inmueble.id_vendedor,
+      idCliente : $scope.usuarioLogueado.id,
+      idSucursal : inmueble.id_sucursal,
+      idInmueble : inmueble.id,
+      importe : inmueble.precio
+    };
+
+    ServicioABM.alta("transaccion/alta/", objTransaccion).then(
+      function(respuesta){
+        console.info("RESPUESTA (ctrl alta transaccion): ", respuesta);
+        $("#loadingModal").modal('hide');
+        alert("transaccion concretada");
+        //$state.go('inmueble.catalogo');
+      },
+      function(error){
+        console.info("ERROR! (ctrl alta transaccion): ", error);
+        $("#loadingModal").modal('hide');
+        alert("error al cargar transaccion");
+      });             
+  }
 
   //PAGINACIÓN:
   $scope.currentPage = 0;

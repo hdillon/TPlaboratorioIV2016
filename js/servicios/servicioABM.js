@@ -69,4 +69,16 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		});
     }
 
+    this.traerVentasPorEmpleado = function (ruta, idSucursal) {
+       return $http.get(traerURL() +ruta + idSucursal).then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio traerPersonas): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio traerPersonas):", error);
+		return error;
+		});
+    }
+
 });

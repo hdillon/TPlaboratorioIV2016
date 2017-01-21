@@ -124,7 +124,9 @@ class Inmueble
 				ambientes=:ambientes,
 				oferta=:oferta,
 				tipo=:tipo,
-				foto=:foto
+				foto=:foto,
+				id_sucursal = :idsucursal,
+				id_vendedor = :idvendedor
 				WHERE id=:id");
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 			$consulta->bindValue(':id',$inmueble->id, PDO::PARAM_INT);
@@ -135,6 +137,8 @@ class Inmueble
 			$consulta->bindValue(':oferta', $inmueble->tipoOferta, PDO::PARAM_STR);
 			$consulta->bindValue(':tipo', $inmueble->tipo, PDO::PARAM_STR);
 			$consulta->bindValue(':foto', $inmueble->foto, PDO::PARAM_STR);
+			$consulta->bindValue(':id_sucursal',$inmueble->idVendedor, PDO::PARAM_INT);
+			$consulta->bindValue(':id_vendedor',$inmueble->idSucursal, PDO::PARAM_INT);
 			return $consulta->execute();
 	}
 
@@ -145,7 +149,7 @@ class Inmueble
 	public static function InsertarInmueble($inmueble)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into inmueble (descripcion,tipo,precio,ambientes,oferta,direccion,foto,id_sucursal)values(:descripcion,:tipo,:precio,:ambientes,:oferta,:direccion,:foto,:id_sucursal)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into inmueble (descripcion,tipo,precio,ambientes,oferta,direccion,foto,id_sucursal,id_vendedor)values(:descripcion,:tipo,:precio,:ambientes,:oferta,:direccion,:foto,:id_sucursal,:id_vendedor)");
 		$consulta->bindValue(':descripcion',$inmueble->descripcion, PDO::PARAM_STR);
 		$consulta->bindValue(':tipo', $inmueble->tipo, PDO::PARAM_STR);
 		$consulta->bindValue(':precio', $inmueble->precio, PDO::PARAM_STR);
@@ -154,6 +158,7 @@ class Inmueble
 		$consulta->bindValue(':direccion', $inmueble->direccion, PDO::PARAM_STR);
 		$consulta->bindValue(':foto',$inmueble->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':id_sucursal',$inmueble->idSucursal, PDO::PARAM_INT);
+		$consulta->bindValue(':id_vendedor',$inmueble->idVendedor, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();			
 	}	

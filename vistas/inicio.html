@@ -13,21 +13,21 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
       <li ng-if="flagLogueado">
-        <a href="#!/sucursal/altasucursales">Sucursales</a>
+        <a href="#!/sucursal/grilla">Sucursales</a>
       </li>
       <li ng-if="flagLogueado">
         <a href="#!/usuario/alta">Usuarios</a>
       </li>
       <li ng-if="flagLogueado">
-        <a href="#!/inmueble/altainmueble">Inmuebles</a>
+        <a href="#!/inmueble/catalogo">Inmuebles</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li ng-if="!flagLogueado">
-        <button ng-click="goToRegistrarse()" class="btn btn-danger navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Registrarse</button>
+        <md-button ng-click="goToRegistrarse()" class="send-button md-warn md-raised btn btn-danger navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Registrarse</md-button>
       </li>
       <li ng-if="!flagLogueado">
-        <button ng-click="goToLogin()" class="btn btn-success navbar-btn"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+        <md-button ng-click="goToLogin()" class="send-button md-primary md-raised btn btn-success navbar-btn"><span class="glyphicon glyphicon-log-in"></span> Login</md-button>
       </li>
       <li class="dropdown" ng-if="flagLogueado">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -87,6 +87,16 @@
         <div class="modal-body" style="padding:40px 50px;">
         <div class="error" ng-if="loginIncorrecto">El email o password ingresados no son correctos</div>
           <form role="form" name="formLogin" id="loginForm">
+<!--
+        <md-input-container>
+            <label>Email</label>
+            <input name="favoriteColor" ng-model="usuarioLogueado.email" required>
+            <div ng-messages="formLogin.email.$error.$error">
+              <div ng-message="required"> </div>
+            </div>
+          </md-input-container>
+
+-->
             <div class="form-group" show-errors>
               <label for="usrname"><span class="glyphicon glyphicon-envelope"></span> Email</label>
               <input type="email" class="form-control" id="usrname" name="email" ng-model="usuarioLogueado.email" placeholder="Enter email" required>
@@ -101,7 +111,7 @@
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <button ng-click="Login()" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+              <md-button ng-click="Login()" class="send-button md-warn md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</md-button>
               <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
           </form>
         </div>
@@ -158,7 +168,7 @@
               <input type="password" class="form-control" id="psw2" name="password2" ng-model="usuarioLogueado.password2" placeholder="Repetir Password" required>
               <p class="help-block" ng-if="formRegistrarse.password.$error.required">Debe ingresar su password</p>
             </div>
-              <button ng-click="Registrarse()" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-pencil"></span> Registrarse</button>
+              <md-button ng-click="Registrarse()" class="send-button md-warn md-raised btn btn-primary btn-block"><span class="glyphicon glyphicon-pencil"></span> Registrarse</md-button>
               <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
           </form>
         </div>
