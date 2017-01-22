@@ -1,3 +1,7 @@
+body {
+    background-color: #f6f6f6;
+}
+
 .navbar-login
 {
     width: 305px;
@@ -54,5 +58,16 @@ background-image: url('warning.png');
 color: #D8000C;
 background-color: #FFBABA;
 background-image: url('error.png');
+}
+
+
+div.margenfix {
+    margin-right: 8px;
+    margin-left: -7px;
+}
+
+div.margenfix2 {
+    margin-right: 30px;
+    margin-left: 0px;
 }
 

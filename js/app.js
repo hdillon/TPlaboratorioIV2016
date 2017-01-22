@@ -94,15 +94,6 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('sucursal.estadisticas', {
-                url: '/estadisticas',
-                views: {
-                    'contenido': {
-                        templateUrl: 'vistas/sucursal/estadisticas.html',
-                        controller : 'ControlEstadisticas'
-                    }
-                }
-            })
       .state('inmueble', {
                 url : '/inmueble',
                 abstract:true,
@@ -124,6 +115,39 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     'contenido': {
                         templateUrl: 'vistas/inmueble/catalogo.html',
                         controller : 'ControlCatalogoInmueble'
+                    }
+                }
+            })
+      .state('estadisticas', {
+                url : '/estadisticas',
+                abstract:true,
+                templateUrl : 'vistas/abstractaEstadisticas.html',
+                controller : 'ControlEstadisticas'
+            })
+      .state('estadisticas.ventasporlocal', {
+                url: '/ventasporlocal',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/estadisticas/estadisticas.html',
+                        controller : 'ControlVentasPorLocal'
+                    }
+                }
+            })
+      .state('estadisticas.ventasporempleado', {
+                url: '/ventasporempleado',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/estadisticas/estadisticas.html',
+                        controller : 'ControlVentasPorEmpleado'
+                    }
+                }
+            })
+      .state('estadisticas.encuestas', {
+                url: '/encuestas',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/estadisticas/estadisticas.html',
+                        controller : 'ControlEstadisticasEncuestas'
                     }
                 }
             })

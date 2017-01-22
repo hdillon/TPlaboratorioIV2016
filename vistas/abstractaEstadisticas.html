@@ -14,14 +14,16 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
     </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#!/sucursal/altasucursales" >Alta Sucursal</a>
-                    </li>
-                    <li>
-                        <a href="#!/sucursal/grilla" >Grilla</a>
-                    </li>
-                    <li class="dropdown" ng-if="flagLogueado">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown" ng-if="flagLogueado">
+              <a class="dropdown-toggle" data-toggle="dropdown" href=""> Estadisticas<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#!/estadisticas/ventasporlocal">Ventas por sucursal</a></li>
+                <li><a href="#!/estadisticas/ventasporempleado">Ventas por empleado</a></li>
+                <li><a href="#!/estadisticas/encuestas">Encuestas de satisfacción</a></li>
+              </ul>
+            </li>
+            <li class="dropdown" ng-if="flagLogueado">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span> 
                 <strong>{{usuarioLogueado.nombre}}</strong>
@@ -60,12 +62,10 @@
                 </li>
             </ul>
         </li>
-                </ul>
-   
-       </div>
-        </div>
-        <!-- /.container -->
-    </nav>  
+    </ul>  
+  </div>
+ </div>
+</nav>  
 
     <!-- Modal Loading -->
 <div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">

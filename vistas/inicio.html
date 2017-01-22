@@ -21,6 +21,16 @@
       <li ng-if="flagLogueado">
         <a href="#!/inmueble/catalogo">Inmuebles</a>
       </li>
+
+      <li class="dropdown" ng-if="flagLogueado">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Estadisticas<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#!/estadisticas/ventasporlocal">Ventas por sucursal</a></li>
+            <li><a href="#!/estadisticas/ventasporempleado">Ventas por empleado</a></li>
+            <li><a href="#!/estadisticas/encuestas">Encuestas de satisfacción</a></li>
+          </ul>
+        </li>
+
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li ng-if="!flagLogueado">
@@ -73,8 +83,84 @@
   </div>
 </nav>
 
+ <!--md-toolbar>
+      <div class="md-toolbar-tools">
+        <div class="container-fluid">
+   
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#miNavbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+      <a class="navbar-brand" href="#">El Campito</a>
+   
+ 
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li ng-if="flagLogueado">
+        <a href="#!/sucursal/grilla">Sucursales</a>
+      </li>
+      <li ng-if="flagLogueado">
+        <a href="#!/usuario/alta">Usuarios</a>
+      </li>
+      <li ng-if="flagLogueado">
+        <a href="#!/inmueble/catalogo">Inmuebles</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li ng-if="!flagLogueado">
+        <md-button ng-click="goToRegistrarse()" class="send-button md-warn md-raised btn btn-danger navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Registrarse</md-button>
+      </li>
+      <li ng-if="!flagLogueado">
+        <md-button ng-click="goToLogin()" class="send-button md-primary md-raised btn btn-success navbar-btn"><span class="glyphicon glyphicon-log-in"></span> Login</md-button>
+      </li>
+      <li class="dropdown" ng-if="flagLogueado">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span> 
+                <strong>{{usuarioLogueado.nombre}}</strong>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div class="navbar-login">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p class="text-center">
+                                    <span class="glyphicon glyphicon-user icon-size"></span>
+                                </p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="text-left"><strong>{{usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}</strong></p>
+                                <p class="text-left small">{{usuarioLogueado.email}}</p>
+                                <p class="text-left">
+                                    <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <div class="navbar-login navbar-login-session">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p>
+                                    <a ng-click="Desloguear()" class="btn btn-danger btn-block">Cerrar Sesion</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+   
+  </div>
+      </div>
+    </md-toolbar-->
 
-<!-- Modal -->
+<!-- Modal Login-->
   <div class="modal fade" id="loginModal" role="dialog">
     <div class="modal-dialog">
     
@@ -111,7 +197,9 @@
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <md-button ng-click="Login()" class="send-button md-warn md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</md-button>
+             <div class="margenfix">
+              <md-button ng-click="Login()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</md-button>
+              </div>
               <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
           </form>
         </div>
@@ -129,7 +217,7 @@
   </div> 
 </div>
 
-<!-- Modal -->
+
   <div class="modal fade" id="registrarseModal" role="dialog">
     <div class="modal-dialog">
     
@@ -168,7 +256,9 @@
               <input type="password" class="form-control" id="psw2" name="password2" ng-model="usuarioLogueado.password2" placeholder="Repetir Password" required>
               <p class="help-block" ng-if="formRegistrarse.password.$error.required">Debe ingresar su password</p>
             </div>
+            <div class="margenfix">
               <md-button ng-click="Registrarse()" class="send-button md-warn md-raised btn btn-primary btn-block"><span class="glyphicon glyphicon-pencil"></span> Registrarse</md-button>
+            </div>
               <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
           </form>
         </div>
