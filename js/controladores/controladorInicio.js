@@ -123,6 +123,5 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	$scope.usuarioLogueado.password = "123456";
   }
 
-
 });
 

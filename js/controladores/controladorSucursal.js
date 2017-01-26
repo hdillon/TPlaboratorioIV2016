@@ -18,11 +18,15 @@ app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $a
 
 })
 
-app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM) {
+app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM, ServicioGeocoding) {
   $("#loadingModal").modal('show');
   $scope.sucursal = {};
-  $scope.sucursal.nombre = "Sucursal 1";
-  $scope.sucursal.direccion = "Calle falsa 123";
+  $scope.sucursal.nombre;
+  $scope.sucursal.localidad;
+  $scope.sucursal.direccion;
+  $scope.sucursal.altura;
+  $scope.sucursal.latitud;
+  $scope.sucursal.longitud;
   $scope.sucursal.email = "suc@suc.com";
   $scope.sucursal.telefono = 123456;
   $scope.sucursal.foto = "";
@@ -65,18 +69,38 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
         $scope.sucursal.foto = $scope.sucursal.foto + ';' + $scope.arrayNombresFotos[i].data;
     };
 
-    $scope.sucursal.foto = 
-    ServicioABM.alta("sucursal/alta/", $scope.sucursal).then(
+    ServicioGeocoding.obtenerCoordenadasMapa($scope.sucursal.direccion, $scope.sucursal.altura).then(
       function(respuesta){
-        console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
+        console.info("RESPUESTA (geocoding): ", respuesta);
         $("#loadingModal").modal('hide');
-        $state.go('sucursal.grilla');
+        if(respuesta.data.results[0] != undefined){
+          $scope.sucursal.latitud = respuesta.data.results[0].geometry.location.lat;
+          $scope.sucursal.longitud = respuesta.data.results[0].geometry.location.lng;
+          console.info("Lat: ",$scope.sucursal.latitud );
+          console.info("Long: ",$scope.sucursal.longitud );
+          //Si logró obtener las coordenadas de la dirección disparo el alta:
+          ServicioABM.alta("sucursal/alta/", $scope.sucursal).then(
+          function(respuesta){
+            console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
+            $("#loadingModal").modal('hide');
+            $state.go('sucursal.grilla');
+          },
+          function(error){
+            console.info("ERROR! (ctrl alta sucursal): ", error);
+            $("#loadingModal").modal('hide');
+            alert("error al cargar sucursal");
+          });
+        }else{
+          alert("No se pudo obtener las coordenadas para la direccion ingresada");
+        }
       },
       function(error){
-        console.info("ERROR! (ctrl alta sucursal): ", error);
+        console.info("ERROR! (geocoding): ", error);
         $("#loadingModal").modal('hide');
-        alert("error al cargar sucursal");
+        alert("error al obtener coordenadas");
       });
+
+    
   }
 
   $scope.subidorDeArchivos.onSuccessItem=function(item, response, status, headers){
@@ -194,39 +218,40 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout
         },
         { field: 'direccion', name: 'direccion'},
         { name: 'Mapa', enableFiltering: false,
-          cellTemplate:'<center><button type="button" data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal()">Mapa</button></center>', width: 75
+          cellTemplate:'<center><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="grid.appScope.mostrarMapaModal(row.entity)">Mapa</button></center>', width: 75
         },
         { field: 'email', name: 'email'},
         { field: 'telefono', name: 'telefono'}
       ];
     }
 
-    $scope.mostrarMapaModal = function(){
-    $scope.ModalHeader = "Nombre Sucursal";
+    $scope.mostrarMapaModal = function(rowEntity){
+      $scope.ModalHeader = rowEntity.nombre;
+      console.info("rowEntity: ", rowEntity);
 
-      NgMap.getMap("miMapaModal").then(function(map) {
-        console.log(map.getCenter());
-        console.log(map);
+        NgMap.getMap("miMapaModal").then(function(map) {
+          console.log(map.getCenter());
+          console.log(map);
 
-        var myLatLng = {lat: Number("-34.603914"), lng: Number("-58.3829876")};
-        //elimino el marker anterior del mapa
-        $scope.marker.setMap(null);
+          var myLatLng = {lat: Number(rowEntity.latitud), lng: Number(rowEntity.longitud)};
+          //elimino el marker anterior del mapa
+          $scope.marker.setMap(null);
 
-        $scope.marker = new google.maps.Marker({
-          position: myLatLng,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          title: "Sucursal Nombre"
+          $scope.marker = new google.maps.Marker({
+            position: myLatLng,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            title: rowEntity.nombre
+          });
+
+          $scope.marker.setMap(map);
+
+          $("#myModal").on("shown.bs.modal", function(e) {
+          google.maps.event.trigger(map, "resize");
+           map.setCenter(myLatLng);// Set here center map coordinates
+          });
+
         });
-
-        $scope.marker.setMap(map);
-
-        $("#myModal").on("shown.bs.modal", function(e) {
-        google.maps.event.trigger(map, "resize");
-         map.setCenter(myLatLng);// Set here center map coordinates
-        });
-
-      });
     }
 
     $scope.export = function(){

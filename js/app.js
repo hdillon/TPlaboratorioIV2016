@@ -14,6 +14,7 @@ var app = angular.module('TPInmobiliaria', [
     'TPInmobiliaria.controladorSucursal', 
     'TPInmobiliaria.services', 
     'TPInmobiliaria.servicioABM',
+    'TPInmobiliaria.servicioGeocoding',
     'TPInmobiliaria.directivaErrores',
     'ui.grid',
     'ui.grid.pagination',

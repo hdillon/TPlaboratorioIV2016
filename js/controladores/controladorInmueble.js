@@ -163,6 +163,12 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
   $scope.currentPage = 0;
   $scope.pageSize = 4;
 
+  $scope.next=function(){
+    $scope.currentPage = $scope.currentPage +1;
+    $window.scrollTo(0, 0);               
+  }
+  
+
   $scope.numberOfPages=function(){
     return Math.ceil($scope.listaInmuebles.length/$scope.pageSize);                
   }
