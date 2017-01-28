@@ -15,14 +15,14 @@
 	      </div>
        <div layout="column" flex>
         <md-card-content flex>
-   			<h2 class="md-title text-success">{{inmueble.tipo}} {{inmueble.ambientes}} ambientes {{inmueble.oferta}} {{inmueble.precio}}$</h2>
+   			<h2 class="md-title text-success">{{inmueble.tipo}} {{inmueble.ambientes}} ambientes {{inmueble.oferta}} {{inmueble.precio}}$ - {{inmueble.direccion}} {{inmueble.altura}}</h2>
           <p class="text-success">
             {{inmueble.descripcion}}
           </p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="end center">
           <md-button ng-click="reservarInmueble(inmueble)" class="send-button md-accent md-raised">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
-          <md-button class="send-button md-accent md-raised">DETALLE</md-button>
+          <md-button ng-click="mostrarMapaModal(inmueble)" data-toggle="modal" data-target="#myModal" class="send-button md-accent md-raised">MAPA</md-button>
         </md-card-actions>
        </div>
       </md-card>
@@ -38,6 +38,30 @@
     </center>
 </div>
 
+   <!-- MapaModal -->
+<div class="container">
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{ModalHeader}}</h4>
+          </div>
+          <div class="modal-body">    
+            <ng-map center="{{mapa.latitud}}, {{mapa.longitud}}" ng-model="miMapa" id="miMapaModal">
+
+        </ng-map>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- fin MapaModal -->
 
 <!-- Modal Loading -->
 <div class="modal fade" id="cargandoCatalogoModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
