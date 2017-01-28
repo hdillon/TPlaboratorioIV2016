@@ -1,34 +1,42 @@
 <div class="container">
     
-    <br><br><br><br>
-  
-  <form class="form-horizontal" id="formAltaSucursal" name="formAltaSucursal">
+<br><br><br>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Alta Sucursal</h3>
+        </div>
+        <div class="panel-body">
+  <form class="form-horizontal" id="formAltaSucursal" name="formAltaSucursal" role="form">
+
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="nombre">Nombre:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="nombre">Nombre:</label>
         <input type="text" class="form-control" id="nombre" name="nombre" ng-model="sucursal.nombre" placeholder="Ingrese Nombre" required>
         <p class="help-block" ng-if="formAltaSucursal.nombre.$error.required">Debe ingresar el nombre de sucursal</p>
       </div>
     </div>
+
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="direccion">Dirección:</label>
-      <div class="col-sm-6">
-        <input type="text" class="form-control" id="direccion" name="direccion" ng-model="sucursal.direccion" placeholder="Ingrese la Calle" required>
+      <div>
+        <label class="control-label" for="direccion">Dirección:</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" ng-model="sucursal.direccion" placeholder="Ingrese Dirección" required>
         <p class="help-block" ng-if="formAltaSucursal.direccion.$error.required">Debe ingresar la dirección de la sucursal</p>
       </div>
     </div>
 
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="altura">Altura:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="altura">Altura:</label>
         <input type="number" class="form-control" id="altura" name="altura" ng-model="sucursal.altura" placeholder="Ingrese la Altura" required>
         <p class="help-block" ng-if="formAltaSucursal.altura.$error.required">Debe ingresar la Altura de la dirección</p>
       </div>
     </div>
 
     <div class="form-group">
-     <label class="control-label col-sm-3" for="encargado">Encargado:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="encargado">Encargado:</label>
        <select  class="form-control" id="selEncargado" ng-model="sucursal.idEncargado">
        <option disabled selected value>Seleccione Encargado</option>
         <option ng-repeat="encargado in listaPersonas" ng-if="encargado.perfil == 'encargado'" value="{{encargado.id}}">
@@ -38,14 +46,15 @@
       </div>
     </div>
 
- <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-6" nv-file-drop="" uploader="subidorDeArchivos">
-        <div nv-file-over="" uploader="subidorDeArchivos" over-class="another-file-over-class" class="well my-drop-zone">
-            <center>Arrastre aquí las 3 fotos del local</center>
-        </div>
-         <div class="error" ng-if="faltanFotos">Debe subir las 3 fotos de la sucursal</div>
-    </div>
- </div>
+   <div class="form-group">
+      <div nv-file-drop="" uploader="subidorDeArchivos">
+        <label class="control-label" for="encargado">Fotos:</label>
+          <div nv-file-over="" uploader="subidorDeArchivos" over-class="another-file-over-class" class="well my-drop-zone">
+              <center>Arrastre aquí las 3 fotos del local</center>
+          </div>
+           <div class="error" ng-if="faltanFotos">Debe subir las 3 fotos de la sucursal</div>
+      </div>
+   </div>
 
 
 
@@ -96,11 +105,15 @@
 
 
     <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-6">
+      <div>
        <div class="margenfix">
         <md-button ng-click="AltaSucursal()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Crear Sucursal</md-button>
         </div>
       </div>
     </div>
   </form>
+</div>
+</div>
+</div>
+</div>
 </div>

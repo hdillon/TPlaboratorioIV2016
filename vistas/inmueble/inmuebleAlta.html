@@ -1,34 +1,48 @@
 <div class="container">
     
-    <br><br><br><br>
+    <br><br><br>
   
-  <form class="form-horizontal" id="formAltaInmueble" name="formAltaInmueble">
-
+ <div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Alta Inmueble</h3>
+      </div>
+      <div class="panel-body">
+  <form class="form-horizontal" id="formAltaInmueble" name="formAltaInmueble" role="form">
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="nombre">Descripción:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="nombre">Descripción:</label>
         <textarea type="text" placeholder="Describa la propiedad en un máximo de 500 caracteres" class="form-control" id="nombre" name="nombre" maxlength="500" ng-model="inmueble.descripcion" required></textarea>
         <p class="help-block" ng-if="formAltaInmueble.nombre.$error.required">Debe ingresar una descripción</p>
       </div>
     </div>
 
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="direccion">Dirección:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="direccion">Dirección:</label>
         <input type="text" class="form-control" id="direccion" name="direccion" ng-model="inmueble.direccion" placeholder="Ingrese Dirección" required>
         <p class="help-block" ng-if="formAltaInmueble.direccion.$error.required">Debe ingresar la dirección de la inmueble</p>
       </div>
     </div>
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="precio">Precio:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="altura">Altura:</label>
+        <input type="number" class="form-control" id="altura" name="altura" ng-model="inmueble.altura" placeholder="Ingrese la Altura" required>
+        <p class="help-block" ng-if="formAltaInmueble.altura.$error.required">Debe ingresar la Altura de la dirección</p>
+      </div>
+    </div>
+    
+    <div class="form-group" show-errors>
+      <div>
+        <label class="control-label" for="precio">Precio:</label>
         <input type="number" class="form-control" id="precio" name="precio" ng-model="inmueble.precio" placeholder="Precio" required>
         <p class="help-block" ng-if="formAltaInmueble.precio.$error.required">Debe ingresar el Precio</p>
       </div>
     </div>
     <div class="form-group">
-     <label class="control-label col-sm-3" for="sucursal">Sucursal:</label>
-      <div class="col-sm-6">
+      <div>
+       <label class="control-label" for="sucursal">Sucursal:</label>
        <select  class="form-control" id="selSucursal" ng-model="inmueble.idSucursal">
        <option disabled selected value>Seleccione Sucursal</option>
         <option ng-repeat="sucursal in listaSucursales" value="{{sucursal.id}}">
@@ -39,8 +53,8 @@
     </div>
 
     <div class="form-group">
-     <label class="control-label col-sm-3" for="tipo">Tipo Inmueble:</label>
-      <div class="col-sm-6">
+      <div>
+       <label class="control-label" for="tipo">Tipo Inmueble:</label>
        <select  class="form-control" id="seltipo" ng-model="inmueble.tipo">
           <option disabled selected value>Seleccione el tipo de inmueble</option>
           <option value="Casa">Casa</option>
@@ -52,8 +66,8 @@
     </div>
 
     <div class="form-group">
-     <label class="control-label col-sm-3" for="tipoOferta">Tipo Oferta:</label>
-      <div class="col-sm-6">
+      <div>
+       <label class="control-label" for="tipoOferta">Tipo Oferta:</label>
        <select  class="form-control" id="seltipoOferta" ng-model="inmueble.tipoOferta">
           <option disabled selected value>Seleccione el tipo de oferta</option>
           <option value="Venta">Venta</option>
@@ -63,15 +77,15 @@
     </div>
 
     <div class="form-group" show-errors>
-      <label class="control-label col-sm-3" for="ambientes">Ambientes:</label>
-      <div class="col-sm-6">
+      <div>
+        <label class="control-label" for="ambientes">Ambientes:</label>
         <input type="number" class="form-control" id="ambientes" name="ambientes" ng-model="inmueble.ambientes" placeholder="Cantidad de Ambientes" required>
         <p class="help-block" ng-if="formAltaInmueble.ambientes.$error.required">Debe ingresar el nro de ambientes del inmueble</p>
       </div>
     </div>
 
  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-6" nv-file-drop="" uploader="subidorDeArchivos">
+    <div nv-file-drop="" uploader="subidorDeArchivos">
         <div nv-file-over="" uploader="subidorDeArchivos" over-class="another-file-over-class" class="well my-drop-zone">
             <center>Arrastre aquí las 3 fotos del inmueble</center>
         </div>
@@ -125,7 +139,7 @@
     </div>
 </div>-->
     <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-6">
+      <div>
        <div class="margenfix">
         <md-button ng-click="AltaInmueble()" class="send-button md-accent md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Crear Inmueble</md-button>
         </div>
