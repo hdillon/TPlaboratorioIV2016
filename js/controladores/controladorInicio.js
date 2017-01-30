@@ -1,6 +1,6 @@
 angular.module('TPInmobiliaria.controllers', [])
 
-app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http, $auth, ServicioABM) {
+app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http, $auth, ServicioABM, $window) {
 	$scope.flagLogueado = false;
 	$scope.loginIncorrecto = false;
 	$scope.registroIncorrecto = false;
@@ -25,6 +25,7 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 
 	$scope.goToLogin=function(){
 		$scope.loginIncorrecto = false;
+		$window.scrollTo(0, 0);
 		 $("#loginModal").modal('show');
 		//$state.go('usuarioLogueado.login');
     }
