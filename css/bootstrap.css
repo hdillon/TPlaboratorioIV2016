@@ -5718,6 +5718,45 @@ button.list-group-item-danger.active:focus {
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #337ab7;
 }
+
+.panel-green {
+  border-color: #009688;
+}
+.panel-green > .panel-heading {
+  color: #fff;
+  background-color: #009688;
+  border-color: #009688;
+}
+.panel-green > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #337ab7;
+}
+.panel-green > .panel-heading .badge {
+  color: #337ab7;
+  background-color: #fff;
+}
+.panel-green > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #009688;
+}
+
+.panel-pink {
+  border-color: #E91E63;
+}
+.panel-pink > .panel-heading {
+  color: #fff;
+  background-color: #E91E63;
+  border-color: #E91E63;
+}
+.panel-pink > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #337ab7;
+}
+.panel-pink > .panel-heading .badge {
+  color: #337ab7;
+  background-color: #fff;
+}
+.panel-pink > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #E91E63;
+}
+
 .panel-success {
   border-color: #d6e9c6;
 }
