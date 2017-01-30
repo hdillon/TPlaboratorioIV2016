@@ -1,8 +1,8 @@
 <div class="container"> 
 <br><br><br><br><br>
-
+<div id="divAnimation">
  <md-content class="md-padding" >
-      <md-card layout="row" layout-sm="column" ng-repeat="inmueble in listaInmuebles | startFrom:currentPage*pageSize | limitTo:pageSize"> 
+      <md-card ng-class="{'Frm animated bounceInLeft' : $index %2 == 0, 'Frm animated bounceInRight' : $index %2 != 0}" layout="row" layout-sm="column" ng-repeat="inmueble in listaInmuebles | startFrom:currentPage*pageSize | limitTo:pageSize"> 
           <div flex-gt-sm="33" layout-align="center center" layout="column">
         	<jk-carousel
 		        data="inmueble.fotosArray"
@@ -28,14 +28,15 @@
       </md-card>
   </md-content>
 <center>
-  <md-button class="send-button md-primary md-raised" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+  <md-button class="send-button md-primary md-raised" ng-disabled="currentPage == 0" ng-click="backPage()">
         << Previous
     </md-button>
     {{currentPage+1}}/{{numberOfPages()}}
-    <md-button class="send-button md-primary md-raised" ng-disabled="currentPage >= listaInmuebles.length/pageSize - 1" ng-click="next()">
+    <md-button class="send-button md-primary md-raised" ng-disabled="currentPage >= listaInmuebles.length/pageSize - 1" ng-click="nextPage()">
         Next >>
     </md-button>
     </center>
+</div>
 </div>
 
    <!-- MapaModal -->
