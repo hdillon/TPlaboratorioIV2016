@@ -79,7 +79,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
           console.info("Lat: ",$scope.sucursal.latitud );
           console.info("Long: ",$scope.sucursal.longitud );
           //Si logró obtener las coordenadas de la dirección disparo el alta:
-          ServicioABM.alta("sucursal/alta/", $scope.sucursal).then(
+          ServicioABM.guardar("sucursal/alta/", $scope.sucursal).then(
           function(respuesta){
             console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
             $("#loadingModal").modal('hide');

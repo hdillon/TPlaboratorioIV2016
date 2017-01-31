@@ -58,6 +58,7 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	        	$("#loadingModal").modal('hide');
 	          console.info("token", $auth.getPayload());
 	          $("#loginModal").modal('hide');
+	          $scope.GuardarFechaLogin($auth.getPayload());
 	      	  $state.reload();//Si se logueó correctamente recargo la pantalla de inicio para actualizar el nav-bar
 	      	}
 	        else{
@@ -77,7 +78,7 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 		$scope.$broadcast('show-errors-check-validity');
 	  	if ($scope.formRegistrarse.$invalid) { return; }//Valido que los campos estén correctos antes de intentar loguear
 		$("#loadingModal").modal('show');//Bloqueo la pantalla con un loading hasta que vuelva la respuesta del servidor
-	    ServicioABM.alta("alta/", $scope.usuarioLogueado).then(
+	    ServicioABM.guardar("persona/alta/", $scope.usuarioLogueado).then(
 	      function(respuesta){
 	        console.info("RESPUESTA (ctrl alta usuarioLogueado): ", respuesta);
 	        $("#loadingModal").modal('hide');//si el registro fué exitoso oculto el formulario para regresar al inicio
@@ -91,6 +92,16 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	    );
 	}
 
+	$scope.GuardarFechaLogin = function(usuario){
+	     ServicioABM.guardar("fechalogin/", usuario).then(
+	      function(respuesta){
+	        console.info("RESPUESTA (ctrl alta fechalogin): ", respuesta);
+	      },
+	      function(error){
+	        console.info("ERROR! (ctrl alta fechalogin): ", error);
+	      }
+	    );
+	}
 
 	$scope.Traer=function(){
     $http.get('http://localhost:8080/TPlaboratorioIV2016/ws/personas')

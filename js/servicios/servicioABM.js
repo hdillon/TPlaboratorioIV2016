@@ -8,7 +8,7 @@ angular.module('TPInmobiliaria.servicioABM', [])
         return Url;
     }
 
-	this.alta = function (ruta, obj) {
+	this.guardar = function (ruta, obj) {
 		console.info("Street Figther: ",JSON.stringify(obj));
 		return $http.post(traerURL() + ruta + JSON.stringify(obj)).then(
 		function(respuesta){

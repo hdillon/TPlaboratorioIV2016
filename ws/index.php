@@ -79,9 +79,16 @@ $app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
 });
 /* FORMA DE RECIBIR POR PARAMETROS UN OBJETO EN POST
     POST: Para crear recursos */
-$app->post('/alta/{objeto}', function ($request, $response, $args) {
+$app->post('persona/alta/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::InsertarPersona($persona);
+    $response->write($datos);
+    return $response;
+});
+
+$app->post('fechalogin/{objeto}', function ($request, $response, $args) {
+    $persona = json_decode($args['objeto']);
+    $datos = Persona::GuardarFechaLogin($persona);
     $response->write($datos);
     return $response;
 });

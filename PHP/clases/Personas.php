@@ -199,9 +199,6 @@ class Persona
 			return $consulta->execute();
 	}
 
-//--------------------------------------------------------------------------------//
-
-//--------------------------------------------------------------------------------//
 
 	public static function InsertarPersona($persona)
 	{
@@ -217,50 +214,16 @@ class Persona
 		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
 		$consulta->bindValue(':id_local',$persona->idLocal, PDO::PARAM_INT);
 		$consulta->execute();		
-		return $objetoAccesoDato->RetornarUltimoIdInsertado();
-	
-				
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();		
 	}	
-//--------------------------------------------------------------------------------//
 
-
-
-	public static function TraerPersonasTest()
+	public static function GuardarFechaLogin($persona)
 	{
-		$arrayDePersonas=array();
-
-		$persona = new stdClass();
-		$persona->id = "4";
-		$persona->nombre = "rogelio";
-		$persona->apellido = "agua";
-		$persona->email = "333333";
-		$persona->foto = "333333.jpg";
-
-		//$objetJson = json_encode($persona);
-		//echo $objetJson;
-		$persona2 = new stdClass();
-		$persona2->id = "5";
-		$persona2->nombre = "Bañera";
-		$persona2->apellido = "giratoria";
-		$persona2->email = "222222";
-		$persona2->foto = "222222.jpg";
-
-		$persona3 = new stdClass();
-		$persona3->id = "6";
-		$persona3->nombre = "Julieta";
-		$persona3->apellido = "Roberto";
-		$persona3->email = "888888";
-		$persona3->foto = "888888.jpg";
-
-		$arrayDePersonas[]=$persona;
-		$arrayDePersonas[]=$persona2;
-		$arrayDePersonas[]=$persona3;
-		 
-		
-
-		return  $arrayDePersonas;
-				
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into registros_login (id_usuario,fecha)values(:id,NOW())");
+		$consulta->bindValue(':id',$persona->id, PDO::PARAM_INT);
+		$consulta->execute();		
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	}	
-
 
 }

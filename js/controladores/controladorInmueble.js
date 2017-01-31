@@ -85,7 +85,7 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
           console.info("Lat: ",$scope.inmueble.latitud );
           console.info("Long: ",$scope.inmueble.longitud );
           //Si logró obtener las coordenadas de la dirección disparo el alta:
-          ServicioABM.alta("inmueble/alta/", $scope.inmueble).then(
+          ServicioABM.guardar("inmueble/alta/", $scope.inmueble).then(
             function(respuesta){
               console.info("RESPUESTA (ctrl alta inmueble): ", respuesta);
               $("#loadingModal").modal('hide');
@@ -175,7 +175,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
       importe : inmueble.precio
     };
 
-    ServicioABM.alta("transaccion/alta/", objTransaccion).then(
+    ServicioABM.guardar("transaccion/alta/", objTransaccion).then(
       function(respuesta){
         console.info("RESPUESTA (ctrl alta transaccion): ", respuesta);
         $("#loadingModal").modal('hide');
@@ -213,6 +213,16 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
           $("#myModal").on("shown.bs.modal", function(e) {
           google.maps.event.trigger(map, "resize");
            map.setCenter(myLatLng);// Set here center map coordinates
+           $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+           //$(".modal-backdrop").addClass("modal-backdrop-transparent");
+          });
+
+          google.maps.event.addListener(map, 'dblclick', function(event) {
+            marker = new google.maps.Marker({position: event.latLng, map: map});
+            var latitude = marker.position.lat();
+            var longitude = marker.position.lng();
+            console.info("lat: ", latitude);
+            console.info("longitude: ", longitude);
           });
 
         });

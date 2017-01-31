@@ -54,7 +54,7 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
 	  $scope.$broadcast('show-errors-check-validity');
 	  if ($scope.formAltaUsuario.$invalid) { return; }
 	  $scope.usuario.idLocal = Number($scope.usuario.idLocal);
-	  ServicioABM.alta("alta/", $scope.usuario).then(
+	  ServicioABM.guardar("persona/alta/", $scope.usuario).then(
       function(respuesta){
       console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
       $state.go('inicio');

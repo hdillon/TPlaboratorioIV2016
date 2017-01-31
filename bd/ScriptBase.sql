@@ -110,3 +110,9 @@ ALTER TABLE `transaccion`
 
 ALTER TABLE `transaccion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+CREATE TABLE IF NOT EXISTS `registros_login` (
+  `id_usuario` int(11) NOT NULL,
+  `fecha` DATETIME NULL DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
