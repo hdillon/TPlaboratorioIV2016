@@ -1,15 +1,10 @@
 <div class="container">
     
     <br><br><br><br>
-    
-<!--div class="margenfix">
-  <md-button class="send-button md-primary md-raised btn btn-success btn-block" ng-click="ventasPorLocal()"><span ></span> ventas por local</md-button>
-  <md-button class="send-button md-primary md-raised btn btn-success btn-block" ng-click="ventasPorEmpleado()"><span ></span> ventas por empleado</md-button>
-</div-->
 
-<form class="form-horizontal" ng-if="mostrarSelect">
+<form class="form-horizontal" ng-if="mostrarSelect != 'NoMostrar'">
 	<div class="form-group">
-	    <div class="col-lg-6">
+	    <div class="col-lg-6" ng-if="mostrarSelect == 'Sucursales'">
 	    <label class="control-label col-sm-3" for="sucursal">Sucursal:</label>
 	        <div class="input-group my-group"> 
 
@@ -24,6 +19,23 @@
 			    </span>
 	        </div>
 	    </div>
+
+	    <div class="col-lg-6" ng-if="mostrarSelect == 'Usuarios'">
+	    <label class="control-label col-sm-3" for="sucursal">Usuario:</label>
+	        <div class="input-group my-group"> 
+
+	           <select  class="form-control" id="selPersona" ng-model="idPersona">
+	                        <option disabled selected value>Seleccione Usuario</option>
+			        <option ng-repeat="persona in listaPersonas" value="{{persona.id}}">
+			            {{persona.nombre}} {{persona.apellido}}
+			        </option>
+	            </select> 
+	            <span class="input-group-btn">
+			      	<button class="btn btn-primary btn-default pull-left" ng-click="loginsPorUsuario(idPersona)" type="submit">CARGAR</button>
+			    </span>
+	        </div>
+	    </div>
+
 	</div>
 </form>
 

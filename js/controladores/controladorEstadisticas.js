@@ -1,7 +1,7 @@
 angular.module('TPInmobiliaria.controladorEstadisticas', [])
 
 app.controller('ControlEstadisticas', function($scope, $http, $state,jwtHelper, $auth) {
-  $scope.mostrarSelect = false;
+  $scope.mostrarSelect = "NoMostrar";
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
       $scope.flagLogueado = true;
@@ -64,7 +64,7 @@ app.controller('ControlVentasPorLocal', function($scope, $http, $state,jwtHelper
 })
 
 app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
-  $scope.mostrarSelect = true;
+  $scope.mostrarSelect = "Sucursales";
   
   ServicioABM.traer("sucursales").then(function(rta){
       $scope.listaSucursales = rta.data;
@@ -152,9 +152,28 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
 
 })
 
-app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
 
+app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
+  $scope.mostrarSelect = "NoMostrar";
 
 });
+
+
+app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
+  $scope.mostrarSelect = "Usuarios";
+
+  ServicioABM.traer("personas").then(function(rta){
+      $scope.listaPersonas = rta.data;
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+  });
+
+  $scope.loginsPorUsuario = function(idUsuario){
+//http://angular-data-grid.github.io/demo/material/
+  }
+
+})
+
 
 

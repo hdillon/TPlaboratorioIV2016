@@ -86,7 +86,7 @@ $app->post('persona/alta/{objeto}', function ($request, $response, $args) {
     return $response;
 });
 
-$app->post('fechalogin/{objeto}', function ($request, $response, $args) {
+$app->post('/fechalogin/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::GuardarFechaLogin($persona);
     $response->write($datos);

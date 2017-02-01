@@ -152,6 +152,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
+      .state('estadisticas.login', {
+                url: '/login',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/estadisticas/estadisticas.html',
+                        controller : 'ControlEstadisticasLogin'
+                    }
+                }
+            })
       
       
              $urlRouterProvider.otherwise('/inicio');
