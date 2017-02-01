@@ -57,6 +57,18 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		});
     }
 
+    this.traerLogueosPorUsuario = function (ruta, idUsuario) {
+       return $http.get(traerURL() +ruta + idUsuario).then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio logueosPorUsuario): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio logueosPorUsuario):", error);
+		return error;
+		});
+    }
+
     this.traerPersonasSinLocal = function () {
        return $http.get(traerURL() + "personas/sinlocal/").then(
 		function(respuesta){

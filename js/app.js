@@ -22,7 +22,9 @@ var app = angular.module('TPInmobiliaria', [
     'ui.grid.selection',
     'ui.grid.exporter',
     'ui.grid.edit',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'dataGrid',
+    'pagination'
     ]);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {

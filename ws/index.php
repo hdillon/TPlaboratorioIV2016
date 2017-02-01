@@ -93,6 +93,12 @@ $app->post('/fechalogin/{objeto}', function ($request, $response, $args) {
     return $response;
 });
 
+$app->get('/resgistroslogin/{idUsuario}', function ($request, $response, $args) {
+    $datos = Persona::TraerRegistrosLogin($args['idUsuario']);
+    $response->write(json_encode($datos));
+    return $response;
+});
+
 $app->put('/modificar/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::ModificarPersona($persona);
@@ -152,21 +158,21 @@ $app->post('/transaccion/alta/{objeto}', function ($request, $response, $args) {
 
 
 $app->get('/transacciones[/]', function ($request, $response, $args) {
-   $datos = Transaccion::TraerTodasLasTransacciones();
+    $datos = Transaccion::TraerTodasLasTransacciones();
     $response->write(json_encode($datos));
 
     return $response;
 });
 
 $app->get('/transacciones/ventasporlocal[/]', function ($request, $response, $args) {
-   $datos = Transaccion::TraerVentasPorLocal();
+    $datos = Transaccion::TraerVentasPorLocal();
     $response->write(json_encode($datos));
 
     return $response;
 });
 
 $app->get('/transacciones/ventasporempleado/{idSucursal}', function ($request, $response, $args) {
-   $datos = Transaccion::TraerVentasPorEmpleado($args['idSucursal']);
+    $datos = Transaccion::TraerVentasPorEmpleado($args['idSucursal']);
     $response->write(json_encode($datos));
 
     return $response;

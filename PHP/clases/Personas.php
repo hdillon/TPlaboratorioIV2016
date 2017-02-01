@@ -226,4 +226,14 @@ class Persona
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();
 	}	
 
+	public static function TraerRegistrosLogin($id_usuario)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT p.id AS 'id', p.nombre AS 'nombre', p.apellido AS 'apellido', rl.fecha AS 'fecha' FROM registros_login rl, persona p WHERE rl.id_usuario = p.id and rl.id_usuario =:id_usuario");
+		$consulta->bindValue(':id_usuario',$id_usuario, PDO::PARAM_INT);
+		$consulta->execute();		
+		$arrLogueosPorUsuario= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
+		return $arrLogueosPorUsuario;
+	}	
+
 }

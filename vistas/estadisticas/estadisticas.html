@@ -45,4 +45,123 @@
 
 </md-card>
 
+<div layout="column" layout-fill>
+    <md-toolbar layout="row" layout-align="center">
+        <div class="md-toolbar-tools" flex-gt-md="60" flex-md="80" flex-sm="100">
+            <span>Angular Data Grid &mdash; Material Design</span>
+            <span flex></span>
+            <md-menu md-position-mode="target-right target">
+                <md-button ng-click="$mdOpenMenu($event)">
+                    <span layout="row" layout-align="center center">
+                    Change theme
+                    <i class="material-icons">arrow_drop_down</i>
+                    </span>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <a href="../bootstrap/index.html">Bootstrap Design</a>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <a href="index.html"><strong>Material Design</strong></a>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding layout="row" layout-align="center">
+        <div flex-gt-md="60" flex-md="80" flex-xs="100">
+            <div>
+                <h4>Resgistros</h4>
+            </div>
+            <hr>
+            
+            <div grid-data id='test' grid-options="gridOptions" grid-actions="gridActions">
+                <div layout-gt-sm="row" layout-sm="column" layout-align="center">
+                    <div flex-gt-sm="25" flex-sm="100" layout="row" layout-align="start center">
+                        <span>{{filtered.length}} items total</span>
+                    </div>
+                    <div flex-gt-sm="75" flex-xs="100">
+                        <div layout-xs="column" layout="row" layout-align-xs="end end" layout-align="end center">
+                            <grid-pagination max-size="5"
+                                             boundary-links="true"
+                                             class="pagination mdl-shadow--2dp"
+                                             ng-if="paginationOptions.totalItems  > paginationOptions.itemsPerPage"
+                                             total-items="paginationOptions.totalItems"
+                                             ng-model="paginationOptions.currentPage"
+                                             ng-change="reloadGrid()"
+                                             items-per-page="paginationOptions.itemsPerPage"></grid-pagination>
+                            <md-input-container flex-offset-gt-xs="5" class="items-per-page">
+                                <md-select ng-init="paginationOptions.itemsPerPage = '10'" placeholder="Rows" ng-model="paginationOptions.itemsPerPage" ng-change="reloadGrid()">
+                                    <md-option>10</md-option>
+                                    <md-option>25</md-option>
+                                    <md-option>50</md-option>
+                                    <md-option>75</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                        <thead>
+                        <tr>
+                            <th sortable="code" class="sortable mdl-data-table__cell--non-numeric">
+                                <span>Id #</span>
+                            </th>
+                            <th class="st-sort-disable th-dropdown">
+                                <md-select filter-by="statusDisplay"
+                                           filter-type="select"
+                                           ng-model="status"
+                                           placeholder="Status"
+                                           ng-change="filter()">
+                                    <md-option value="">All Statuses</md-option>
+                                    <md-option ng-repeat="option in gridOptions.data"
+                                               >
+                                        {{option.nombre}}
+                                    </md-option>
+                                </md-select>
+                            </th>
+                            <th sortable="placed" class="sortable">
+                                <span>Fecha_Login</span>
+                            </th>
+                            <th sortable='total.value' class="sortable">
+                                <span>Apellido</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr grid-item>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                <span ng-bind="item.id"></span>
+                            </td>
+                            <td ng-bind="item.nombre"></td>
+                            <td ng-bind="item.fecha"></td>
+                            <td ng-bind="item.apellido"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div layout-xs="column" layout="row" layout-align-xs="end end" layout-align="end center">
+                    <grid-pagination max-size="5"
+                                     boundary-links="true"
+                                     class="pagination"
+                                     ng-if="paginationOptions.totalItems  > paginationOptions.itemsPerPage"
+                                     total-items="paginationOptions.totalItems"
+                                     ng-model="paginationOptions.currentPage"
+                                     ng-change="reloadGrid()"
+                                     items-per-page="paginationOptions.itemsPerPage"></grid-pagination>
+                    <md-input-container flex-offset-gt-xs="5" class="items-per-page">
+                        <md-select ng-init="paginationOptions.itemsPerPage = '10'" placeholder="Rows" ng-model="paginationOptions.itemsPerPage" ng-change="reloadGrid()">
+                            <md-option>10</md-option>
+                            <md-option>25</md-option>
+                            <md-option>50</md-option>
+                            <md-option>75</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+    </md-content>
+</div>
+
 </div>

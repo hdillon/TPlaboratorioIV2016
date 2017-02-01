@@ -156,11 +156,16 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
 app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "NoMostrar";
 
-});
+})
 
 
 app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "Usuarios";
+
+  $scope.gridOptions = {
+            data: [],
+            urlSync: false
+        };
 
   ServicioABM.traer("personas").then(function(rta){
       $scope.listaPersonas = rta.data;
@@ -169,11 +174,22 @@ app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHel
       }, 1000)
   });
 
+  ServicioABM.traerLogueosPorUsuario("resgistroslogin/", 1).then(function(rta){
+      console.info("ASDAS: ", rta.data);
+      $scope.gridOptions.data = rta.data;
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+  });
+
+
   $scope.loginsPorUsuario = function(idUsuario){
 //http://angular-data-grid.github.io/demo/material/
   }
 
-})
+});
+
+
 
 
 
