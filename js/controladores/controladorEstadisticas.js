@@ -2,6 +2,7 @@ angular.module('TPInmobiliaria.controladorEstadisticas', [])
 
 app.controller('ControlEstadisticas', function($scope, $http, $state,jwtHelper, $auth) {
   $scope.mostrarSelect = "NoMostrar";
+  $scope.tipoDeReporte = "";
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
       $scope.flagLogueado = true;
@@ -18,6 +19,8 @@ app.controller('ControlEstadisticas', function($scope, $http, $state,jwtHelper, 
 })
 
 app.controller('ControlVentasPorLocal', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
+  $scope.mostrarSelect = "NoMostrar";
+  $scope.tipoDeReporte = "Ventas";
   var sucursales = [];
   var cantidadVentasSucursal = [];
   ServicioABM.traer('transacciones/ventasporlocal').then(
@@ -65,6 +68,7 @@ app.controller('ControlVentasPorLocal', function($scope, $http, $state,jwtHelper
 
 app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "Sucursales";
+  $scope.tipoDeReporte = "Ventas";
   
   ServicioABM.traer("sucursales").then(function(rta){
       $scope.listaSucursales = rta.data;
@@ -155,12 +159,14 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
 
 app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "NoMostrar";
+  $scope.tipoDeReporte = "Encuestas";
 
 })
 
 
 app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "Usuarios";
+  $scope.tipoDeReporte = "Ingresos al Sistema";
 
   $scope.gridOptions = {
             data: [],
@@ -174,17 +180,14 @@ app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHel
       }, 1000)
   });
 
-  ServicioABM.traerLogueosPorUsuario("resgistroslogin/", 1).then(function(rta){
-      console.info("ASDAS: ", rta.data);
-      $scope.gridOptions.data = rta.data;
-      setTimeout(function () {
-          $("#loadingModal").modal('hide');
-      }, 1000)
-  });
-
-
   $scope.loginsPorUsuario = function(idUsuario){
 //http://angular-data-grid.github.io/demo/material/
+    ServicioABM.traerLogueosPorUsuario("resgistroslogin/", idUsuario).then(function(rta){
+        $scope.gridOptions.data = rta.data;
+        setTimeout(function () {
+            $("#loadingModal").modal('hide');
+        }, 1000)
+    });
   }
 
 });
