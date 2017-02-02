@@ -21,7 +21,7 @@
           </p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="end center">
-          <md-button ng-click="reservarInmueble(inmueble)" class="send-button md-accent md-raised">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
+          <md-button ng-click="showConfirm($event, inmueble)" class="send-button md-accent md-raised">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
           <md-button ng-click="mostrarMapaModal(inmueble)" data-toggle="modal" data-target="#myModal" class="send-button md-accent md-raised">MAPA</md-button>
         </md-card-actions>
        </div>

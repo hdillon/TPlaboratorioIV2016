@@ -122,7 +122,7 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
     }
 })
 
-app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth,NgMap, $window, ServicioABM) {
+app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth,NgMap, $window, ServicioABM, $mdDialog) {
   $("#cargandoCatalogoModal").modal('show');
   $scope.flagLogueado = false;
   $scope.listaInmuebles = [];
@@ -164,7 +164,6 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
           $("#cargandoCatalogoModal").modal('hide');
       }, 1000)
   });
-
 
   $scope.reservarInmueble=function(inmueble){
     var objTransaccion = {
@@ -227,6 +226,33 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
 
         });
     }
+
+
+  $scope.showConfirm = function(ev, inmueble) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm({
+                    onComplete: function afterShowAnimation() {
+                        var $dialog = angular.element(document.querySelector('md-dialog'));
+                        var $actionsSection = $dialog.find('md-dialog-actions');
+                        var $cancelButton = $actionsSection.children()[0];
+                        var $confirmButton = $actionsSection.children()[1];
+                        angular.element($confirmButton).addClass('md-raised');
+                        angular.element($cancelButton).addClass('md-raised md-warn');
+                    }
+                })
+          .title('Confirma la reserva?')
+          .textContent('Le enviaremos las instrucciones de pago a su correo')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Confirmar')
+          .cancel('Cancelar');
+
+    $mdDialog.show(confirm).then(function() {
+      $scope.reservarInmueble(inmueble);
+    }, function() {
+      $scope.status = 'You decided to keep your debt.';
+    });
+  };
 
   /**********************
    *FUNCIONES PAGINACIÓN*
