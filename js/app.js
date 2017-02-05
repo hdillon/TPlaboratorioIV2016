@@ -7,6 +7,7 @@ var app = angular.module('TPInmobiliaria', [
     'jkAngularCarousel',
     'angular-jwt',
     'ngMaterial',
+    'mdSteppers',
     'cl.paging',
     'TPInmobiliaria.controllers', 
     'TPInmobiliaria.controladorInmueble', 
@@ -118,6 +119,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     'contenido': {
                         templateUrl: 'vistas/inmueble/catalogo.html',
                         controller : 'ControlCatalogoInmueble'
+                    }
+                }
+            })
+      .state('inmueble.encuesta', {
+                url: '/encuesta',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/inmueble/encuesta.html',
+                        controller : 'ControlEncuesta'
                     }
                 }
             })

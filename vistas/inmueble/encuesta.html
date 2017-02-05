@@ -1,0 +1,106 @@
+<div class="container">
+<br><br><br><br>
+<md-stepper id="MiStepper" 
+        md-mobile-step-text="$ctrl.isMobileStepText" 
+        md-vertical="$ctrl.isVertical" 
+        md-linear="$ctrl.isLinear"
+        md-alternative="$ctrl.isAlternative">
+        <md-step md-label="Conformidades">
+            <md-step-body>
+            <br>
+            <p class="md-title">Marque las opciones con las que se sintió conforme:</p>
+                <md-input-container class="md-block">
+                    <md-checkbox name="tos" ng-model="resultadosEncuesta.atencionPersonalizada" required>
+                      Atención personalizada de los empleados.
+                    </md-checkbox>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <md-checkbox name="tos" ng-model="resultadosEncuesta.variedadOfertas" required>
+                      Variedad de ofertas.
+                    </md-checkbox>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <md-checkbox name="tos" ng-model="resultadosEncuesta.funcionamiento" required>
+                      Funcionamiento del sistema.
+                    </md-checkbox>
+                </md-input-container>
+            </md-step-body>
+            <md-step-actions>
+                <md-button class="md-primary md-raised" ng-click="nextStep();">Siguiente</md-button>
+            </md-step-actions>
+        </md-step>
+        <md-step md-label="Experiencia de Usuario">
+            <md-step-body>
+            <br>
+            <p class="md-title">Del 1 al 10, ¿cómo calificaría su experiencia como usuario de ElCampito.com?</p>
+              <md-input-container>
+                <label>Puntos</label>
+                <md-select name="selectPuntajes"  required ng-model="resultadosEncuesta.puntaje">
+                  <md-option ng-repeat="puntos in puntajes" value="{{puntos}}">
+                    {{puntos}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </md-step-body>
+            <md-step-actions>
+                <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
+                <md-button class="md-primary md-raised" ng-disabled="!resultadosEncuesta.puntaje" ng-click="nextStep();">Siguiente</md-button>
+            </md-step-actions>
+        </md-step>
+        <md-step md-label="Diseño">
+            <md-step-body>
+                <br>
+                <p class="md-title">¿Cómo calificaría estéticamente el diseño de ElCampito.com?</p>
+                <md-input-container class="md-block">
+                <md-radio-group name="radioDisenio" required  ng-model="resultadosEncuesta.disenio">
+                  <md-radio-button value="Malo">Malo</md-radio-button>
+                  <md-radio-button value="Bueno">Bueno </md-radio-button>
+                  <md-radio-button value="Muy bueno">Muy bueno</md-radio-button>
+                  <md-radio-button value="Increible">Increible!</md-radio-button>
+                </md-radio-group>
+                </md-input-container>
+            </md-step-body>
+            <md-step-actions>
+                <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
+                <md-button class="md-primary md-raised" ng-disabled="!resultadosEncuesta.disenio" ng-click="nextStep();">Siguiente</md-button>
+            </md-step-actions>
+        </md-step>
+        <md-step md-label="Sugerencias">
+            <md-step-body>
+                <br>
+                <p class="md-title">Ingrese sugerencias o comentarios:</p>
+                <md-content layout-padding>
+                <div>
+                  <form name="userForm">
+                    <md-input-container class="md-block">
+                      <label>Comentarios</label>
+                      <textarea ng-model="resultadosEncuesta.sugerencias" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                    </form>
+                </div>
+              </md-content>
+            </md-step-body>
+            <md-step-actions>
+                <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
+                <md-button class="md-primary md-raised" ng-click="nextStep();">Siguiente</md-button>
+            </md-step-actions>
+        </md-step>
+        <md-step md-label="Finalizar">
+            <md-step-body>
+                <br>
+                <p class="md-title">¿Recomendaría a sus conocidos ElCampito.com?</p>
+                <md-input-container class="md-block">
+                <md-radio-group name="radioPuntajes" required  ng-model="resultadosEncuesta.recomendacion">
+                  <md-radio-button value="si">Si, lo recomendaría</md-radio-button>
+                  <md-radio-button value="talvez">Probablemente lo recomendaría </md-radio-button>
+                  <md-radio-button value="no">No lo recomendaría</md-radio-button>
+                </md-radio-group>
+                </md-input-container>
+            </md-step-body>
+            <md-step-actions>
+                <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
+                <md-button class="md-primary md-raised" ng-disabled="!resultadosEncuesta.recomendacion" ng-click="finalizarEncuesta();">Finalizar</md-button>
+            </md-step-actions>
+        </md-step>
+    </md-stepper>
+</div>

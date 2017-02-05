@@ -166,6 +166,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
   });
 
   $scope.reservarInmueble=function(inmueble){
+     $("#loadingModal").modal('show');
     var objTransaccion = {
       idVendedor : inmueble.id_vendedor,
       idCliente : $scope.usuarioLogueado.id,
@@ -178,13 +179,13 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
       function(respuesta){
         console.info("RESPUESTA (ctrl alta transaccion): ", respuesta);
         $("#loadingModal").modal('hide');
-        alert("transaccion concretada");
-        //$state.go('inmueble.catalogo');
+        $scope.ofrecerEncuesta();
       },
       function(error){
         console.info("ERROR! (ctrl alta transaccion): ", error);
         $("#loadingModal").modal('hide');
-        alert("error al cargar transaccion");
+        $scope.informarErrorAlUsuario();
+        //alert("error al cargar transaccion");
       });             
   }
 
@@ -227,7 +228,9 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
         });
     }
 
-
+  /*******************************
+   *ALERTAS CONFIRMAR TRANSACCIÓN*
+   *******************************/
   $scope.showConfirm = function(ev, inmueble) {
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm({
@@ -253,6 +256,59 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
       $scope.status = 'You decided to keep your debt.';
     });
   };
+
+  $scope.ofrecerEncuesta = function() {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm({
+                    onComplete: function afterShowAnimation() {
+                        var $dialog = angular.element(document.querySelector('md-dialog'));
+                        var $actionsSection = $dialog.find('md-dialog-actions');
+                        var $cancelButton = $actionsSection.children()[0];
+                        var $confirmButton = $actionsSection.children()[1];
+                        angular.element($confirmButton).addClass('md-raised');
+                        angular.element($cancelButton).addClass('md-raised md-warn');
+                    }
+                })
+          .title('Su reserva fué realizada con éxito!')
+          .textContent('Nos gustaría que complete una breve encuesta para ayudar a mejorar el servicio')
+          .ariaLabel('Lucky day')
+          .ok('Llenar Encuesta')
+          .cancel('Ahora No');
+
+    $mdDialog.show(confirm).then(function() {
+      $state.go('inmueble.encuesta');
+    }, function() {
+      $state.go('inicio');
+    });
+  };
+
+  $scope.informarErrorAlUsuario = function() {
+    $mdDialog.show(
+      $mdDialog.alert({
+                    onComplete: function afterShowAnimation() {
+                        var $dialog = angular.element(document.querySelector('md-dialog'));
+                        var $actionsSection = $dialog.find('md-dialog-actions');
+                        var $confirmButton = $actionsSection.children()[0];
+                        angular.element($confirmButton).addClass('md-raised');
+                    }
+                })
+        .clickOutsideToClose(true)
+        .title('Lo sentimos!')
+        .textContent('La reserva no pudo ser realizada. Por favor intentelo más tarde.')
+        .ariaLabel('Offscreen Demo')
+        .ok('Aceptar')
+        // Or you can specify the rect to do the transition from
+        .openFrom({
+          top: -50,
+          width: 30,
+          height: 80
+        })
+        .closeTo({
+          left: 1500
+        })
+    );
+  };
+  //fin ALERTAS CONFIRMAR TRANSACCIÓN
 
   /**********************
    *FUNCIONES PAGINACIÓN*
@@ -287,4 +343,74 @@ app.filter('startFrom', function() {
     start = +start; //parse to int
     return input.slice(start);
   }
+})
+
+
+
+app.controller('ControlEncuesta', function($scope, $http, $state,jwtHelper, $auth, ServicioABM, $mdDialog, $mdStepper) {
+  $scope.flagLogueado = false;
+  $scope.puntajes = [1,2,3,4,5,6,7,8,9,10];
+  $scope.resultadosEncuesta = {
+    atencionPersonalizada : false,
+    variedadOfertas : false,
+    funcionamiento : false,
+    puntaje : "",
+    disenio : "",
+    sugerencias : "",
+    recomendacion : ""
+  };
+
+  if($auth.isAuthenticated()){
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+      $scope.flagLogueado = true;
+      console.info("usuario", $scope.usuarioLogueado);
+  }else{
+    $scope.flagLogueado = false;
+  }
+
+  $scope.Desloguear=function(){
+    $auth.logout();
+    $scope.flagLogueado = false;
+  }
+
+  $scope.nextStep=function(){
+    var steppers = $mdStepper('MiStepper');
+    steppers.next();
+  }
+
+  $scope.previousStep=function(){
+    var steppers = $mdStepper('MiStepper');
+    steppers.back();
+  }
+
+  $scope.finalizarEncuesta=function(){
+    alert("guardar resultados y mostrar alerta de agradecimiento");
+    $scope.informarEncuestaFinalizada();
+  }
+
+  $scope.informarEncuestaFinalizada = function() {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm({
+                    onComplete: function afterShowAnimation() {
+                        var $dialog = angular.element(document.querySelector('md-dialog'));
+                        var $actionsSection = $dialog.find('md-dialog-actions');
+                        var $cancelButton = $actionsSection.children()[0];
+                        var $confirmButton = $actionsSection.children()[1];
+                        angular.element($confirmButton).addClass('md-raised');
+                    }
+                })
+          .title('Muchas Gracias!')
+          .textContent('Tu opinión nos ayuda a mejorar nuestro servicio.')
+          .ariaLabel('Lucky day')
+          .ok('Continuar')
+
+    $mdDialog.show(confirm).then(function() {
+      console.info("Resultados: ", $scope.resultadosEncuesta);
+      $state.go('inicio');
+    }, function() {
+      $state.go('inicio');
+    });
+  };
+
+
 });
