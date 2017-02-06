@@ -172,4 +172,20 @@ class Inmueble
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();			
 	}	
 
+	public static function InsertarEncuesta($encuesta)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into encuesta (atencion_personalizada,variedad_ofertas,funcionamiento,puntaje,diseño,sugerencias,recomendacion)values(:atencionpersonalizada,:variedadofertas,:funcionamiento,:puntaje,:disenio,:sugerencias,:recomendacion)");
+		$consulta->bindValue(':atencionpersonalizada',$encuesta->atencionPersonalizada, PDO::PARAM_STR);
+		$consulta->bindValue(':variedadofertas', $encuesta->variedadOfertas, PDO::PARAM_STR);
+		$consulta->bindValue(':funcionamiento', $encuesta->funcionamiento, PDO::PARAM_STR);
+		$consulta->bindValue(':puntaje', $encuesta->puntaje, PDO::PARAM_INT);
+		$consulta->bindValue(':disenio', $encuesta->disenio, PDO::PARAM_STR);
+		$consulta->bindValue(':sugerencias', $encuesta->sugerencias, PDO::PARAM_STR);
+		$consulta->bindValue(':recomendacion', $encuesta->recomendacion, PDO::PARAM_STR);
+		$consulta->execute();		
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();			
+	}	
+
+
 }

@@ -350,16 +350,16 @@ app.filter('startFrom', function() {
 app.controller('ControlEncuesta', function($scope, $http, $state,jwtHelper, $auth, ServicioABM, $mdDialog, $mdStepper) {
   $scope.flagLogueado = false;
   $scope.puntajes = [1,2,3,4,5,6,7,8,9,10];
-  $scope.resultadosEncuesta = {
-    atencionPersonalizada : false,
-    variedadOfertas : false,
-    funcionamiento : false,
-    puntaje : "",
-    disenio : "",
-    sugerencias : "",
-    recomendacion : ""
-  };
-
+  $scope.resultadoEncuesta = {};
+  $scope.resultadoEncuesta.atencionPersonalizada = false;
+  $scope.resultadoEncuesta.variedadOfertas = false;
+  $scope.resultadoEncuesta.funcionamiento = false;
+  $scope.resultadoEncuesta.puntaje = "";
+  $scope.resultadoEncuesta.disenio = "";
+  $scope.resultadoEncuesta.sugerencias = "";
+  $scope.resultadoEncuesta.recomendacion = "";
+    
+    
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
       $scope.flagLogueado = true;
@@ -384,12 +384,21 @@ app.controller('ControlEncuesta', function($scope, $http, $state,jwtHelper, $aut
   }
 
   $scope.finalizarEncuesta=function(){
-    alert("guardar resultados y mostrar alerta de agradecimiento");
+    $scope.resultadoEncuesta.atencionPersonalizada = $scope.resultadoEncuesta.atencionPersonalizada == true ? "true" : "false";
+    $scope.resultadoEncuesta.variedadOfertas = $scope.resultadoEncuesta.variedadOfertas == true ? "true" : "false";
+    $scope.resultadoEncuesta.funcionamiento = $scope.resultadoEncuesta.funcionamiento == true ? "true" : "false";
+    ServicioABM.guardar("encuestas/alta/", $scope.resultadoEncuesta).then(
+      function(respuesta){
+        console.info("RESPUESTA (ctrl alta encuesta): ", respuesta);
+      },
+      function(error){
+        console.info("ERROR! (ctrl alta encuesta): ", error);
+      }
+    );
     $scope.informarEncuestaFinalizada();
   }
 
   $scope.informarEncuestaFinalizada = function() {
-    // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm({
                     onComplete: function afterShowAnimation() {
                         var $dialog = angular.element(document.querySelector('md-dialog'));
@@ -405,7 +414,7 @@ app.controller('ControlEncuesta', function($scope, $http, $state,jwtHelper, $aut
           .ok('Continuar')
 
     $mdDialog.show(confirm).then(function() {
-      console.info("Resultados: ", $scope.resultadosEncuesta);
+      console.info("Resultados: ", $scope.resultadoEncuesta);
       $state.go('inicio');
     }, function() {
       $state.go('inicio');

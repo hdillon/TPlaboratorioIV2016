@@ -116,3 +116,22 @@ CREATE TABLE IF NOT EXISTS `registros_login` (
   `id_usuario` int(11) NOT NULL,
   `fecha` DATETIME NULL DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+
+CREATE TABLE IF NOT EXISTS `encuesta` (
+  `id` int(11) NOT NULL,
+  `atencion_personalizada` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `variedad_ofertas` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `funcionamiento` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `puntaje` int(11) NOT NULL,
+  `diseño` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `sugerencias` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
+  `recomendacion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+ALTER TABLE `encuesta`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `encuesta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

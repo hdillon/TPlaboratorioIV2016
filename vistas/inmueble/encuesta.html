@@ -10,17 +10,17 @@
             <br>
             <p class="md-title">Marque las opciones con las que se sintió conforme:</p>
                 <md-input-container class="md-block">
-                    <md-checkbox name="tos" ng-model="resultadosEncuesta.atencionPersonalizada" required>
+                    <md-checkbox name="tos" ng-model="resultadoEncuesta.atencionPersonalizada" required>
                       Atención personalizada de los empleados.
                     </md-checkbox>
                 </md-input-container>
                 <md-input-container class="md-block">
-                    <md-checkbox name="tos" ng-model="resultadosEncuesta.variedadOfertas" required>
+                    <md-checkbox name="tos" ng-model="resultadoEncuesta.variedadOfertas" required>
                       Variedad de ofertas.
                     </md-checkbox>
                 </md-input-container>
                 <md-input-container class="md-block">
-                    <md-checkbox name="tos" ng-model="resultadosEncuesta.funcionamiento" required>
+                    <md-checkbox name="tos" ng-model="resultadoEncuesta.funcionamiento" required>
                       Funcionamiento del sistema.
                     </md-checkbox>
                 </md-input-container>
@@ -35,7 +35,7 @@
             <p class="md-title">Del 1 al 10, ¿cómo calificaría su experiencia como usuario de ElCampito.com?</p>
               <md-input-container>
                 <label>Puntos</label>
-                <md-select name="selectPuntajes"  required ng-model="resultadosEncuesta.puntaje">
+                <md-select name="selectPuntajes"  required ng-model="resultadoEncuesta.puntaje">
                   <md-option ng-repeat="puntos in puntajes" value="{{puntos}}">
                     {{puntos}}
                   </md-option>
@@ -44,7 +44,7 @@
             </md-step-body>
             <md-step-actions>
                 <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
-                <md-button class="md-primary md-raised" ng-disabled="!resultadosEncuesta.puntaje" ng-click="nextStep();">Siguiente</md-button>
+                <md-button class="md-primary md-raised" ng-disabled="!resultadoEncuesta.puntaje" ng-click="nextStep();">Siguiente</md-button>
             </md-step-actions>
         </md-step>
         <md-step md-label="Diseño">
@@ -52,7 +52,7 @@
                 <br>
                 <p class="md-title">¿Cómo calificaría estéticamente el diseño de ElCampito.com?</p>
                 <md-input-container class="md-block">
-                <md-radio-group name="radioDisenio" required  ng-model="resultadosEncuesta.disenio">
+                <md-radio-group name="radioDisenio" required  ng-model="resultadoEncuesta.disenio">
                   <md-radio-button value="Malo">Malo</md-radio-button>
                   <md-radio-button value="Bueno">Bueno </md-radio-button>
                   <md-radio-button value="Muy bueno">Muy bueno</md-radio-button>
@@ -62,7 +62,7 @@
             </md-step-body>
             <md-step-actions>
                 <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
-                <md-button class="md-primary md-raised" ng-disabled="!resultadosEncuesta.disenio" ng-click="nextStep();">Siguiente</md-button>
+                <md-button class="md-primary md-raised" ng-disabled="!resultadoEncuesta.disenio" ng-click="nextStep();">Siguiente</md-button>
             </md-step-actions>
         </md-step>
         <md-step md-label="Sugerencias">
@@ -74,7 +74,7 @@
                   <form name="userForm">
                     <md-input-container class="md-block">
                       <label>Comentarios</label>
-                      <textarea ng-model="resultadosEncuesta.sugerencias" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                      <textarea ng-model="resultadoEncuesta.sugerencias" md-maxlength="150" rows="5" md-select-on-focus></textarea>
                     </md-input-container>
                     </form>
                 </div>
@@ -90,7 +90,7 @@
                 <br>
                 <p class="md-title">¿Recomendaría a sus conocidos ElCampito.com?</p>
                 <md-input-container class="md-block">
-                <md-radio-group name="radioPuntajes" required  ng-model="resultadosEncuesta.recomendacion">
+                <md-radio-group name="radioPuntajes" required  ng-model="resultadoEncuesta.recomendacion">
                   <md-radio-button value="si">Si, lo recomendaría</md-radio-button>
                   <md-radio-button value="talvez">Probablemente lo recomendaría </md-radio-button>
                   <md-radio-button value="no">No lo recomendaría</md-radio-button>
@@ -99,7 +99,7 @@
             </md-step-body>
             <md-step-actions>
                 <md-button class="md-primary" ng-click="previousStep();">Anterior</md-button>
-                <md-button class="md-primary md-raised" ng-disabled="!resultadosEncuesta.recomendacion" ng-click="finalizarEncuesta();">Finalizar</md-button>
+                <md-button class="md-primary md-raised" ng-disabled="!resultadoEncuesta.recomendacion" ng-click="finalizarEncuesta();">Finalizar</md-button>
             </md-step-actions>
         </md-step>
     </md-stepper>

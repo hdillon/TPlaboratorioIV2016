@@ -179,5 +179,14 @@ $app->get('/transacciones/ventasporempleado/{idSucursal}', function ($request, $
 });
 
 
+//****************************************ENCUESTAS********************************************//
+$app->post('/encuestas/alta/{objeto}', function ($request, $response, $args) {
+    $encuesta = json_decode($args['objeto']);
+    $datos = Inmueble::InsertarEncuesta($encuesta);
+    $response->write($datos);
+
+    return $response;
+});
+
 
 $app->run();
