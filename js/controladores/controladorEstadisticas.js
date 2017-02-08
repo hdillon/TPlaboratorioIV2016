@@ -11,6 +11,45 @@ app.controller('ControlEstadisticas', function($scope, $http, $state,jwtHelper, 
     $scope.flagLogueado = false;
   }
 
+  Highcharts.theme = {
+    colors: ['#058DC7', '#ED561B', '#50B432', '#DDDF00', '#24CBE5', '#64E572', 
+             '#FF9655', '#FFF263', '#6AF9C4'],
+    chart: {
+        backgroundColor: {
+            linearGradient: [0, 0, 500, 500],
+            stops: [
+                [0, 'rgb(255, 255, 255)'],
+                [1, 'rgb(240, 240, 255)']
+            ]
+        },
+    },
+    title: {
+        style: {
+            color: '#000',
+            font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+        }
+    },
+    subtitle: {
+        style: {
+            color: '#666666',
+            font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+        }
+    },
+
+    legend: {
+        itemStyle: {
+            font: '9pt Trebuchet MS, Verdana, sans-serif',
+            color: 'black'
+        },
+        itemHoverStyle:{
+            color: 'gray'
+        }   
+    }
+};
+
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
+
   $scope.Desloguear=function(){
     $auth.logout();
     $scope.flagLogueado = false;
@@ -160,6 +199,9 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
 app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "Encuestas";
   $scope.tipoDeReporte = "Encuestas";
+  $scope.siRecomienda = 0;
+  $scope.noRecomienda = 0;
+  $scope.talvezRecomienda = 0;
 
   ServicioABM.traer("encuestas").then(function(rta){
       $scope.listaEncuestas = rta.data;
@@ -169,22 +211,42 @@ app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jw
       }, 1000)
   });
 
+  $timeout(function() {
+      $scope.listaEncuestas.forEach(function(encuesta){
+        if(encuesta.recomendacion == "si")
+          $scope.siRecomienda ++;
+        else if(encuesta.recomendacion == "no")
+          $scope.noRecomienda ++;
+        else
+          $scope.talvezRecomienda ++;
+      });
+
+
   Highcharts.chart('miGrafico', {
         chart: {
-            type: 'pie'
+            type: 'pie',
+            options3d: {
+            enabled: true,
+            alpha: 45,
+            beta: 0
+            }
         },
         title: {
             text: 'Escuestas Realizadas'
         },
         subtitle: {
-            text: 'Ranking de ventas por empleado de la sucursal:'
+            text: 'Recomendaciones de los usuarios:'
         },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true
-                }
+         plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            depth: 35,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
             }
+          }
         },
         legend: {
             layout: 'vertical',
@@ -203,16 +265,17 @@ app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jw
         series: [{
              data: [{
                 name: 'Si lo recomendaría',
-                y: 10
+                y: $scope.siRecomienda
             }, {
                 name: 'No lo recomendaría',
-                y: 20
+                y: $scope.noRecomienda
             }, {
                 name: 'Probablemente lo recomendaría',
-                y: 70
+                y: $scope.talvezRecomienda
             }]
         }]
       });
+     }, 1000); 
 
 })
 
