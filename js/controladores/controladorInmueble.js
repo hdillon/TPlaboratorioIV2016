@@ -213,9 +213,10 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
           $("#myModal").on("shown.bs.modal", function(e) {
           google.maps.event.trigger(map, "resize");
            map.setCenter(myLatLng);// Set here center map coordinates
-           $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
+           //$(".modal-backdrop").addClass("modal-backdrop-fullscreen");
            //$(".modal-backdrop").addClass("modal-backdrop-transparent");
           });
+
 
           google.maps.event.addListener(map, 'dblclick', function(event) {
             marker = new google.maps.Marker({position: event.latLng, map: map});

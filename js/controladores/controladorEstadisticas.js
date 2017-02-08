@@ -158,8 +158,61 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
 
 
 app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
-  $scope.mostrarSelect = "NoMostrar";
+  $scope.mostrarSelect = "Encuestas";
   $scope.tipoDeReporte = "Encuestas";
+
+  ServicioABM.traer("encuestas").then(function(rta){
+      $scope.listaEncuestas = rta.data;
+      console.info("Encuestas: ", $scope.listaEncuestas);
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+  });
+
+  Highcharts.chart('miGrafico', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Escuestas Realizadas'
+        },
+        subtitle: {
+            text: 'Ranking de ventas por empleado de la sucursal:'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+             data: [{
+                name: 'Si lo recomendaría',
+                y: 10
+            }, {
+                name: 'No lo recomendaría',
+                y: 20
+            }, {
+                name: 'Probablemente lo recomendaría',
+                y: 70
+            }]
+        }]
+      });
 
 })
 

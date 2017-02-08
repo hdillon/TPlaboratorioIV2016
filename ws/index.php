@@ -11,6 +11,7 @@ require '../PHP/clases/Personas.php';
 require '../PHP/clases/Sucursales.php';
 require '../PHP/clases/Inmuebles.php';
 require '../PHP/clases/Transacciones.php';
+require '../PHP/clases/Encuestas.php';
 
 /**
  * Step 2: Instantiate a Slim application
@@ -182,8 +183,15 @@ $app->get('/transacciones/ventasporempleado/{idSucursal}', function ($request, $
 //****************************************ENCUESTAS********************************************//
 $app->post('/encuestas/alta/{objeto}', function ($request, $response, $args) {
     $encuesta = json_decode($args['objeto']);
-    $datos = Inmueble::InsertarEncuesta($encuesta);
+    $datos = Encuesta::InsertarEncuesta($encuesta);
     $response->write($datos);
+
+    return $response;
+});
+
+$app->get('/encuestas[/]', function ($request, $response, $args) {
+   $datos = Encuesta::TraerTodasLasEncuestas();
+    $response->write(json_encode($datos));
 
     return $response;
 });

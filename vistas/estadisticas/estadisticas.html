@@ -35,6 +35,22 @@
 			    </span>
 	        </div>
 	    </div>
+
+        <div class="col-lg-6" ng-if="mostrarSelect == 'Encuestas'">
+        <label class="control-label col-sm-3" for="sucursal">Usuario:</label>
+            <div class="input-group my-group"> 
+
+               <select  class="form-control" id="selPersona" ng-model="idPersona">
+                            <option disabled selected value>Seleccione Usuario</option>
+                    <option ng-repeat="persona in listaPersonas" value="{{persona.id}}">
+                        {{persona.nombre}} {{persona.apellido}}
+                    </option>
+                </select> 
+                <span class="input-group-btn">
+                    <button class="btn btn-primary btn-default pull-left" ng-click="loginsPorUsuario(idPersona)" type="submit">CARGAR</button>
+                </span>
+            </div>
+        </div>
 	</div>
 </form>
 
