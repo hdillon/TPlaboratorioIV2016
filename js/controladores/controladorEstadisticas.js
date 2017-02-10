@@ -5,55 +5,55 @@ app.controller('ControlEstadisticas', function($scope, $http, $state,jwtHelper, 
   $scope.tipoDeReporte = "";
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
-      $scope.flagLogueado = true;
-      console.info("usuario", $scope.usuarioLogueado);
+    $scope.flagLogueado = true;
+    console.info("usuario", $scope.usuarioLogueado);
   }else{
     $scope.flagLogueado = false;
   }
 
   Highcharts.theme = {
     colors: ['#058DC7', '#ED561B', '#50B432', '#DDDF00', '#24CBE5', '#64E572', 
-             '#FF9655', '#FFF263', '#6AF9C4'],
+    '#FF9655', '#FFF263', '#6AF9C4'],
     chart: {
-        backgroundColor: {
-            linearGradient: [0, 0, 500, 500],
-            stops: [
-                [0, 'rgb(255, 255, 255)'],
-                [1, 'rgb(240, 240, 255)']
-            ]
-        },
+      backgroundColor: {
+        linearGradient: [0, 0, 500, 500],
+        stops: [
+        [0, 'rgb(255, 255, 255)'],
+        [1, 'rgb(240, 240, 255)']
+        ]
+      },
     },
     title: {
-        style: {
-            color: '#000',
-            font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
-        }
+      style: {
+        color: '#000',
+        font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+      }
     },
     subtitle: {
-        style: {
-            color: '#666666',
-            font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
-        }
+      style: {
+        color: '#666666',
+        font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+      }
     },
 
     legend: {
-        itemStyle: {
-            font: '9pt Trebuchet MS, Verdana, sans-serif',
-            color: 'black'
-        },
-        itemHoverStyle:{
-            color: 'gray'
-        }   
+      itemStyle: {
+        font: '9pt Trebuchet MS, Verdana, sans-serif',
+        color: 'black'
+      },
+      itemHoverStyle:{
+        color: 'gray'
+      }   
     }
-};
+  };
 
 // Apply the theme
 Highcharts.setOptions(Highcharts.theme);
 
-  $scope.Desloguear=function(){
-    $auth.logout();
-    $scope.flagLogueado = false;
-  }
+$scope.Desloguear=function(){
+  $auth.logout();
+  $scope.flagLogueado = false;
+}
 
 })
 
@@ -69,36 +69,36 @@ app.controller('ControlVentasPorLocal', function($scope, $http, $state,jwtHelper
     },function(error){
       $("#loadingModal").modal('hide');
       $scope.ventas = [];
-  });
+    });
 
   $timeout(function() {
     $scope.ventas.forEach(function(venta){
-        cantidadVentasSucursal.push(venta.cantidad);
-        sucursales.push(venta.nombresucursal);
+      cantidadVentasSucursal.push(venta.cantidad);
+      sucursales.push(venta.nombresucursal);
     });
 
     Highcharts.chart('miGrafico', {
       chart: {
-          type: 'column',
-          options3d: {
-                  enabled: true,
-                  alpha: 10,
-                  beta: 25,
-                  depth: 70
-              }
+        type: 'column',
+        options3d: {
+          enabled: true,
+          alpha: 10,
+          beta: 25,
+          depth: 70
+        }
       },
       title: {
-          text: 'Ventas por Sucursal'
+        text: 'Ventas por Sucursal'
       },
       xAxis: {
-          categories: sucursales
+        categories: sucursales
       },
       yAxis: {
-          title: {text: null}
+        title: {text: null}
       },
       series: [{
-          name: 'Ventas',
-          data: cantidadVentasSucursal
+        name: 'Ventas',
+        data: cantidadVentasSucursal
       }]
     });
   }, 1000); 
@@ -108,15 +108,15 @@ app.controller('ControlVentasPorLocal', function($scope, $http, $state,jwtHelper
 app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "Sucursales";
   $scope.tipoDeReporte = "Ventas";
-  
+
   ServicioABM.traer("sucursales").then(function(rta){
-      $scope.listaSucursales = rta.data;
-      setTimeout(function () {
-          $("#loadingModal").modal('hide');
-      }, 1000)
+    $scope.listaSucursales = rta.data;
+    setTimeout(function () {
+      $("#loadingModal").modal('hide');
+    }, 1000)
   });
 
- $scope.ventasPorEmpleado = function(idSucursal){
+  $scope.ventasPorEmpleado = function(idSucursal){
     var listaEmpleados = [];
     var cantidadVentasEmpleado = [];
     var ventas = [];
@@ -128,70 +128,70 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
       },function(error){
         $("#loadingModal").modal('hide');
         ventas = [];
-    });
+      });
 
     $timeout(function() {
       ventas.forEach(function(venta){
-          cantidadVentasEmpleado.push(venta.cantidad);
-          listaEmpleados.push(venta.empleado);
-          $scope.nombreSucursal = venta.nombresucursal;
+        cantidadVentasEmpleado.push(venta.cantidad);
+        listaEmpleados.push(venta.empleado);
+        $scope.nombreSucursal = venta.nombresucursal;
       });
 
-  
+
       Highcharts.chart('miGrafico', {
         chart: {
-            type: 'bar'
+          type: 'bar'
         },
         title: {
-            text: 'Ventas Por Empleado'
+          text: 'Ventas Por Empleado'
         },
         subtitle: {
-            text: 'Ranking de ventas por empleado de la sucursal: ' + $scope.nombreSucursal
+          text: 'Ranking de ventas por empleado de la sucursal: ' + $scope.nombreSucursal
         },
         xAxis: {
-            categories: listaEmpleados,
-            title: {
-                text: null
-            }
+          categories: listaEmpleados,
+          title: {
+            text: null
+          }
         },
         yAxis: {
-            min: 0,
-            title: {
-                text: 'Ventas',
-                align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            }
+          min: 0,
+          title: {
+            text: 'Ventas',
+            align: 'high'
+          },
+          labels: {
+            overflow: 'justify'
+          }
         },
         plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true
-                }
+          bar: {
+            dataLabels: {
+              enabled: true
             }
+          }
         },
         legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 80,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-            shadow: true
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -40,
+          y: 80,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+          shadow: true
         },
         credits: {
-            enabled: false
+          enabled: false
         },
         series: [{
-            name: 'Ventas',
-            data: cantidadVentasEmpleado
+          name: 'Ventas',
+          data: cantidadVentasEmpleado
         }]
       });
-    }, 1000); 
-  }
+}, 1000); 
+}
 
 })
 
@@ -204,78 +204,78 @@ app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jw
   $scope.talvezRecomienda = 0;
 
   ServicioABM.traer("encuestas").then(function(rta){
-      $scope.listaEncuestas = rta.data;
-      console.info("Encuestas: ", $scope.listaEncuestas);
-      setTimeout(function () {
-          $("#loadingModal").modal('hide');
-      }, 1000)
+    $scope.listaEncuestas = rta.data;
+    console.info("Encuestas: ", $scope.listaEncuestas);
+    setTimeout(function () {
+      $("#loadingModal").modal('hide');
+    }, 1000)
   });
 
   $timeout(function() {
-      $scope.listaEncuestas.forEach(function(encuesta){
-        if(encuesta.recomendacion == "si")
-          $scope.siRecomienda ++;
-        else if(encuesta.recomendacion == "no")
-          $scope.noRecomienda ++;
-        else
-          $scope.talvezRecomienda ++;
-      });
+    $scope.listaEncuestas.forEach(function(encuesta){
+      if(encuesta.recomendacion == "si")
+        $scope.siRecomienda ++;
+      else if(encuesta.recomendacion == "no")
+        $scope.noRecomienda ++;
+      else
+        $scope.talvezRecomienda ++;
+    });
 
 
-  Highcharts.chart('miGrafico', {
-        chart: {
-            type: 'pie',
-            options3d: {
-            enabled: true,
-            alpha: 45,
-            beta: 0
-            }
-        },
-        title: {
-            text: 'Escuestas Realizadas'
-        },
-        subtitle: {
-            text: 'Recomendaciones de los usuarios:'
-        },
-         plotOptions: {
+    Highcharts.chart('miGrafico', {
+      chart: {
+        type: 'pie',
+        options3d: {
+          enabled: true,
+          alpha: 45,
+          beta: 0
+        }
+      },
+      title: {
+        text: 'Escuestas Realizadas'
+      },
+      subtitle: {
+        text: 'Recomendaciones de los usuarios:'
+      },
+      plotOptions: {
         pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            depth: 35,
-            dataLabels: {
-                enabled: true,
-                format: '{point.name}'
-            }
+          allowPointSelect: true,
+          cursor: 'pointer',
+          depth: 35,
+          dataLabels: {
+            enabled: true,
+            format: '{point.name}'
           }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 80,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-            shadow: true
-        },
-        credits: {
-            enabled: false
-        },
-        series: [{
-             data: [{
-                name: 'Si lo recomendaría',
-                y: $scope.siRecomienda
-            }, {
-                name: 'No lo recomendaría',
-                y: $scope.noRecomienda
-            }, {
-                name: 'Probablemente lo recomendaría',
-                y: $scope.talvezRecomienda
-            }]
+        }
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+        shadow: true
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: [{
+          name: 'Si lo recomendaría',
+          y: $scope.siRecomienda
+        }, {
+          name: 'No lo recomendaría',
+          y: $scope.noRecomienda
+        }, {
+          name: 'Probablemente lo recomendaría',
+          y: $scope.talvezRecomienda
         }]
-      });
-     }, 1000); 
+      }]
+    });
+}, 1000); 
 
 })
 
@@ -285,26 +285,26 @@ app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHel
   $scope.tipoDeReporte = "Ingresos al Sistema";
 
   $scope.gridOptions = {
-            data: [],
-            urlSync: false
-        };
+    data: [],
+    urlSync: false
+  };
 
   ServicioABM.traer("personas").then(function(rta){
-      $scope.listaPersonas = rta.data;
-      setTimeout(function () {
-          $("#loadingModal").modal('hide');
-      }, 1000)
+    $scope.listaPersonas = rta.data;
+    setTimeout(function () {
+      $("#loadingModal").modal('hide');
+    }, 1000)
   });
 
   $scope.loginsPorUsuario = function(idUsuario){
 //http://angular-data-grid.github.io/demo/material/
-    ServicioABM.traerLogueosPorUsuario("resgistroslogin/", idUsuario).then(function(rta){
-        $scope.gridOptions.data = rta.data;
-        setTimeout(function () {
-            $("#loadingModal").modal('hide');
-        }, 1000)
-    });
-  }
+ServicioABM.traerLogueosPorUsuario("resgistroslogin/", idUsuario).then(function(rta){
+  $scope.gridOptions.data = rta.data;
+  setTimeout(function () {
+    $("#loadingModal").modal('hide');
+  }, 1000)
+});
+}
 
 });
 

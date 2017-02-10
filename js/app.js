@@ -25,7 +25,8 @@ var app = angular.module('TPInmobiliaria', [
     'ui.grid.edit',
     'ui.bootstrap',
     'dataGrid',
-    'pagination'
+    'pagination',
+    'ngAnimate'
     ]);
 
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
