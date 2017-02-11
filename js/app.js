@@ -48,6 +48,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/abstractaUsuario.html',
                 controller : 'ControlUsuarios'
             })
+      .state('usuario.usuariomenu', {
+                url: '/usuariomenu',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/usuario/usuarioMenu.html',
+                        controller : 'ControlUsuarios'
+                    }
+                }
+            })
       .state('usuario.login', {
                 url: '/login',
                 views: {
@@ -81,6 +90,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/abstractaSucursal.html',
                 controller : 'ControlSucursales'
             })
+      .state('sucursal.sucursalmenu', {
+                url: '/sucursalmenu',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/sucursal/sucursalMenu.html',
+                        controller : 'ControlSucursales'
+                    }
+                }
+            })
       .state('sucursal.altasucursales', {
                 url: '/altasucursales',
                 views: {
@@ -104,6 +122,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 abstract:true,
                 templateUrl : 'vistas/abstractaInmueble.html',
                 controller : 'ControlInmueble'
+            })
+      .state('inmueble.inmueblemenu', {
+                url: '/inmueblemenu',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/inmueble/inmuebleMenu.html',
+                        controller : 'ControlInmueble'
+                    }
+                }
             })
       .state('inmueble.altainmueble', {
                 url: '/altainmueble',
@@ -137,6 +164,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 abstract:true,
                 templateUrl : 'vistas/abstractaEstadisticas.html',
                 controller : 'ControlEstadisticas'
+            })
+      .state('estadisticas.estadisticasmenu', {
+                url: '/estadisticasmenu',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/estadisticas/estadisticasMenu.html',
+                        controller : 'ControlEstadisticas'
+                    }
+                }
             })
       .state('estadisticas.ventasporlocal', {
                 url: '/ventasporlocal',
