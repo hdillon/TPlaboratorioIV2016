@@ -39,7 +39,13 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
   $stateProvider
       .state('inicio', {
                 url : '/inicio',
+                abstract:true,
                 templateUrl : 'vistas/inicio.html',
+                controller : 'ControlInicio'
+            })
+      .state('inicio.inicio2', {
+                url : '/inicio2',
+                templateUrl : 'vistas/inicio2.html',
                 controller : 'ControlInicio'
             })
       .state('usuario', {
@@ -48,7 +54,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/abstractaUsuario.html',
                 controller : 'ControlUsuarios'
             })
-      .state('usuario.usuariomenu', {
+      .state('inicio.usuariomenu', {
                 url: '/usuariomenu',
                 views: {
                     'contenido': {
@@ -57,7 +63,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('usuario.login', {
+      .state('inicio.login', {
                 url: '/login',
                 views: {
                     'contenido': {
@@ -66,7 +72,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('usuario.registrarse', {
+      .state('inicio.registrarse', {
                 url: '/registrarse',
                 views: {
                     'contenido': {
@@ -75,8 +81,8 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('usuario.alta', {
-                url: '/alta',
+      .state('inicio.altausuario', {
+                url: '/altausuario',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/usuario/usuarioAlta.html',
@@ -90,7 +96,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/abstractaSucursal.html',
                 controller : 'ControlSucursales'
             })
-      .state('sucursal.sucursalmenu', {
+      .state('inicio.sucursalmenu', {
                 url: '/sucursalmenu',
                 views: {
                     'contenido': {
@@ -99,7 +105,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('sucursal.altasucursales', {
+      .state('inicio.altasucursales', {
                 url: '/altasucursales',
                 views: {
                     'contenido': {
@@ -108,7 +114,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('sucursal.grilla', {
+      .state('inicio.grilla', {
                 url: '/grilla',
                 views: {
                     'contenido': {
@@ -123,7 +129,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/abstractaInmueble.html',
                 controller : 'ControlInmueble'
             })
-      .state('inmueble.inmueblemenu', {
+      .state('inicio.inmueblemenu', {
                 url: '/inmueblemenu',
                 views: {
                     'contenido': {
@@ -132,7 +138,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('inmueble.altainmueble', {
+      .state('inicio.altainmueble', {
                 url: '/altainmueble',
                 views: {
                     'contenido': {
@@ -141,7 +147,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('inmueble.catalogo', {
+      .state('inicio.catalogo', {
                 url: '/catalogo',
                 views: {
                     'contenido': {
@@ -150,7 +156,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('inmueble.encuesta', {
+      .state('inicio.encuesta', {
                 url: '/encuesta',
                 views: {
                     'contenido': {
@@ -165,7 +171,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/abstractaEstadisticas.html',
                 controller : 'ControlEstadisticas'
             })
-      .state('estadisticas.estadisticasmenu', {
+      .state('inicio.estadisticasmenu', {
                 url: '/estadisticasmenu',
                 views: {
                     'contenido': {
@@ -174,7 +180,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('estadisticas.ventasporlocal', {
+      .state('inicio.ventasporlocal', {
                 url: '/ventasporlocal',
                 views: {
                     'contenido': {
@@ -183,7 +189,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('estadisticas.ventasporempleado', {
+      .state('inicio.ventasporempleado', {
                 url: '/ventasporempleado',
                 views: {
                     'contenido': {
@@ -192,7 +198,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('estadisticas.encuestas', {
+      .state('inicio.encuestas', {
                 url: '/encuestas',
                 views: {
                     'contenido': {
@@ -201,8 +207,8 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
-      .state('estadisticas.login', {
-                url: '/login',
+      .state('inicio.encuestaslogin', {
+                url: '/encuestaslogin',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/estadisticas/estadisticas.html',
@@ -212,5 +218,5 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
             })
       
       
-             $urlRouterProvider.otherwise('/inicio');
+             $urlRouterProvider.otherwise('inicio/inicio2');
 });

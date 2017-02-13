@@ -148,7 +148,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
     $scope.mapa.latitud = '-34.662716';
     $scope.mapa.longitud = '-58.365113';
 
-  //traigo las sucursales para llenar el select del formulario
+  //traigo las inmuebles para llenar el catalogo
   ServicioABM.traer("inmuebles").then(function(rta){
       $scope.listaInmuebles = rta.data;
       console.info("inmuebles:", $scope.listaInmuebles);

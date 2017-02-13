@@ -1,9 +1,6 @@
-
-
- <!--md-toolbar>
-      <div class="md-toolbar-tools">
-        <div class="container-fluid">
-   
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#miNavbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -11,18 +8,20 @@
         <span class="icon-bar"></span>
     </button>
       <a class="navbar-brand" href="#">El Campito</a>
-   
- 
+    </div>
+    <div id="miNavbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li ng-if="flagLogueado">
-        <a href="#!/sucursal/grilla">Sucursales</a>
+      <li ng-show="flagLogueado">
+        <a href="#!/inicio/sucursalmenu">Sucursales</a>
       </li>
       <li ng-if="flagLogueado">
-        <a href="#!/usuario/alta">Usuarios</a>
+        <a href="#!/inicio/usuariomenu">Usuarios</a>
       </li>
       <li ng-if="flagLogueado">
-        <a href="#!/inmueble/catalogo">Inmuebles</a>
+        <a href="#!/inicio/inmueblemenu">Inmuebles</a>
+      </li>
+      <li ng-if="flagLogueado">
+        <a href="#!/inicio/estadisticasmenu">Estadisticas</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -72,85 +71,71 @@
             </ul>
         </li>
     </ul>
-   
-  </div>
-      </div>
-    </md-toolbar-->
-
-<!-- Modal Login-->
-  <div class="modal fade" id="loginModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class=" glyphicon glyphicon-log-in"></span> Login</h4>
-        </div>
-        <div class="modal-body" style="padding:40px 50px;">
-        <div class="error" ng-if="loginIncorrecto">El email o password ingresados no son correctos</div>
-          <form role="form" name="formLogin" id="loginForm">
-<!--
-        <md-input-container>
-            <label>Email</label>
-            <input name="favoriteColor" ng-model="usuarioLogueado.email" required>
-            <div ng-messages="formLogin.email.$error.$error">
-              <div ng-message="required"> </div>
-            </div>
-          </md-input-container>
-
--->
-            <div class="form-group" show-errors>
-              <label for="usrname"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-              <input type="email" class="form-control" id="usrname" name="email" ng-model="usuarioLogueado.email" placeholder="Enter email" required>
-              <p class="help-block" ng-if="formLogin.email.$error.required">Debe ingresar su email</p>
-              <p class="help-block" ng-if="formLogin.email.$error.email">El email ingresado no es válido</p>
-            </div>
-            <div class="form-group" show-errors>
-              <label for="psw"><span class="glyphicon glyphicon-lock"></span> Password</label>
-              <input type="password" class="form-control" id="psw" name="password" ng-model="usuarioLogueado.password" placeholder="Enter password" required>
-              <p class="help-block" ng-if="formLogin.password.$error.required">Debe ingresar su password</p>
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
-            </div>
-             <div class="margenfix">
-              <md-button ng-click="Login()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</md-button>
-              </div>
-              <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button ng-click="DatosAdmin()" class="btn btn-primary btn-default pull-left" ><span ></span> Admin</button>
-          <button ng-click="DatosEncargado()"  class="btn btn-primary btn-default pull-left" ><span ></span> Encargado</button>
-          <button ng-click="DatosEmpleado()" class="btn btn-primary btn-default pull-left" ><span ></span> Empleado</button>
-          <button ng-click="DatosCliente()" class="btn btn-primary btn-default pull-left" ><span ></span> Cliente</button><br><br>
-          <p>No posee una cuenta? <a href="#" ng-click="goToRegistrarse()">Registrese</a></p>
-          <p>Olvidó su <a href="#">Password?</a></p>
-        </div>
-      </div>
-      
     </div>
-  </div> 
+  </div>
+</nav>
+<!-- Modal Login-->
+<div class="modal fade" id="loginModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="padding:35px 50px;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4><span class=" glyphicon glyphicon-log-in"></span> Login</h4>
+      </div>
+      <div class="modal-body" style="padding:40px 50px;">
+        <div class="error" ng-if="loginIncorrecto">El email o password ingresados no son correctos</div>
+        <form role="form" name="formLogin" id="loginForm">
+          <div class="form-group" show-errors>
+            <label for="usrname"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+            <input type="email" class="form-control" id="usrname" name="email" ng-model="usuarioLogueado.email" placeholder="Enter email" required>
+            <p class="help-block" ng-if="formLogin.email.$error.required">Debe ingresar su email</p>
+            <p class="help-block" ng-if="formLogin.email.$error.email">El email ingresado no es válido</p>
+          </div>
+          <div class="form-group" show-errors>
+            <label for="psw"><span class="glyphicon glyphicon-lock"></span> Password</label>
+            <input type="password" class="form-control" id="psw" name="password" ng-model="usuarioLogueado.password" placeholder="Enter password" required>
+            <p class="help-block" ng-if="formLogin.password.$error.required">Debe ingresar su password</p>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="" checked>Remember me</label>
+          </div>
+          <div class="margenfix">
+            <md-button ng-click="Login()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</md-button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button ng-click="DatosAdmin()" class="btn btn-primary btn-default pull-left" ><span ></span> Admin</button>
+        <button ng-click="DatosEncargado()"  class="btn btn-primary btn-default pull-left" ><span ></span> Encargado</button>
+        <button ng-click="DatosEmpleado()" class="btn btn-primary btn-default pull-left" ><span ></span> Empleado</button>
+        <button ng-click="DatosCliente()" class="btn btn-primary btn-default pull-left" ><span ></span> Cliente</button><br><br>
+        <p>No posee una cuenta? <a href="#" ng-click="goToRegistrarse()">Registrese</a></p>
+        <p>Olvidó su <a href="#">Password?</a></p>
+      </div>
+    </div>
+
+  </div>
+</div> 
 </div>
 
 
-  <div class="modal fade" id="registrarseModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-pencil"></span> Registrarse</h4>
-        </div>
-        <div class="modal-body" style="padding:40px 50px;">
+<div class="modal fade" id="registrarseModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="padding:35px 50px;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4><span class="glyphicon glyphicon-pencil"></span> Registrarse</h4>
+      </div>
+      <div class="modal-body" style="padding:40px 50px;">
         <div class="error" ng-if="registroIncorrecto">El registro no fué exitoso, reintente nuevamente.</div>
-          <form role="form" name="formRegistrarse" id="loginForm">
+        <form role="form" name="formRegistrarse" id="loginForm">
           <div class="form-group" show-errors>
-              <label for="nombre"><span class="glyphicon glyphicon-user"></span> Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" ng-model="usuarioLogueado.nombre" placeholder="Ingrese Nombre" required>
-              <spam class="help-block" ng-if="formRegistrarse.nombre.$error.required">Debe ingresar su nombre</span>
+            <label for="nombre"><span class="glyphicon glyphicon-user"></span> Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" ng-model="usuarioLogueado.nombre" placeholder="Ingrese Nombre" required>
+            <spam class="help-block" ng-if="formRegistrarse.nombre.$error.required">Debe ingresar su nombre</span>
             </div>
             <div class="form-group" show-errors>
               <label for="apellido"><span class="glyphicon glyphicon-user"></span> Apellido</label>
@@ -176,11 +161,11 @@
             <div class="margenfix">
               <md-button ng-click="Registrarse()" class="send-button md-warn md-raised btn btn-primary btn-block"><span class="glyphicon glyphicon-pencil"></span> Registrarse</md-button>
             </div>
-              <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
+            <!--<button class="btn btn-link" ng-click="resetErrores()">Reset</button>-->
           </form>
         </div>
         <div class="modal-footer">
-     
+
 
         </div>
       </div>
@@ -191,10 +176,76 @@
 
 <!-- Modal Loading -->
 <div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
-<div class="modal-content">
-<div class="modal-header">
-<h3 style="margin:0;">Loading...</h3>
-</div><div class="modal-body">
-<div class="progress progress-striped active" style="margin-bottom:0;">
-<div class="progress-bar" style="width: 100%">
-</div></div></div></div></div></div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 style="margin:0;">Loading...</h3>
+    </div><div class="modal-body">
+    <div class="progress progress-striped active" style="margin-bottom:0;">
+      <div class="progress-bar" style="width: 100%">
+      </div></div></div></div></div></div>
+
+
+
+<div class=ui-base> 
+
+    <!-- Modal Loading -->
+    <div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin:0;">Loading...</h3>
+            </div><div class="modal-body">
+            <div class="progress progress-striped active" style="margin-bottom:0;">
+                <div class="progress-bar" style="width: 100%">
+                </div></div></div></div></div></div>
+
+                <div ui-view name="contenido" animation="slide-left-right"></div>
+            </div>
+
+
+<div class=ui-base> 
+
+    <!-- Modal Loading -->
+    <div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin:0;">Loading...</h3>
+            </div><div class="modal-body">
+            <div class="progress progress-striped active" style="margin-bottom:0;">
+                <div class="progress-bar" style="width: 100%">
+                </div></div></div></div></div></div>
+
+  
+            </div>
+
+<div class=ui-base> 
+
+    <!-- Modal Loading -->
+    <div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin:0;">Loading...</h3>
+            </div><div class="modal-body">
+            <div class="progress progress-striped active" style="margin-bottom:0;">
+                <div class="progress-bar" style="width: 100%">
+                </div></div></div></div></div></div>
+
+            </div>
+
+
+<div class=ui-base> 
+  <div ui-view ></div>
+
+
+
+  <!-- Modal Loading -->
+  <div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 15%; overflow-y: visible; display: none;"><div class="modal-dialog modal-m">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="margin:0;">Cargando...</h3>
+      </div><div class="modal-body">
+      <div class="progress progress-striped active" style="margin-bottom:0;">
+        <div class="progress-bar" style="width: 100%">
+        </div></div></div></div></div></div>
+
+   
+      </div>
