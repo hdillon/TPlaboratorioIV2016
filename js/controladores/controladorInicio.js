@@ -40,6 +40,8 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	$scope.Desloguear=function(){
 		$auth.logout();
 		$scope.flagLogueado = false;
+		$state.go("inicio.home");
+		//$state.reload();
     }
 
 	$scope.resetErrores=function(){

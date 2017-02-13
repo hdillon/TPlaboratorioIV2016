@@ -10,7 +10,7 @@ $traerPersona = Persona::TraerPersonaLogin($usuario->email, $usuario->password);
 
 if ($traerPersona != null){
 	
-	$ClaveDeEncriptacion = 'estaEsLaClave';
+	$ClaveDeEncriptacion = 'ElCampitoClave';
 	$token["id"] = $traerPersona->id;
 	$token["id_local"] = $traerPersona->id_local;
 	$token["nombre"] = $traerPersona->nombre;
@@ -21,10 +21,10 @@ if ($traerPersona != null){
 	$token["exp"]=time()+120;
 
 	$jwt = JWT::encode($token, $ClaveDeEncriptacion); //&genero el token con los datos que quiero
-	$ArrayConToken["ElNombreDelToken"]=$jwt;//Guardo el token en un array (el nombre del token tiene que ser el mismo que en el js)!!
+	$ArrayConToken["ElCampitoToken"]=$jwt;//Guardo el token en un array (el nombre del token tiene que ser el mismo que en el js)!!
 }
 else {
- $ArrayConToken["ElNombreDelToken"]= false;
+ $ArrayConToken["ElCampitoToken"]= false;
 }
 
 echo json_encode($ArrayConToken);//devuelvo el array que contiene el token

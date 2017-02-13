@@ -32,7 +32,7 @@ var app = angular.module('TPInmobiliaria', [
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
 
   $authProvider.loginUrl = 'TPlaboratorioIV2016/PHP/auth.php'; //Ruta del archivo auth que esta en jwt y direcciona a PHP
-  $authProvider.tokenName = 'ElNombreDelToken'; //nombre largo
+  $authProvider.tokenName = 'ElCampitoToken'; //nombre largo
   $authProvider.tokenPrefix = 'Aplicacion'; //sarasa
   $authProvider.authHeader = 'data';
   
@@ -43,9 +43,9 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 templateUrl : 'vistas/inicio.html',
                 controller : 'ControlInicio'
             })
-      .state('inicio.inicio2', {
-                url : '/inicio2',
-                templateUrl : 'vistas/inicio2.html',
+      .state('inicio.home', {
+                url : '/home',
+                templateUrl : 'vistas/home.html',
                 controller : 'ControlInicio'
             })
       .state('usuario', {
@@ -218,5 +218,5 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
             })
       
       
-             $urlRouterProvider.otherwise('inicio/inicio2');
+             $urlRouterProvider.otherwise('inicio/home');
 });

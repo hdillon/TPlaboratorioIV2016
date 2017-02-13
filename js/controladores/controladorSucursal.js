@@ -42,7 +42,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
       console.info("usuario", $scope.usuarioLogueado);
   }else{
     $("#loadingModal").modal('hide');
-      $state.go('inicio');
+      $state.go('inicio.home');
   }
 
   //traigo los usuarios que no tienen un local asignado para llenar los select del formulario
