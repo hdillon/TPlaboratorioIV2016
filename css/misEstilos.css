@@ -499,8 +499,8 @@ body {
 .green-circle-button:focus {
   outline:0;
   color:#ffffff;
-  background-color: #e84d0e;
-  border-color: #e84d0e;
+  background-color: #009688;
+  border-color: #009688;
 }
 
 .green-circle-button:visited {
@@ -537,8 +537,8 @@ body {
 .purple-circle-button:focus {
   outline:0;
   color:#ffffff;
-  background-color: #e84d0e;
-  border-color: #e84d0e;
+  background-color: #673AB7;
+  border-color: #673AB7;
 }
 
 .purple-circle-button:visited {
@@ -575,8 +575,8 @@ body {
 .indigo-circle-button:focus {
   outline:0;
   color:#ffffff;
-  background-color: #e84d0e;
-  border-color: #e84d0e;
+  background-color: #3F51B5;
+  border-color: #3F51B5;
 }
 
 .indigo-circle-button:visited {
