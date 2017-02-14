@@ -431,3 +431,180 @@ body.md-dialog-is-showing {
 }
 
 /* FIN ANIMACIONES BOTONES MENU */
+
+/*BOTONES CIRCULARES*/
+body {
+ font-size: 18px;   
+}
+.orange-circle-button {
+  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+  border: .5em solid #E84D0E;
+  font-size: 2em;
+  line-height: 1.1em;
+  color: #ffffff;
+  background-color: #e84d0e;
+  margin: auto;
+  border-radius: 50%;
+  height: 8em;
+  width: 8em;
+  position: relative;
+}
+.orange-circle-button:hover {
+  color:#ffffff;
+    background-color: #e84d0e;
+  text-decoration: none;
+  border-color: #ff7536;
+  
+}
+.orange-circle-button:visited {
+  color:#ffffff;
+    background-color: #e84d0e;
+  text-decoration: none;
+  
+}
+.orange-circle-link-greater-than {
+    font-size: 1em;
+}
+
+.green-circle-button {
+  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+  border: .5em solid #009688;
+  font-size: 2em;
+  line-height: 1.1em;
+  color: #ffffff;
+  background-color: #009688;
+  margin: auto;
+  border-radius: 50%;
+  height: 8em;
+  width: 8em;
+  position: relative;
+}
+.green-circle-button:hover {
+  color:#ffffff;
+    background-color: #009688;
+  text-decoration: none;
+  border-color: #4DB6AC;
+  
+}
+.green-circle-button:visited {
+  color:#ffffff;
+    background-color: #009688;
+  text-decoration: none;
+  
+}
+.green-circle-link-greater-than {
+    font-size: 1em;
+}
+
+.purple-circle-button {
+  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+  border: .5em solid #673AB7;
+  font-size: 2em;
+  line-height: 1.1em;
+  color: #ffffff;
+  background-color: #673AB7;
+  margin: auto;
+  border-radius: 50%;
+  height: 8em;
+  width: 8em;
+  position: relative;
+}
+.purple-circle-button:hover {
+  color:#ffffff;
+    background-color: #673AB7;
+  text-decoration: none;
+  border-color: #7E57C2;
+  
+}
+.purple-circle-button:visited {
+  color:#ffffff;
+    background-color: #673AB7;
+  text-decoration: none;
+  
+}
+.purple-circle-link-greater-than {
+    font-size: 1em;
+}
+
+.indigo-circle-button {
+  box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+  border: .5em solid #3F51B5;
+  font-size: 2em;
+  line-height: 1.1em;
+  color: #ffffff;
+  background-color: #3F51B5;
+  margin: auto;
+  border-radius: 50%;
+  height: 8em;
+  width: 8em;
+  position: relative;
+}
+.indigo-circle-button:hover {
+  color:#ffffff;
+    background-color: #3F51B5;
+  text-decoration: none;
+  border-color: #5C6BC0;
+  
+}
+.indigo-circle-button:visited {
+  color:#ffffff;
+    background-color: #3F51B5;
+  text-decoration: none;
+  
+}
+.indigo-circle-link-greater-than {
+    font-size: 1em;
+}
+
+/*FIN BOTONES CIRCULARES*/
+
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 50px;
+    right: 45px;
+    font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}

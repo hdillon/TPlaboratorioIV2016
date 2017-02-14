@@ -137,5 +137,13 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	$scope.usuarioLogueado.password = "123456";
   }
 
+  $scope.openNav=function(){
+    document.getElementById("myNav").style.width = "100%";
+  }
+
+  $scope.closeNav=function(){
+    document.getElementById("myNav").style.width = "0%";
+}
+
 });
 
