@@ -143,7 +143,19 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 
   $scope.closeNav=function(){
     document.getElementById("myNav").style.width = "0%";
-}
+  }
+
+  $scope.MostrarTodasLasOfertas=function(){
+	$state.go("inicio.catalogo");
+  }
+
+  $scope.MisReservas=function(){
+	$state.go("inicio.catalogo");
+  }
+
+  $scope.NuestrasScursales=function(){
+	$state.go("inicio.nuestrassucursales");
+  }
 
 });
 

@@ -114,6 +114,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                     }
                 }
             })
+      .state('inicio.nuestrassucursales', {
+                url: '/nuestrassucursales',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/sucursal/nuestrassucursales.html',
+                        controller : 'ControlSucursales'
+                    }
+                }
+            })
       .state('inicio.grilla', {
                 url: '/grilla',
                 views: {
