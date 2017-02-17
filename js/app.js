@@ -119,7 +119,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/sucursal/nuestrassucursales.html',
-                        controller : 'ControlSucursales'
+                        controller : 'ControlNuestrasSucursales'
                     }
                 }
             })

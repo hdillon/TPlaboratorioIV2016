@@ -200,17 +200,6 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout
       
     });
 
-
-//TODO: SACAR HARDCODED ARRAY ************************
-   /* var myArray = Array();
-    myArray[0] = JSON.parse('{"id":1,"nombre":"Sucursal 1", "data" : "dataa", "fecha" : "01-01-2000"}');
-    myArray[1] = JSON.parse('{"id":2,"nombre":"Sucursal 2", "data" : "dataa", "fecha" : "02-02-2000"}');
-    myArray[2] = JSON.parse('{"id":3,"nombre":"Sucursal 3", "data" : "dataa", "fecha" : "03-03-2000"}');
-    $scope.gridOptions.data = myArray;
-
-    console.log(uiGridConstants);*/
-//TODO: SACAR HARDCODED ARRAY ***********************
-
     function columnDefs () {
       return [
         { field: 'id', name: 'ID', width: 45},
@@ -262,6 +251,29 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout
         $scope.gridApi.exporter.pdfExport( $scope.export_row_type, $scope.export_column_type );
       }
     }
+
+})
+
+
+app.controller('ControlNuestrasSucursales', function($scope, $http, $state, ServicioABM) {
+  $("#loadingModal").modal('show');
+  $scope.listaSucursales = [];
+
+  ServicioABM.traerSucursales().then(function(rta){
+      $scope.listaSucursales = rta.data;
+      for (i = 0; i < $scope.listaSucursales.length; i++) {
+        $scope.listaSucursales[i].fotosArray = [];//Cargo un nuevo array con obj de tipo json para que el carousel pueda levantar las fotos 
+        $scope.listaSucursales[i].foto = $scope.listaSucursales[i].foto.split(';');
+        for (j = 0; j < $scope.listaSucursales[i].foto.length; j++) {
+          $scope.listaSucursales[i].fotosArray.push(JSON.parse("{" + '"src"' + ":" + '"' + "./fotos/" + $scope.listaSucursales[i].foto[j] + '"' + "}"));
+        }
+      }
+      console.info("Sucursales: ", $scope.listaSucursales);
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+      
+    });
 
 });
 
