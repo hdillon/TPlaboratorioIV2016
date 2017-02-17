@@ -23,7 +23,7 @@
           <p>Tel.: {{sucursal.telefono}} / Email: {{sucursal.email}}</p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="center">
-          <md-button class="send-button md-accent" md-colors="{background: 'TEAL'}">CATÁLOGO</md-button>
+          <md-button class="send-button md-accent" md-colors="{background: 'TEAL'}" ng-click="MostrarCatalogoSucursal(sucursal)">CATÁLOGO</md-button>
           <md-card-icon-actions>
             <md-button class="md-fab" md-colors="{background: 'RED'}" ng-click="mostrarMapaModal(sucursal)" data-toggle="modal" data-target="#myModal">
               <md-icon md-svg-icon="img/icons/map.svg"></md-icon>

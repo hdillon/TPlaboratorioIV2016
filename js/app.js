@@ -29,8 +29,9 @@ var app = angular.module('TPInmobiliaria', [
     'ngAnimate'
     ]);
 
-app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
+app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider) {
 
+  $qProvider.errorOnUnhandledRejections(false);
   $authProvider.loginUrl = 'TPlaboratorioIV2016/PHP/auth.php'; //Ruta del archivo auth que esta en jwt y direcciona a PHP
   $authProvider.tokenName = 'ElCampitoToken'; //nombre largo
   $authProvider.tokenPrefix = 'Aplicacion'; //sarasa
@@ -157,7 +158,7 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
                 }
             })
       .state('inicio.catalogo', {
-                url: '/catalogo',
+                url: '/catalogo/:sucursal',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/inmueble/catalogo.html',

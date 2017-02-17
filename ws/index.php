@@ -148,6 +148,12 @@ $app->get('/inmuebles[/]', function ($request, $response, $args) {
     return $response;
 });
 
+$app->get('/inmueblesporsucursal/{idSucursal}', function ($request, $response, $args) {
+    $datos = Inmueble::TraerInmueblesPorSucursal($args['idSucursal']);
+    $response->write(json_encode($datos));
+    return $response;
+});
+
 //****************************************TRANSACCIONES********************************************//
 $app->post('/transaccion/alta/{objeto}', function ($request, $response, $args) {
     $transaccion = json_decode($args['objeto']);

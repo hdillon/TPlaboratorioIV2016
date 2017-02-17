@@ -170,6 +170,16 @@ class Inmueble
 		$consulta->bindValue(':id_vendedor',$inmueble->idVendedor, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();			
-	}	
+	}
+
+	public static function TraerInmueblesPorSucursal($id_sucursal)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM inmueble WHERE id_sucursal =:id_sucursal");
+		$consulta->bindValue(':id_sucursal',$id_sucursal, PDO::PARAM_INT);
+		$consulta->execute();		
+		$arrInmuebles= $consulta->fetchAll(PDO::FETCH_CLASS, "inmueble");	
+		return $arrInmuebles;
+	}		
 
 }

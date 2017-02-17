@@ -320,5 +320,9 @@ app.controller('ControlNuestrasSucursales', function($scope, $http, $state, Serv
         });
     }
 
+    $scope.MostrarCatalogoSucursal=function(sucursal){
+      $state.go('inicio.catalogo',{sucursal : JSON.stringify(sucursal)});
+    }
+
 });
 

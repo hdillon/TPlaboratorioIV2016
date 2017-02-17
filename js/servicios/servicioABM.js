@@ -69,6 +69,18 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		});
     }
 
+    this.traerInmueblesPorSucursal = function (ruta, idSucursal) {
+       return $http.get(traerURL() +ruta + idSucursal).then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio inmueblesPorSucursal): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio inmueblesPorSucursal):", error);
+		return error;
+		});
+    }
+
     this.traerPersonasSinLocal = function () {
        return $http.get(traerURL() + "personas/sinlocal/").then(
 		function(respuesta){

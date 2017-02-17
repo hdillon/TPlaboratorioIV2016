@@ -122,7 +122,7 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
     }
 })
 
-app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelper, $auth,NgMap, $window, ServicioABM, $mdDialog) {
+app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $stateParams, jwtHelper, $auth,NgMap, $window, ServicioABM, $mdDialog) {
   $("#cargandoCatalogoModal").modal('show');
   $scope.flagLogueado = false;
   $scope.listaInmuebles = [];
@@ -148,22 +148,42 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state,jwtHelp
     $scope.mapa.latitud = '-34.662716';
     $scope.mapa.longitud = '-58.365113';
 
-  //traigo las inmuebles para llenar el catalogo
-  ServicioABM.traer("inmuebles").then(function(rta){
-      $scope.listaInmuebles = rta.data;
-      console.info("inmuebles:", $scope.listaInmuebles);
-      for (i = 0; i < $scope.listaInmuebles.length; i++) {
-        $scope.listaInmuebles[i].fotosArray = [];//Cargo un nuevo array con obj de tipo json para que el carousel pueda levantar las fotos 
-        $scope.listaInmuebles[i].foto = $scope.listaInmuebles[i].foto.split(',');
-        for (j = 0; j < $scope.listaInmuebles[i].foto.length; j++) {
-          $scope.listaInmuebles[i].fotosArray.push(JSON.parse("{" + '"src"' + ":" + '"' + "./fotos/" + $scope.listaInmuebles[i].foto[j] + '"' + "}"));
+  if($stateParams.sucursal != ""){//Si la sucursal viene por parámetro traigo sólo los inmuebles de esa sucursal, sino traigo todos
+    var _sucursal = JSON.parse($stateParams.sucursal);
+    //traigo las inmuebles para llenar el catalogo
+    ServicioABM.traerInmueblesPorSucursal("inmueblesporsucursal/", _sucursal.id).then(function(rta){
+        $scope.listaInmuebles = rta.data;
+        console.info("inmuebles:", $scope.listaInmuebles);
+        for (i = 0; i < $scope.listaInmuebles.length; i++) {
+          $scope.listaInmuebles[i].fotosArray = [];//Cargo un nuevo array con obj de tipo json para que el carousel pueda levantar las fotos 
+          $scope.listaInmuebles[i].foto = $scope.listaInmuebles[i].foto.split(',');
+          for (j = 0; j < $scope.listaInmuebles[i].foto.length; j++) {
+            $scope.listaInmuebles[i].fotosArray.push(JSON.parse("{" + '"src"' + ":" + '"' + "./fotos/" + $scope.listaInmuebles[i].foto[j] + '"' + "}"));
+          }
         }
-      }
-      console.info("inmuebles after transformation:", $scope.listaInmuebles);
-      setTimeout(function () {
-          $("#cargandoCatalogoModal").modal('hide');
-      }, 1000)
-  });
+        console.info("inmuebles after transformation:", $scope.listaInmuebles);
+        setTimeout(function () {
+            $("#cargandoCatalogoModal").modal('hide');
+        }, 1000)
+    });
+  }else{
+    //traigo las inmuebles para llenar el catalogo
+    ServicioABM.traer("inmuebles").then(function(rta){
+        $scope.listaInmuebles = rta.data;
+        console.info("inmuebles:", $scope.listaInmuebles);
+        for (i = 0; i < $scope.listaInmuebles.length; i++) {
+          $scope.listaInmuebles[i].fotosArray = [];//Cargo un nuevo array con obj de tipo json para que el carousel pueda levantar las fotos 
+          $scope.listaInmuebles[i].foto = $scope.listaInmuebles[i].foto.split(',');
+          for (j = 0; j < $scope.listaInmuebles[i].foto.length; j++) {
+            $scope.listaInmuebles[i].fotosArray.push(JSON.parse("{" + '"src"' + ":" + '"' + "./fotos/" + $scope.listaInmuebles[i].foto[j] + '"' + "}"));
+          }
+        }
+        console.info("inmuebles after transformation:", $scope.listaInmuebles);
+        setTimeout(function () {
+            $("#cargandoCatalogoModal").modal('hide');
+        }, 1000)
+    });
+  }
 
   $scope.reservarInmueble=function(inmueble){
      $("#loadingModal").modal('show');
