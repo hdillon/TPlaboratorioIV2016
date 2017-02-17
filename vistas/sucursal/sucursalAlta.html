@@ -33,6 +33,21 @@
         <p class="help-block" ng-if="formAltaSucursal.altura.$error.required">Debe ingresar la Altura de la dirección</p>
       </div>
     </div>
+    <div class="form-group" show-errors>
+      <div>
+        <label class="control-label" for="telefono">Tel:</label>
+        <input type="number" class="form-control" id="telefono" name="telefono"ng-model="sucursal.telefono" placeholder="Telefono" required>
+        <p class="help-block" ng-if="formAltaSucursal.telefono.$error.required">Debe ingresar el Telefono</p>
+      </div>
+    </div>
+    <div class="form-group" show-errors>
+      <div>
+        <label class="control-label" for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" ng-model="sucursal.email" placeholder="Email" required>
+        <p class="help-block" ng-if="formAltaSucursal.email.$error.required">Debe ingresar el Email</p>
+        <p class="help-block" ng-if="formAltaSucursal.email.$error.email">El Email ingresado no es válido</p>
+      </div>
+    </div>
 
     <div class="form-group">
       <div>

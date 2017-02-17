@@ -27,8 +27,8 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
   $scope.sucursal.altura;
   $scope.sucursal.latitud;
   $scope.sucursal.longitud;
-  $scope.sucursal.email = "suc@suc.com";
-  $scope.sucursal.telefono = 123456;
+  $scope.sucursal.email;
+  $scope.sucursal.telefono;
   $scope.sucursal.foto = "";
   $scope.sucursal.idEncargado;
   $scope.subidorDeArchivos = new FileUploader({url:'PHP/nexo.php'});
