@@ -1,5 +1,5 @@
 <div class="container">
-  <br><br><br><br><br><br>
+  <br><br><br><br>
   <div class="row">
     <div ng-repeat="sucursal in listaSucursales" class="col-md-4">
       <md-card>
@@ -20,15 +20,18 @@
         </md-card-title>
         <md-card-content>
           <p>Ubicación:{{sucursal.direccion}} {{sucursal.altura}}</p>
-          <p>Email: {{sucursal.email}}</p>
-          <p>Tel.: {{sucursal.telefono}}</p>
+          <p>Tel.: {{sucursal.telefono}} / Email: {{sucursal.email}}</p>
         </md-card-content>
-        <md-card-actions layout="column" layout-align="start">
-          <md-button>Action 1</md-button>
-          <md-button>Action 2</md-button>
+        <md-card-actions layout="row" layout-align="center">
+          <md-button class="send-button md-accent" md-colors="{background: 'TEAL'}">CATÁLOGO</md-button>
+          <md-card-icon-actions>
+            <md-button class="md-fab" md-colors="{background: 'RED'}" ng-click="mostrarMapaModal(sucursal)" data-toggle="modal" data-target="#myModal">
+              <md-icon md-svg-icon="img/icons/map.svg"></md-icon>
+            </md-button>
+          </md-card-icon-actions>
         </md-card-actions>
       </md-card>
     </div>   
   </div>
 </div>  
-
+<br><br><br><br><br><br>

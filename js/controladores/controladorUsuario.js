@@ -19,7 +19,6 @@ app.controller('ControlUsuarios', function($scope, $http, $state, jwtHelper, $au
 });
 
 app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioABM, jwtHelper) {
-	$("#loadingModal").modal('show');
 	$scope.usuario={};
 	$scope.usuario.nombre = "";
 	$scope.usuario.apellido = "";
@@ -30,7 +29,6 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
 	$scope.usuario.foto = "foto.jpg";
 	$scope.usuario.perfil = "";
 	$scope.usuario.estado = "activo";
-	$scope.usuario.idLocal;
 	$scope.listaSucursales;
 
 	if($auth.isAuthenticated()){
@@ -38,26 +36,16 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
       console.info("usuarioLogueado", $scope.usuarioLogueado);
     }else{
     $("#loadingModal").modal('hide');
-      $state.go('inicio');
+      $state.go('inicio.home');
     }
-
-    //traigo el listado de sucursales para llenar el select del formulario
-    ServicioABM.traerSucursales().then(function(rta){
-      console.info("rta", rta.data);
-      $scope.listaSucursales = rta.data;
-      setTimeout(function () {
-          $("#loadingModal").modal('hide');
-      }, 1000)
-    });
 
 	$scope.CrearUsuario = function(){
 	  $scope.$broadcast('show-errors-check-validity');
 	  if ($scope.formAltaUsuario.$invalid) { return; }
-	  $scope.usuario.idLocal = Number($scope.usuario.idLocal);
-	  ServicioABM.guardar("persona/alta/", $scope.usuario).then(
+	  ServicioABM.guardar("personas/alta/", $scope.usuario).then(
       function(respuesta){
       console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
-      $state.go('inicio');
+      $state.go('inicio.home');
       },
       function(error){
         console.info("ERROR! (ctrl alta usuario): ", error);

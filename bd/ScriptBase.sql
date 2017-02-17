@@ -17,8 +17,6 @@ ALTER TABLE `persona`
 
 ALTER TABLE `persona`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `persona` ADD `id_local` INT NULL DEFAULT NULL AFTER `estado`;
   
 -- Tabla sucursal:
 

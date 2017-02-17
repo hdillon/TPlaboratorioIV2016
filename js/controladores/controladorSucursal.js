@@ -83,7 +83,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
           function(respuesta){
             console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
             $("#loadingModal").modal('hide');
-            $state.go('sucursal.grilla');
+            $state.go('inicio.home');
           },
           function(error){
             console.info("ERROR! (ctrl alta sucursal): ", error);
@@ -255,7 +255,7 @@ app.controller('ControlGrillaSucursal', function($scope, $http, $state, $timeout
 })
 
 
-app.controller('ControlNuestrasSucursales', function($scope, $http, $state, ServicioABM) {
+app.controller('ControlNuestrasSucursales', function($scope, $http, $state, ServicioABM, NgMap) {
   $("#loadingModal").modal('show');
   $scope.listaSucursales = [];
 
@@ -274,6 +274,51 @@ app.controller('ControlNuestrasSucursales', function($scope, $http, $state, Serv
       }, 1000)
       
     });
+
+  $scope.marker = new google.maps.Marker({
+        title: 'default'
+      });
+    $scope.mapa = {};
+    $scope.mapa.latitud = '-34.662716';
+    $scope.mapa.longitud = '-58.365113';
+
+  $scope.mostrarMapaModal = function(sucursal){
+      $scope.ModalHeader = sucursal.direccion + " " + sucursal.altura;
+      console.info("sucursal: ", sucursal);
+
+        NgMap.getMap("miMapaModal").then(function(map) {
+          console.log(map.getCenter());
+          console.log(map);
+
+          var myLatLng = {lat: Number(sucursal.latitud), lng: Number(sucursal.longitud)};
+          //elimino el marker anterior del mapa
+          $scope.marker.setMap(null);
+
+          $scope.marker = new google.maps.Marker({
+            position: myLatLng,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            title: sucursal.nombre
+          });
+
+          $scope.marker.setMap(map);
+
+          $("#myModal").on("shown.bs.modal", function(e) {
+          google.maps.event.trigger(map, "resize");
+           map.setCenter(myLatLng);// Set here center map coordinates
+          });
+
+
+          google.maps.event.addListener(map, 'dblclick', function(event) {
+            marker = new google.maps.Marker({position: event.latLng, map: map});
+            var latitude = marker.position.lat();
+            var longitude = marker.position.lng();
+            console.info("lat: ", latitude);
+            console.info("longitude: ", longitude);
+          });
+
+        });
+    }
 
 });
 

@@ -13,7 +13,6 @@ class Persona
   	public $foto;
   	public $perfil;
   	public $estado;
-  	public $idLocal;
 
 //--------------------------------------------------------------------------------//
 
@@ -203,7 +202,7 @@ class Persona
 	public static function InsertarPersona($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,telefono,foto,perfil,estado,id_local)values(:nombre,:apellido,:email,:password,:telefono,:foto,:perfil,:estado,:id_local)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,telefono,foto,perfil,estado)values(:nombre,:apellido,:email,:password,:telefono,:foto,:perfil,:estado)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
 		$consulta->bindValue(':email', $persona->email, PDO::PARAM_INT);
@@ -212,7 +211,6 @@ class Persona
 		$consulta->bindValue(':foto',$persona->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':perfil',$persona->perfil, PDO::PARAM_STR);
 		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
-		$consulta->bindValue(':id_local',$persona->idLocal, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();		
 	}	

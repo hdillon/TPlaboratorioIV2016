@@ -12,7 +12,6 @@ if ($traerPersona != null){
 	
 	$ClaveDeEncriptacion = 'ElCampitoClave';
 	$token["id"] = $traerPersona->id;
-	$token["id_local"] = $traerPersona->id_local;
 	$token["nombre"] = $traerPersona->nombre;
 	$token["apellido"] = $traerPersona->apellido;
 	$token["email"] = $traerPersona->email;

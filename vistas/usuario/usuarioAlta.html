@@ -67,17 +67,6 @@
     </div>
     <div class="form-group">
       <div>
-       <label class="control-label" for="sucursal">Sucursal Asignada:</label>
-       <select  class="form-control" id="selEncargado" ng-model="usuario.idLocal">
-       <option disabled selected value>Seleccione Sucursal</option>
-        <option ng-repeat="sucursal in listaSucursales" value="{{sucursal.id}}">
-            {{sucursal.nombre}}
-        </option>
-       </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <div>
        <div class="margenfix">
         <md-button ng-click="CrearUsuario()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Crear Usuario</md-button>
        </div>
