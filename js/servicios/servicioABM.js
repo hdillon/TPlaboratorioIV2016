@@ -33,18 +33,6 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		});
     }
 
-    this.traerPersonas = function () {
-       return $http.get(traerURL()).then(
-		function(respuesta){
-			console.info("RESPUESTA (Servicio traerPersonas): ", respuesta);
-			return respuesta; 
-		},
-		function(error){
-			console.info("ERROR (Servicio traerPersonas):", error);
-		return error;
-		});
-    }
-
     this.traer = function (ruta) {
        return $http.get(traerURL() + ruta).then(
 		function(respuesta){
@@ -53,6 +41,18 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		},
 		function(error){
 			console.info("ERROR (Servicio traer):", error);
+		return error;
+		});
+    }
+
+    this.borrar = function (ruta, obj) {
+       return $http.put(traerURL() + ruta + JSON.stringify(obj)).then(
+		function(respuesta){
+			console.info("RESPUESTA (Servicio borrar): ", respuesta);
+			return respuesta; 
+		},
+		function(error){
+			console.info("ERROR (Servicio borrar):", error);
 		return error;
 		});
     }

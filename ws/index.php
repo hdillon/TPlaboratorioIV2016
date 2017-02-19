@@ -108,9 +108,9 @@ $app->put('/modificar/{objeto}', function ($request, $response, $args) {
     return $response;
 });
 
-$app->delete('/personas/{id}', function ($request, $response, $args) {
+$app->put('/borrarpersona/{id}', function ($request, $response, $args) {
     $datos = Persona::BorrarPersona($args['id']);
-    $response->write("borrar !: ");
+    $response->write($datos);
     //var_dump($args);
     return $response;
 });

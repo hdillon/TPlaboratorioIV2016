@@ -35,22 +35,6 @@
 			    </span>
 	        </div>
 	    </div>
-
-        <!--div class="col-lg-6" ng-if="mostrarSelect == 'Encuestas'">
-        <label class="control-label col-sm-3" for="sucursal">Usuario:</label>
-            <div class="input-group my-group"> 
-
-               <select  class="form-control" id="selPersona" ng-model="idPersona">
-                            <option disabled selected value>Seleccione Usuario</option>
-                    <option ng-repeat="persona in listaPersonas" value="{{persona.id}}">
-                        {{persona.nombre}} {{persona.apellido}}
-                    </option>
-                </select> 
-                <span class="input-group-btn">
-                    <button class="btn btn-primary btn-default pull-left" ng-click="cargarGrafico()" type="submit">CARGAR</button>
-                </span>
-            </div>
-        </div-->
 	</div>
 </form>
 
@@ -92,7 +76,7 @@
             <hr>
             
             <div grid-data id='test' grid-options="gridOptions" grid-actions="gridActions">
-                <div layout-gt-sm="row" layout-sm="column" layout-align="center">
+
                     <div flex-gt-sm="25" flex-sm="100" layout="row" layout-align="start center">
                         <span>Total de registros: {{filtered.length}}</span>
                     </div>
@@ -146,28 +130,11 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
-                <div layout-xs="column" layout="row" layout-align-xs="end end" layout-align="end center">
-                    <grid-pagination max-size="5"
-                                     boundary-links="true"
-                                     class="pagination"
-                                     ng-if="paginationOptions.totalItems  > paginationOptions.itemsPerPage"
-                                     total-items="paginationOptions.totalItems"
-                                     ng-model="paginationOptions.currentPage"
-                                     ng-change="reloadGrid()"
-                                     items-per-page="paginationOptions.itemsPerPage"></grid-pagination>
-                    <md-input-container flex-offset-gt-xs="5" class="items-per-page">
-                        <md-select ng-init="paginationOptions.itemsPerPage = '10'" placeholder="Rows" ng-model="paginationOptions.itemsPerPage" ng-change="reloadGrid()">
-                            <md-option>10</md-option>
-                            <md-option>25</md-option>
-                            <md-option>50</md-option>
-                            <md-option>75</md-option>
-                        </md-select>
-                    </md-input-container>
-                </div>
+                </div> 
             </div>
         </div>
     </md-content>
 </div>
+<br><br><br><br>
 
 </div>

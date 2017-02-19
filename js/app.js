@@ -91,6 +91,15 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                     }
                 }
             })
+      .state('inicio.grillausuarios', {
+                url: '/grillausuarios',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/usuario/usuarioGrilla.html',
+                        controller : 'ControlGrillaUsuario'
+                    }
+                }
+            })
       .state('sucursal', {
                 url : '/sucursal',
                 abstract:true,
@@ -121,15 +130,6 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                     'contenido': {
                         templateUrl: 'vistas/sucursal/nuestrassucursales.html',
                         controller : 'ControlNuestrasSucursales'
-                    }
-                }
-            })
-      .state('inicio.grilla', {
-                url: '/grilla',
-                views: {
-                    'contenido': {
-                        templateUrl: 'vistas/sucursal/sucursalGrilla.html',
-                        controller : 'ControlGrillaSucursal'
                     }
                 }
             })
@@ -190,8 +190,8 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                     }
                 }
             })
-      .state('inicio.ventasporlocal', {
-                url: '/ventasporlocal',
+      .state('inicio.ventasporsucursal', {
+                url: '/ventasporsucursal',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/estadisticas/estadisticas.html',

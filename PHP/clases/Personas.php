@@ -2,8 +2,7 @@
 require_once"AccesoDatos.php";
 class Persona
 {
-//--------------------------------------------------------------------------------//
-//--ATRIBUTOS
+
 	public $id;
 	public $nombre;
  	public $apellido;
@@ -14,10 +13,6 @@ class Persona
   	public $perfil;
   	public $estado;
 
-//--------------------------------------------------------------------------------//
-
-//--------------------------------------------------------------------------------//
-//--GETTERS Y SETTERS
   	public function GetId()
 	{
 		return $this->id;
@@ -95,8 +90,7 @@ class Persona
 	{
 		$this->estado = $valor;
 	}
-//--------------------------------------------------------------------------------//
-//--CONSTRUCTOR
+
 	public function __construct($email=NULL)
 	{
 		if($email != NULL){
@@ -113,16 +107,6 @@ class Persona
 		}
 	}
 
-//--------------------------------------------------------------------------------//
-//--TOSTRING	
-  	public function ToString()
-	{
-	  	return $this->apellido."-".$this->nombre."-".$this->email."-".$this->foto;
-	}
-//--------------------------------------------------------------------------------//
-
-//--------------------------------------------------------------------------------//
-//--METODO DE CLASE
 	public static function TraerUnaPersona($idParametro) 
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
@@ -136,7 +120,7 @@ class Persona
 	public static function TraerPersonaLogin($email, $pass) 
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where email =:email and password =:password");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from persona where email =:email and password =:password and estado = 'activo'");
 		$consulta->bindValue(':email', $email, PDO::PARAM_STR);
 		$consulta->bindValue(':password', $pass, PDO::PARAM_STR);
 		$consulta->execute();
@@ -166,7 +150,7 @@ class Persona
 	public static function BorrarPersona($idParametro)
 	{	
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("delete from persona	WHERE id=:id");
+		$consulta =$objetoAccesoDato->RetornarConsulta("update persona set estado = 'bloqueado' WHERE id=:id");
 		$consulta->bindValue(':id',$idParametro, PDO::PARAM_INT);		
 		$consulta->execute();
 		return $consulta->rowCount();
