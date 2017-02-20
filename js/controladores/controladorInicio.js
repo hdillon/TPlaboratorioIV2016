@@ -1,6 +1,6 @@
 angular.module('TPInmobiliaria.controllers', [])
 
-app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http, $auth, ServicioABM, $window) {
+app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jwtHelper, $http, $auth, ServicioABM, $window) {
 	$scope.flagLogueado = false;
 	$scope.loginIncorrecto = false;
 	$scope.registroIncorrecto = false;
@@ -20,7 +20,12 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	    $scope.flagLogueado = true;
 	    console.info("usuarioLogueado", $scope.usuarioLogueado);
 	}else{
+		console.log("USUARIO NO LOGUEADO INICIO");
 		$scope.flagLogueado = false;
+		console.info("session Agotada: ", $stateParams.sesionagotada);
+		if($stateParams.sesionagotada != ""){
+			$("#modalSesionAgotada").modal();
+		}
 	}
 
 	$scope.goToLogin=function(){
@@ -47,6 +52,10 @@ app.controller('ControlInicio', function($scope, $state, $auth, jwtHelper, $http
 	$scope.resetErrores=function(){
 		$scope.$broadcast('show-errors-reset');
     }
+
+	$scope.reload = function(){
+		$state.go("inicio.menuinicio");
+	}    
 
 	$scope.Login = function(){
 		$scope.$broadcast('show-errors-check-validity');

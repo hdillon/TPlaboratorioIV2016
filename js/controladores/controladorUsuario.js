@@ -36,7 +36,7 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
       console.info("usuarioLogueado", $scope.usuarioLogueado);
     }else{
     $("#loadingModal").modal('hide');
-      $state.go('inicio.home');
+      $state.go('inicio.home', {sesionagotada : "true"});
     }
 
 	$scope.CrearUsuario = function(){

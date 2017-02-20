@@ -44,8 +44,13 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                 templateUrl : 'vistas/inicio.html',
                 controller : 'ControlInicio'
             })
+      .state('inicio.menuinicio', {
+                url : '/menuinicio',
+                templateUrl : 'vistas/menuinicio.html',
+                controller : 'ControlInicio'
+            })
       .state('inicio.home', {
-                url : '/home',
+                url : '/home/:sesionagotada',
                 templateUrl : 'vistas/home.html',
                 controller : 'ControlInicio'
             })
@@ -228,5 +233,5 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
             })
       
       
-             $urlRouterProvider.otherwise('inicio/home');
+             $urlRouterProvider.otherwise('inicio/home/');
 });
