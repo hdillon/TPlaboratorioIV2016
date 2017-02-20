@@ -42,7 +42,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
       console.info("usuario", $scope.usuarioLogueado);
   }else{
     $("#loadingModal").modal('hide');
-      $state.go('inicio.home');
+      $state.go('inicio.menuinicio', {sesionagotada : "true"});
   }
 
   //traigo los usuarios que no tienen un local asignado para llenar los select del formulario
@@ -83,7 +83,7 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
           function(respuesta){
             console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
             $("#loadingModal").modal('hide');
-            $state.go('inicio.home');
+            $state.go('inicio.menuinicio');
           },
           function(error){
             console.info("ERROR! (ctrl alta sucursal): ", error);

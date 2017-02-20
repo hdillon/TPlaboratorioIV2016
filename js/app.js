@@ -45,12 +45,14 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                 controller : 'ControlInicio'
             })
       .state('inicio.menuinicio', {
-                url : '/menuinicio',
+                url : '/menuinicio/:sesionagotada',
+                reloadOnSearch: false,
                 templateUrl : 'vistas/menuinicio.html',
                 controller : 'ControlInicio'
             })
       .state('inicio.home', {
                 url : '/home/:sesionagotada',
+                reloadOnSearch: false,
                 templateUrl : 'vistas/home.html',
                 controller : 'ControlInicio'
             })
@@ -88,7 +90,7 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                 }
             })
       .state('inicio.altausuario', {
-                url: '/altausuario',
+                url: '/altausuario/:usuario',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/usuario/usuarioAlta.html',

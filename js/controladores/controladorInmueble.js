@@ -133,7 +133,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
   }else{
     $scope.flagLogueado = false;
     $("#cargandoCatalogoModal").modal('hide');
-      $state.go('inicio.home');
+      $state.go('inicio.menuinicio', {sesionagotada : "true"});
   }
 
   $scope.Desloguear=function(){
@@ -299,7 +299,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
     $mdDialog.show(confirm).then(function() {
       $state.go('inicio.encuesta');
     }, function() {
-      $state.go('inicio.home');
+      $state.go('inicio.menuinicio');
     });
   };
 
@@ -436,9 +436,9 @@ app.controller('ControlEncuesta', function($scope, $http, $state,jwtHelper, $aut
 
     $mdDialog.show(confirm).then(function() {
       console.info("Resultados: ", $scope.resultadoEncuesta);
-      $state.go('inicio.home');
+      $state.go('inicio.menuinicio');
     }, function() {
-      $state.go('inicio.home');
+      $state.go('inicio.menuinicio');
     });
   };
 

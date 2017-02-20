@@ -6,7 +6,7 @@
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Alta Usuario</h3>
+          <h3 class="panel-title">{{accion}} Usuario</h3>
         </div>
         <div class="panel-body">
   <form class="form-horizontal" id="formAltaUsuario" name="formAltaUsuario" role="form">
@@ -46,14 +46,7 @@
         <p class="help-block" ng-if="formAltaUsuario.password.$error.required">Debe ingresar el Password</p>
       </div>
     </div>
-    <div class="form-group" show-errors>
-      <div>
-        <label class="control-label" for="password2">Password:</label>
-        <input type="password" class="form-control" id="password2" name="password2" ng-model="usuario.password2" placeholder="Repetir Password" required>
-        <p class="help-block" ng-if="formAltaUsuario.password2.$error.required">Debe ingresar el Password</p>
-      </div>
-    </div>
-    <div class="form-group">
+    <div class="form-group" ng-if="accion == 'Alta'">
       <div>
         <label class="control-label" for="perfil">Perfil:</label>
         <select class="form-control" ng-model="usuario.perfil">
@@ -68,7 +61,7 @@
     <div class="form-group">
       <div>
        <div class="margenfix">
-        <md-button ng-click="CrearUsuario()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Crear Usuario</md-button>
+        <md-button ng-click="this[accionFormulario]()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> {{accion}} Usuario</md-button>
        </div>
       </div>
     </div>

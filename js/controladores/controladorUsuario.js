@@ -1,48 +1,64 @@
 angular.module('TPInmobiliaria.controladorUsuario', [])
 
 app.controller('ControlUsuarios', function($scope, $http, $state, jwtHelper, $auth) {
-	$scope.flagLogueado = false;
+  $scope.flagLogueado = false;
 
-	if($auth.isAuthenticated()){
-	$scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
-	  $scope.flagLogueado = true;
-	  console.info("usuario", $scope.usuarioLogueado);
-	}else{
-	  $scope.flagLogueado = false;
-	}
+  if($auth.isAuthenticated()){
+  $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+    $scope.flagLogueado = true;
+    console.info("usuario", $scope.usuarioLogueado);
+  }else{
+    $scope.flagLogueado = false;
+  }
 
-	$scope.Desloguear=function(){
-	  $auth.logout();
-	  $scope.flagLogueado = false;
-	}
+  $scope.Desloguear=function(){
+    $auth.logout();
+    $scope.flagLogueado = false;
+  }
+
+  $scope.FormularioAltaUsuario=function(){
+    $state.go("inicio.altausuario");
+  }
 
 });
 
-app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, ServicioABM, jwtHelper) {
-	$scope.usuario={};
-	$scope.usuario.nombre = "";
-	$scope.usuario.apellido = "";
-	$scope.usuario.telefono ;
-	$scope.usuario.email = "";
-	$scope.usuario.password = "";
-	$scope.usuario.password2 = "";
-	$scope.usuario.foto = "foto.jpg";
-	$scope.usuario.perfil = "";
-	$scope.usuario.estado = "activo";
-	$scope.listaSucursales;
+app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $stateParams, $auth, ServicioABM, jwtHelper) {
+  $scope.accion = "Alta";
+  $scope.accionFormulario = "CrearUsuario";
+  $scope.usuario={};
+  $scope.usuario.nombre = "";
+  $scope.usuario.apellido = "";
+  $scope.usuario.telefono ;
+  $scope.usuario.email = "";
+  $scope.usuario.password = "";
+  $scope.usuario.foto = "foto.jpg";
+  $scope.usuario.perfil = "";
+  $scope.usuario.estado = "activo";
+  $scope.listaSucursales;
 
-	if($auth.isAuthenticated()){
+  if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
       console.info("usuarioLogueado", $scope.usuarioLogueado);
     }else{
     $("#loadingModal").modal('hide');
-      $state.go('inicio.home', {sesionagotada : "true"});
+      $state.go('inicio.menuinicio', {sesionagotada : "true"});
     }
+    console.info("USER: ",$stateParams.usuario);
+   if($stateParams.usuario != "" && $stateParams.usuario != undefined){
+    $scope.accion = "Editar";
+    $scope.accionFormulario = "ModificarUsuario";
+      var pUsuario = JSON.parse($stateParams.usuario);
+      $scope.usuario.nombre = pUsuario.nombre;
+      $scope.usuario.apellido = pUsuario.apellido;
+      $scope.usuario.telefono = Number(pUsuario.telefono);
+      $scope.usuario.email = pUsuario.email;
+      $scope.usuario.password = pUsuario.password;
+   }
 
-	$scope.CrearUsuario = function(){
-	  $scope.$broadcast('show-errors-check-validity');
-	  if ($scope.formAltaUsuario.$invalid) { return; }
-	  ServicioABM.guardar("personas/alta/", $scope.usuario).then(
+  $scope.CrearUsuario = function(){
+    $scope.$broadcast('show-errors-check-validity');
+    if ($scope.formAltaUsuario.$invalid) { return; }
+    ServicioABM.guardar("personas/alta/", $scope.usuario).then(
       function(respuesta){
       console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
       $state.go('inicio.home');
@@ -51,7 +67,7 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $auth, S
         console.info("ERROR! (ctrl alta usuario): ", error);
         alert("ERROR AL CREAR USUARIO");
       });
-	}
+  }
 
 })
 
@@ -131,8 +147,8 @@ app.controller('ControlGrillaUsuario', function($scope, $http, $state, $timeout,
     function columnDefs () {
       return [
         { field: 'id', name: 'ID', width: 45,enableSorting: false},
-        { field: 'apellido', name: 'apellido'
-        },
+        { field: 'apellido', name: 'apellido'},
+        { field: 'nombre', name: 'nombre'},
         { field: 'email', name: 'email'},
         { field: 'telefono', name: 'telefono', enableSorting: false},
         { field: 'perfil', name: 'perfil'},
@@ -146,6 +162,9 @@ app.controller('ControlGrillaUsuario', function($scope, $http, $state, $timeout,
       ];
     }
 
+    $scope.EditarUsuario = function(rowEntity){
+      $state.go('inicio.altausuario',{usuario : JSON.stringify(rowEntity)});
+    }
 
     $scope.bajaUsuario = function(rowEntity){
       var idusuario = rowEntity.id;

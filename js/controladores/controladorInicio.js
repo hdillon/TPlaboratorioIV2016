@@ -23,7 +23,7 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
 		console.log("USUARIO NO LOGUEADO INICIO");
 		$scope.flagLogueado = false;
 		console.info("session Agotada: ", $stateParams.sesionagotada);
-		if($stateParams.sesionagotada != ""){
+		if($stateParams.sesionagotada != "" && $stateParams.sesionagotada != undefined){
 			$("#modalSesionAgotada").modal();
 		}
 	}
@@ -54,7 +54,8 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
     }
 
 	$scope.reload = function(){
-		$state.go("inicio.menuinicio");
+		//Limpio el parametro sesionagotada para que no me vuelva a mostrar el dialogo cuando se cargue la página de inicio
+		$state.go("inicio.home", {sesionagotada : ""}, {reload: true});
 	}    
 
 	$scope.Login = function(){
@@ -70,7 +71,8 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
 	          console.info("token", $auth.getPayload());
 	          $("#loginModal").modal('hide');
 	          $scope.GuardarFechaLogin($auth.getPayload());
-	      	  $state.reload();//Si se logueó correctamente recargo la pantalla de inicio para actualizar el nav-bar
+	          $state.go("inicio.menuinicio", {sesionagotada : ""}, {reload: true});
+	      	  //$state.reload();//Si se logueó correctamente recargo la pantalla de inicio para actualizar el nav-bar
 	      	}
 	        else{
 	          console.info("no token", $auth.getPayload());
