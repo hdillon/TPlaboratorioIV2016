@@ -98,7 +98,7 @@ class Inmueble
 	public static function TraerTodosLosInmuebles()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("select * from inmueble");
+		$consulta =$objetoAccesoDato->RetornarConsulta("select * from inmueble where id not in (select id_inmueble from transaccion)");
 		$consulta->execute();			
 		$arrInmuebles= $consulta->fetchAll(PDO::FETCH_CLASS, "inmueble");	
 		return $arrInmuebles;
@@ -119,32 +119,22 @@ class Inmueble
 			$consulta =$objetoAccesoDato->RetornarConsulta("
 				update inmueble 
 				set descripcion=:descripcion,
-				direccion=:direccion,
-				altura=:altura,
-				latitud=:latitud,
-				longitud=:longitud,
 				precio=:precio,
 				ambientes=:ambientes,
 				oferta=:oferta,
 				tipo=:tipo,
-				foto=:foto,
-				id_sucursal = :idsucursal,
-				id_vendedor = :idvendedor
+				id_sucursal = :id_sucursal,
+				id_vendedor = :id_vendedor
 				WHERE id=:id");
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 			$consulta->bindValue(':id',$inmueble->id, PDO::PARAM_INT);
 			$consulta->bindValue(':descripcion',$inmueble->descripcion, PDO::PARAM_STR);
-			$consulta->bindValue(':direccion', $inmueble->direccion, PDO::PARAM_STR);
-			$consulta->bindValue(':altura', $inmueble->altura, PDO::PARAM_INT);
-			$consulta->bindValue(':latitud', $inmueble->latitud, PDO::PARAM_STR);
-			$consulta->bindValue(':longitud', $inmueble->longitud, PDO::PARAM_STR);
 			$consulta->bindValue(':precio', $inmueble->precio, PDO::PARAM_STR);
 			$consulta->bindValue(':ambientes', $inmueble->ambientes, PDO::PARAM_INT);
 			$consulta->bindValue(':oferta', $inmueble->tipoOferta, PDO::PARAM_STR);
 			$consulta->bindValue(':tipo', $inmueble->tipo, PDO::PARAM_STR);
-			$consulta->bindValue(':foto', $inmueble->foto, PDO::PARAM_STR);
-			$consulta->bindValue(':id_sucursal',$inmueble->idVendedor, PDO::PARAM_INT);
-			$consulta->bindValue(':id_vendedor',$inmueble->idSucursal, PDO::PARAM_INT);
+			$consulta->bindValue(':id_sucursal',$inmueble->idSucursal, PDO::PARAM_INT);
+			$consulta->bindValue(':id_vendedor',$inmueble->idVendedor, PDO::PARAM_INT);
 			return $consulta->execute();
 	}
 
@@ -175,8 +165,18 @@ class Inmueble
 	public static function TraerInmueblesPorSucursal($id_sucursal)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM inmueble WHERE id_sucursal =:id_sucursal");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM inmueble WHERE id_sucursal =:id_sucursal and id not in (select id_inmueble from transaccion)");
 		$consulta->bindValue(':id_sucursal',$id_sucursal, PDO::PARAM_INT);
+		$consulta->execute();		
+		$arrInmuebles= $consulta->fetchAll(PDO::FETCH_CLASS, "inmueble");	
+		return $arrInmuebles;
+	}	
+
+	public static function TraerReservasPorCliente($id_cliente)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT i.* FROM inmueble i, transaccion t WHERE i.id = t.id_inmueble and t.id_cliente =:id_cliente");
+		$consulta->bindValue(':id_cliente',$id_cliente, PDO::PARAM_INT);
 		$consulta->execute();		
 		$arrInmuebles= $consulta->fetchAll(PDO::FETCH_CLASS, "inmueble");	
 		return $arrInmuebles;

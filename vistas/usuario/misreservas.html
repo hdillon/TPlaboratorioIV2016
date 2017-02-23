@@ -1,12 +1,15 @@
 <section>
 <div class="container">
-  <br><br><br><br>
+ <br><br>
+  <div class="page-header">
+    <h2 class="bg-primary text-center">{{tituloReservas}}</h2>
+  </div>
   <div class="row">
-    <div ng-repeat="sucursal in listaSucursales" class="col-md-4">
+    <div ng-repeat="reserva in listaReservas" class="col-md-4">
       <md-card>
         <div flex-gt-sm="33" layout-align="center center" layout="column">
           <jk-carousel
-            data="sucursal.fotosArray"
+            data="reserva.fotosArray"
             item-template-url="'./vistas/inmueble/item-template.html'"
             auto-slide="true" 
             auto-slide-time="3000"
@@ -16,17 +19,15 @@
         </div>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{sucursal.nombre}}</span>
+            <span class="md-headline">{{reserva.nombre}}</span>
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
-          <p>Ubicación:{{sucursal.direccion}} {{sucursal.altura}}</p>
-          <p>Tel.: {{sucursal.telefono}} / Email: {{sucursal.email}}</p>
+          <p>Ubicaci&oacute;n:{{reserva.direccion}} {{reserva.altura}}</p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="center">
-          <md-button class="send-button md-accent" md-colors="{background: 'TEAL'}" ng-click="MostrarCatalogoSucursal(sucursal)">CATÁLOGO</md-button>
           <md-card-icon-actions>
-            <md-button class="md-fab" md-colors="{background: 'RED'}" ng-click="mostrarMapaModal(sucursal)" data-toggle="modal" data-target="#myModal">
+            <md-button class="md-fab" md-colors="{background: 'RED'}" ng-click="mostrarMapaModal(reserva)" data-toggle="modal" data-target="#myModal">
               <md-icon md-svg-icon="img/icons/map.svg"></md-icon>
             </md-button>
           </md-card-icon-actions>
@@ -62,5 +63,5 @@
   </div>
   <!-- fin MapaModal -->
   
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </section>

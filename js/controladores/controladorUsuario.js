@@ -20,7 +20,7 @@ app.controller('ControlUsuarios', function($scope, $http, $state, jwtHelper, $au
     $state.go("inicio.altausuario");
   }
 
-});
+})
 
 app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $stateParams, $auth, ServicioABM, jwtHelper) {
   $scope.accion = "Alta";
@@ -48,6 +48,7 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
     $scope.accion = "Editar";
     $scope.accionFormulario = "ModificarUsuario";
       var pUsuario = JSON.parse($stateParams.usuario);
+      $scope.usuario.id = pUsuario.id;
       $scope.usuario.nombre = pUsuario.nombre;
       $scope.usuario.apellido = pUsuario.apellido;
       $scope.usuario.telefono = Number(pUsuario.telefono);
@@ -61,11 +62,24 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
     ServicioABM.guardar("personas/alta/", $scope.usuario).then(
       function(respuesta){
       console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
-      $state.go('inicio.home');
+      $state.go('inicio.menuinicio');
       },
       function(error){
         console.info("ERROR! (ctrl alta usuario): ", error);
         alert("ERROR AL CREAR USUARIO");
+      });
+  }
+
+  $scope.ModificarUsuario = function(){
+    $scope.$broadcast('show-errors-check-validity');
+    if ($scope.formAltaUsuario.$invalid) { return; }
+    ServicioABM.modificar("modificarpersona/", $scope.usuario).then(
+        function(respuesta){
+        console.info("RESPUESTA (modificar usuario): ", respuesta);
+        $state.go("inicio.grillausuarios");
+        },
+        function(error){
+          console.info("ERROR! (modificar usuario): ", error);
       });
   }
 
@@ -167,8 +181,9 @@ app.controller('ControlGrillaUsuario', function($scope, $http, $state, $timeout,
     }
 
     $scope.bajaUsuario = function(rowEntity){
-      var idusuario = rowEntity.id;
-      ServicioABM.borrar("borrarpersona/", idusuario).then(
+      var idusuario = Number(rowEntity.id);
+      console.info("ID DE USUARIO A BORRAR: ", idusuario);
+      ServicioABM.modificar("borrarpersona/", idusuario).then(
         function(respuesta){
         console.info("RESPUESTA (borrar usuario): ", respuesta);
         $scope.informarBajaConcretada();
@@ -209,6 +224,88 @@ app.controller('ControlGrillaUsuario', function($scope, $http, $state, $timeout,
       }
     }
 
+})
+
+app.controller('ControlMisReservas', function($scope, $http, $state, ServicioABM, NgMap, $auth, jwtHelper) {
+  $("#loadingModal").modal('show');
+  $scope.listaReservas = [];
+
+  if($auth.isAuthenticated()){
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+    $scope.flagLogueado = true;
+    console.info("usuario", $scope.usuarioLogueado);
+  }else{
+    $state.go('inicio.menuinicio', {sesionagotada : "true"});
+  }
+
+  ServicioABM.traerPorId("reservasporcliente/", $scope.usuarioLogueado.id).then(function(rta){
+    $scope.listaReservas = rta.data;
+    console.info("inmuebles:", $scope.listaReservas);
+    console.info("Cantodad reservas: ", $scope.listaReservas.length);
+    if($scope.listaReservas.length == 0)
+    {
+      $scope.tituloReservas = "No Posee Reservas";
+    }else{
+      $scope.tituloReservas = "Sus Reservas";
+      for (i = 0; i < $scope.listaReservas.length; i++) {
+        $scope.listaReservas[i].fotosArray = [];//Cargo un nuevo array con obj de tipo json para que el carousel pueda levantar las fotos 
+        $scope.listaReservas[i].foto = $scope.listaReservas[i].foto.split(',');
+        for (j = 0; j < $scope.listaReservas[i].foto.length; j++) {
+          $scope.listaReservas[i].fotosArray.push(JSON.parse("{" + '"src"' + ":" + '"' + "./fotos/" + $scope.listaReservas[i].foto[j] + '"' + "}"));
+        }
+      }
+    }
+    setTimeout(function () {
+          $("#loadingModal").modal('hide');
+    }, 1000)
+  });
+
+  $scope.marker = new google.maps.Marker({
+        title: 'default'
+      });
+    $scope.mapa = {};
+    $scope.mapa.latitud = '-34.662716';
+    $scope.mapa.longitud = '-58.365113';
+
+  $scope.mostrarMapaModal = function(sucursal){
+      $scope.ModalHeader = sucursal.direccion + " " + sucursal.altura;
+      console.info("sucursal: ", sucursal);
+
+        NgMap.getMap("miMapaModal").then(function(map) {
+          console.log(map.getCenter());
+          console.log(map);
+
+          var myLatLng = {lat: Number(sucursal.latitud), lng: Number(sucursal.longitud)};
+          //elimino el marker anterior del mapa
+          $scope.marker.setMap(null);
+
+          $scope.marker = new google.maps.Marker({
+            position: myLatLng,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            title: sucursal.nombre
+          });
+
+          $scope.marker.setMap(map);
+
+          $("#myModal").on("shown.bs.modal", function(e) {
+          google.maps.event.trigger(map, "resize");
+           map.setCenter(myLatLng);// Set here center map coordinates
+          });
+
+
+          google.maps.event.addListener(map, 'dblclick', function(event) {
+            marker = new google.maps.Marker({position: event.latLng, map: map});
+            var latitude = marker.position.lat();
+            var longitude = marker.position.lng();
+            console.info("lat: ", latitude);
+            console.info("longitude: ", longitude);
+          });
+
+        });
+    }
+
 });
+
 
 

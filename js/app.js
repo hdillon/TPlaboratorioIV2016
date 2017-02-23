@@ -156,7 +156,7 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                 }
             })
       .state('inicio.altainmueble', {
-                url: '/altainmueble',
+                url: '/altainmueble/:inmueble',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/inmueble/inmuebleAlta.html',
@@ -165,11 +165,20 @@ app.config(function($stateProvider, $urlRouterProvider,$qProvider, $authProvider
                 }
             })
       .state('inicio.catalogo', {
-                url: '/catalogo/:sucursal',
+                url: '/catalogo/:sucursal/:modificar',
                 views: {
                     'contenido': {
                         templateUrl: 'vistas/inmueble/catalogo.html',
                         controller : 'ControlCatalogoInmueble'
+                    }
+                }
+            })
+      .state('inicio.misreservas', {
+                url: '/misreservas',
+                views: {
+                    'contenido': {
+                        templateUrl: 'vistas/usuario/misreservas.html',
+                        controller : 'ControlMisReservas'
                     }
                 }
             })

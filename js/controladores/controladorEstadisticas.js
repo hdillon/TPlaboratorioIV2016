@@ -73,7 +73,7 @@ app.controller('ControlVentasPorLocal', function($scope, $http, $state,jwtHelper
 
   $timeout(function() {
     $scope.ventas.forEach(function(venta){
-      cantidadVentasSucursal.push(venta.cantidad);
+      cantidadVentasSucursal.push(Number(venta.cantidad));
       sucursales.push(venta.nombresucursal);
     });
 
@@ -121,7 +121,7 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
     var cantidadVentasEmpleado = [];
     var ventas = [];
 
-    ServicioABM.traerVentasPorEmpleado('transacciones/ventasporempleado/', idSucursal).then(
+    ServicioABM.traerPorId('transacciones/ventasporempleado/', idSucursal).then(
       function(rta){
         ventas = rta.data;
         $("#loadingModal").modal('hide');
@@ -132,7 +132,7 @@ app.controller('ControlVentasPorEmpleado', function($scope, $http, $state,jwtHel
 
     $timeout(function() {
       ventas.forEach(function(venta){
-        cantidadVentasEmpleado.push(venta.cantidad);
+        cantidadVentasEmpleado.push(Number(venta.cantidad));
         listaEmpleados.push(venta.empleado);
         $scope.nombreSucursal = venta.nombresucursal;
       });
@@ -298,7 +298,7 @@ app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHel
 
   $scope.loginsPorUsuario = function(idUsuario){
 //http://angular-data-grid.github.io/demo/material/
-ServicioABM.traerLogueosPorUsuario("resgistroslogin/", idUsuario).then(function(rta){
+ServicioABM.traerPorId("resgistroslogin/", idUsuario).then(function(rta){
   $scope.gridOptions.data = rta.data;
   setTimeout(function () {
     $("#loadingModal").modal('hide');

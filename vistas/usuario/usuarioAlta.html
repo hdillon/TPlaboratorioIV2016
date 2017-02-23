@@ -1,3 +1,4 @@
+<section>
 <div class="container">
     
     <br><br><br>
@@ -36,7 +37,7 @@
         <label class="control-label" for="email">Email:</label>
         <input type="email" class="form-control" id="email" name="email" ng-model="usuario.email" placeholder="Email" required>
         <p class="help-block" ng-if="formAltaUsuario.email.$error.required">Debe ingresar el Email</p>
-        <p class="help-block" ng-if="formAltaUsuario.email.$error.email">El Email ingresado no es válido</p>
+        <p class="help-block" ng-if="formAltaUsuario.email.$error.email">El Email ingresado no es v&aacute;lido</p>
       </div>
     </div>
     <div class="form-group" show-errors>
@@ -49,13 +50,14 @@
     <div class="form-group" ng-if="accion == 'Alta'">
       <div>
         <label class="control-label" for="perfil">Perfil:</label>
-        <select class="form-control" ng-model="usuario.perfil">
+        <select class="form-control" id="perfil" name="perfil" ng-model="usuario.perfil" required>
           <option disabled selected value>Seleccione el Perfil</option>
           <option value="encargado">Encargado</option>
           <option value="empleado">Empleado</option>
           <option value="cliente">Cliente</option>
           <option value="administrador">Administrador</option>
         </select>
+        <p class="help-block" ng-if="formAltaUsuario.perfil.$error.required">Debe seleccionar el perfil</p>
       </div>
     </div>
     <div class="form-group">
@@ -70,6 +72,6 @@
 </div>
 </div>
 </div>
-<br><br><br><br><br><br>
 </div>
-      
+<br><br><br><br><br><br>
+</section>

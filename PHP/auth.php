@@ -17,7 +17,7 @@ if ($traerPersona != null){
 	$token["email"] = $traerPersona->email;
 	$token["perfil"]=$traerPersona->perfil;
 	$token["iat"]=time();
-	$token["exp"]=time()+120;
+	$token["exp"]=time()+20000;
 
 	$jwt = JWT::encode($token, $ClaveDeEncriptacion); //&genero el token con los datos que quiero
 	$ArrayConToken["ElCampitoToken"]=$jwt;//Guardo el token en un array (el nombre del token tiene que ser el mismo que en el js)!!

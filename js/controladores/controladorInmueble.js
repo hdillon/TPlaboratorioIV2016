@@ -16,10 +16,20 @@ app.controller('ControlInmueble', function($scope, $http, $state,jwtHelper, $aut
     $scope.flagLogueado = false;
   }
 
+  $scope.IrAModificarInmuebles=function(){
+    $state.go('inicio.catalogo',{modificar : "true"});
+  }
+
+  $scope.FormularioAltaInmueble=function(){
+    $state.go("inicio.altainmueble");
+  }
+
 })
 
-app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM, ServicioGeocoding) {
-   $("#loadingModal").modal('show');
+app.controller('ControlAltaInmueble', function($scope, $http, $state, $stateParams, jwtHelper, FileUploader, $auth, ServicioABM, ServicioGeocoding) {
+  $("#loadingModal").modal('show');
+  $scope.accion = "Alta";
+  $scope.accionFormulario = "AltaInmueble";
   $scope.inmueble = {};
   $scope.inmueble.descripcion = "";
   $scope.inmueble.foto = "";
@@ -45,7 +55,25 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
       console.info("usuario", $scope.usuarioLogueado);
   }else{
     $("#loadingModal").modal('hide');
-      $state.go('inicio');
+    $state.go('inicio.menuinicio', {sesionagotada : "true"});
+  }
+
+  if($stateParams.inmueble != "" && $stateParams.inmueble != undefined){
+    console.info("inmu: ", $stateParams.inmueble );
+    $scope.accion = "Editar";
+    $scope.accionFormulario = "ModificarInmueble";
+    parametro_inmueble = JSON.parse($stateParams.inmueble);
+    $scope.inmueble.id = parametro_inmueble.id;
+    $scope.inmueble.descripcion = parametro_inmueble.descripcion;
+    $scope.inmueble.foto = parametro_inmueble.foto;
+    $scope.inmueble.precio = Number(parametro_inmueble.precio);
+    $scope.inmueble.direccion = parametro_inmueble.direccion;
+    $scope.inmueble.altura = parametro_inmueble.altura;
+    $scope.inmueble.latitud = parametro_inmueble.latitud;
+    $scope.inmueble.longitud = parametro_inmueble.longitud;
+    $scope.inmueble.ambientes = parametro_inmueble.ambientes;
+    $scope.inmueble.tipoOferta = parametro_inmueble.tipoOferta;
+    $scope.inmueble.idSucursal = parametro_inmueble.idSucursal;
   }
 
   //traigo las sucursales para llenar el select del formulario
@@ -89,7 +117,7 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
             function(respuesta){
               console.info("RESPUESTA (ctrl alta inmueble): ", respuesta);
               $("#loadingModal").modal('hide');
-              $state.go('inmueble.catalogo');
+              $state.go('inicio.catalogo');
             },
             function(error){
               console.info("ERROR! (ctrl alta inmueble): ", error);
@@ -105,6 +133,19 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, jwtHelper,
         console.info("ERROR! (geocoding): ", error);
         $("#loadingModal").modal('hide');
         alert("error al obtener coordenadas");
+      });
+  }
+
+  $scope.ModificarInmueble = function(){
+    $scope.$broadcast('show-errors-check-validity');
+    if ($scope.formAltaInmueble.$invalid) { return; }
+    ServicioABM.modificar("modificarinmueble/", $scope.inmueble).then(
+        function(respuesta){
+        console.info("RESPUESTA (modificar inmueble): ", respuesta);
+        $state.go("inicio.menuinicio");
+        },
+        function(error){
+          console.info("ERROR! (modificar inmueble): ", error);
       });
   }
 
@@ -126,6 +167,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
   $("#cargandoCatalogoModal").modal('show');
   $scope.flagLogueado = false;
   $scope.listaInmuebles = [];
+  $scope.accion = "mostrarInmuebles";
 
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
@@ -134,6 +176,10 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
     $scope.flagLogueado = false;
     $("#cargandoCatalogoModal").modal('hide');
       $state.go('inicio.menuinicio', {sesionagotada : "true"});
+  }
+
+  if($stateParams.modificar == "true"){
+    $scope.accion = "editarInmuebles";
   }
 
   $scope.Desloguear=function(){
@@ -151,7 +197,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
   if($stateParams.sucursal != ""){//Si la sucursal viene por parámetro traigo sólo los inmuebles de esa sucursal, sino traigo todos
     var _sucursal = JSON.parse($stateParams.sucursal);
     //traigo las inmuebles para llenar el catalogo
-    ServicioABM.traerInmueblesPorSucursal("inmueblesporsucursal/", _sucursal.id).then(function(rta){
+    ServicioABM.traerPorId("inmueblesporsucursal/", _sucursal.id).then(function(rta){
         $scope.listaInmuebles = rta.data;
         console.info("inmuebles:", $scope.listaInmuebles);
         for (i = 0; i < $scope.listaInmuebles.length; i++) {
@@ -183,6 +229,10 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
             $("#cargandoCatalogoModal").modal('hide');
         }, 1000)
     });
+  }
+
+  $scope.IrAEditarInmueble=function(inmueble){
+    $state.go('inicio.altainmueble',{inmueble : JSON.stringify(inmueble)});
   }
 
   $scope.reservarInmueble=function(inmueble){
@@ -233,8 +283,6 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
           $("#myModal").on("shown.bs.modal", function(e) {
           google.maps.event.trigger(map, "resize");
            map.setCenter(myLatLng);// Set here center map coordinates
-           //$(".modal-backdrop").addClass("modal-backdrop-fullscreen");
-           //$(".modal-backdrop").addClass("modal-backdrop-transparent");
           });
 
 

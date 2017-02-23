@@ -42,6 +42,10 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
     	//$state.go('usuarioLogueado.registrarse');
     }
 
+    $scope.IrAlMenuInicio=function(){
+		$state.go("inicio.menuinicio");
+    }
+
 	$scope.Desloguear=function(){
 		$auth.logout();
 		$scope.flagLogueado = false;
@@ -160,8 +164,8 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
 	$state.go("inicio.catalogo");
   }
 
-  $scope.MisReservas=function(){
-	$state.go("inicio.catalogo");
+  $scope.MostrarMisReservas=function(){
+	$state.go("inicio.misreservas");
   }
 
   $scope.NuestrasScursales=function(){

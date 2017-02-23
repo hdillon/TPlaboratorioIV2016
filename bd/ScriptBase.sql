@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   `id_encargado` int(11) NOT NULL,
   CONSTRAINT `fk_sucursal_encargado1`
   FOREIGN KEY (`id_encargado`)
-  REFERENCES `inmobiliaria`.`persona` (`id`)
+  REFERENCES `u942480002_inmob`.`persona` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -52,12 +52,12 @@ INDEX `fk_sucursal_empleado_sucursal1_idx` (`id_sucursal` ASC),
 INDEX `fk_sucursal_empleado_empleado1_idx` (`id_persona` ASC),
 CONSTRAINT `fk_sucursal_empleado_sucursal1`
   FOREIGN KEY (`id_sucursal`)
-  REFERENCES `inmobiliaria`.`sucursal` (`id`)
+  REFERENCES `u942480002_inmob`.`sucursal` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
 CONSTRAINT `fk_sucursal_empleado_empleado1`
   FOREIGN KEY (`id_persona`)
-  REFERENCES `inmobiliaria`.`persona` (`id`)
+  REFERENCES `u942480002_inmob`.`persona` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION)
 ENGINE=InnoDB;
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `inmueble` (
   `id_vendedor` int(11) NOT NULL,
   CONSTRAINT `fk_sucursal_sucursal1`
   FOREIGN KEY (`id_sucursal`)
-  REFERENCES `inmobiliaria`.`sucursal` (`id`)
+  REFERENCES `u942480002_inmob`.`sucursal` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;

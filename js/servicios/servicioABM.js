@@ -45,56 +45,32 @@ angular.module('TPInmobiliaria.servicioABM', [])
 		});
     }
 
-    this.borrar = function (ruta, obj) {
+    this.modificar = function (ruta, obj) {
        return $http.put(traerURL() + ruta + JSON.stringify(obj)).then(
 		function(respuesta){
-			console.info("RESPUESTA (Servicio borrar): ", respuesta);
+			console.info("RESPUESTA (Servicio modificar): ", respuesta);
 			return respuesta; 
 		},
 		function(error){
-			console.info("ERROR (Servicio borrar):", error);
+			console.info("ERROR (Servicio modificar):", error);
 		return error;
 		});
     }
 
-    this.traerLogueosPorUsuario = function (ruta, idUsuario) {
-       return $http.get(traerURL() +ruta + idUsuario).then(
+    this.traerPorId = function (ruta, id) {
+       return $http.get(traerURL() +ruta + id).then(
 		function(respuesta){
-			console.info("RESPUESTA (Servicio logueosPorUsuario): ", respuesta);
+			console.info("RESPUESTA (Servicio traerPorid): ", respuesta);
 			return respuesta; 
 		},
 		function(error){
-			console.info("ERROR (Servicio logueosPorUsuario):", error);
-		return error;
-		});
-    }
-
-    this.traerInmueblesPorSucursal = function (ruta, idSucursal) {
-       return $http.get(traerURL() +ruta + idSucursal).then(
-		function(respuesta){
-			console.info("RESPUESTA (Servicio inmueblesPorSucursal): ", respuesta);
-			return respuesta; 
-		},
-		function(error){
-			console.info("ERROR (Servicio inmueblesPorSucursal):", error);
+			console.info("ERROR (Servicio traerPorId):", error);
 		return error;
 		});
     }
 
     this.traerPersonasSinLocal = function () {
        return $http.get(traerURL() + "personas/sinlocal/").then(
-		function(respuesta){
-			console.info("RESPUESTA (Servicio traerPersonas): ", respuesta);
-			return respuesta; 
-		},
-		function(error){
-			console.info("ERROR (Servicio traerPersonas):", error);
-		return error;
-		});
-    }
-
-    this.traerVentasPorEmpleado = function (ruta, idSucursal) {
-       return $http.get(traerURL() +ruta + idSucursal).then(
 		function(respuesta){
 			console.info("RESPUESTA (Servicio traerPersonas): ", respuesta);
 			return respuesta; 

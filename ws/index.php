@@ -80,7 +80,7 @@ $app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
 });
 /* FORMA DE RECIBIR POR PARAMETROS UN OBJETO EN POST
     POST: Para crear recursos */
-$app->post('persona/alta/{objeto}', function ($request, $response, $args) {
+$app->post('/persona/alta/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::InsertarPersona($persona);
     $response->write($datos);
@@ -100,7 +100,7 @@ $app->get('/resgistroslogin/{idUsuario}', function ($request, $response, $args) 
     return $response;
 });
 
-$app->put('/modificar/{objeto}', function ($request, $response, $args) {
+$app->put('/modificarpersona/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::ModificarPersona($persona);
     $response->write($datos);
@@ -151,6 +151,20 @@ $app->get('/inmuebles[/]', function ($request, $response, $args) {
 $app->get('/inmueblesporsucursal/{idSucursal}', function ($request, $response, $args) {
     $datos = Inmueble::TraerInmueblesPorSucursal($args['idSucursal']);
     $response->write(json_encode($datos));
+    return $response;
+});
+
+$app->get('/reservasporcliente/{idCliente}', function ($request, $response, $args) {
+    $datos = Inmueble::TraerReservasPorCliente($args['idCliente']);
+    $response->write(json_encode($datos));
+    return $response;
+});
+
+$app->put('/modificarinmueble/{objeto}', function ($request, $response, $args) {
+    $inmueble = json_decode($args['objeto']);
+    $datos = Inmueble::ModificarInmueble($inmueble);
+    $response->write($datos);
+    //var_dump($args);
     return $response;
 });
 

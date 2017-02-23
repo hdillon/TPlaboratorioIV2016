@@ -166,9 +166,7 @@ class Persona
 				apellido=:apellido,
 				telefono=:telefono,
 				password=:password,
-				foto=:foto,
-				perfil=:perfil,
-				estado=:estado
+				email=:email
 				WHERE id=:id");
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
 			$consulta->bindValue(':id',$persona->id, PDO::PARAM_INT);
@@ -176,9 +174,7 @@ class Persona
 			$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
 			$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_STR);
 			$consulta->bindValue(':password', $persona->password, PDO::PARAM_STR);
-			$consulta->bindValue(':foto', $persona->foto, PDO::PARAM_STR);
-			$consulta->bindValue(':perfil', $persona->perfil, PDO::PARAM_STR);
-			$consulta->bindValue(':estado', $persona->estado, PDO::PARAM_STR);
+			$consulta->bindValue(':email', $persona->email, PDO::PARAM_STR);
 			return $consulta->execute();
 	}
 

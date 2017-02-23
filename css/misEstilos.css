@@ -4,13 +4,15 @@ html, body {
 
 body {
     background-color: #f6f6f6;
-    background-image: url(".Chrysanthemum.jpg");
 }
 
 body.miEstilo {
     background-color: #B2DFDB;
 }
 
+h2{
+font-style: oblique;
+}
 
 .navbar-login
 {
@@ -655,5 +657,39 @@ body {
    position: absolute;
 
   right: 0;
+}
+
+
+section {
+      background-image: url('../img/home2.png');
+    background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+    background-position: center;
+    background-size: cover;
+    width: 105%;
+    height: 100%;
+  top: 0; 
+  left: 0; 
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
+
+div.bgimg {
+    background-image: url('../img/home2.png');
+    background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  top: 0; 
+  left: 0; 
+position:absolute;
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+
 }
 

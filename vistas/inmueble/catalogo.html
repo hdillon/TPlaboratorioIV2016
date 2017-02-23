@@ -1,3 +1,4 @@
+<section>
 <div class="container"> 
 <br><br><br><br><br>
 <div id="divAnimation">
@@ -21,8 +22,9 @@
           </p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="end center">
-          <md-button ng-click="showConfirm($event, inmueble)" class="send-button md-accent md-raised">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
-          <md-button ng-click="mostrarMapaModal(inmueble)" data-toggle="modal" data-target="#myModal" class="send-button md-accent md-raised">MAPA</md-button>
+        <md-button ng-click="IrAEditarInmueble(inmueble)" class="send-button md-accent" md-colors="{background: 'TEAL'}" ng-if="accion == 'editarInmuebles'">EDITAR</md-button>
+          <md-button ng-click="showConfirm($event, inmueble)" class="send-button md-accent md-raised" ng-if="accion == 'mostrarInmuebles'">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
+          <md-button ng-click="mostrarMapaModal(inmueble)" ng-if="accion == 'mostrarInmuebles'" data-toggle="modal" data-target="#myModal" class="send-button md-accent md-raised">MAPA</md-button>
         </md-card-actions>
        </div>
       </md-card>
@@ -51,3 +53,31 @@
 </div>
 
 <br><br><br><br><br><br><br>
+</section>
+
+
+  <!-- MapaModal -->
+<div class="container">
+    <!--div class="modal modal-fullscreen fade" id="myModal" role="dialog"-->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{ModalHeader}}</h4>
+          </div>
+          <div class="modal-body">    
+            <ng-map center="{{mapa.latitud}}, {{mapa.longitud}}" ng-model="miMapa" id="miMapaModal">
+
+        </ng-map>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- fin MapaModal -->
