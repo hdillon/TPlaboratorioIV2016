@@ -1,13 +1,27 @@
-html, body {
+html, body{
   height: 100%;
+  width: 97%;
+
 }
 
-body {
-    background-color: #f6f6f6;
-}
+
+/*body {
+    background-color: #7968ae;
+    ground-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+    background-position: center;
+    background-size: cover;
+}*/
+
+
 
 body.miEstilo {
-    background-color: #B2DFDB;
+    background-color: red;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100%;
 }
 
 h2{
@@ -660,36 +674,5 @@ body {
 }
 
 
-section {
-      background-image: url('../img/home2.png');
-    background-attachment: fixed, scroll;
-  background-repeat: no-repeat, repeat-y;
-    background-position: center;
-    background-size: cover;
-    width: 105%;
-    height: 100%;
-  top: 0; 
-  left: 0; 
 
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
-}
-
-div.bgimg {
-    background-image: url('../img/home2.png');
-    background-attachment: fixed, scroll;
-  background-repeat: no-repeat, repeat-y;
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-  top: 0; 
-  left: 0; 
-position:absolute;
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
-
-}
 

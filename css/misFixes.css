@@ -1,0 +1,97 @@
+html {
+
+overflow-x: hidden;
+}
+
+section {
+  background-image: url('../img/logo.png');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: center;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+section.bottomfixed {
+  background-image: url('../img/logo.png');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: center bottom 20px;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+section.bottom {
+  background-image: url('../img/logo.png');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: bottom;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+section.usuarios {
+  background-image: url('../img/logousuarios.png');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: center;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+section.sucursales {
+  background-image: url('../img/logosucursales.png');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: center;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+section.inmuebles {
+  background-image: url('../img/logoinmuebles.png');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: center;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+
+section.sarasa {
+  background-image: url('../img/home2.jpg');
+  background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+  background-position: center;
+  top: 0; 
+  left: 0; 
+  min-width: 100%;
+  min-height: 100%;
+}
+
+div.bgimg {
+    background-image: url('../img/logo.png');
+    background-attachment: fixed, scroll;
+  background-repeat: no-repeat, repeat-y;
+    background-position: center;
+  
+  top: 0; 
+  left: 0; 
+position:absolute;
+
+  min-width: 100%;
+  min-height: 100%;
+
+}
