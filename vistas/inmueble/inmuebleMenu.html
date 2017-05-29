@@ -5,20 +5,14 @@
     <img src="./img/inmuebles.png" alt="" />
 </div>
   <div class="row">
-    <div class="col-sm-6">
-      <h4>AGREGAR</h4>
-        <a type="button" ng-click="FormularioAltaInmueble()" class="btn btn-default" style="color: #00897B" aria-label="Left Align">
-		  <span href="#!/inicio/altainmueble" class="glyphicon glyphicon-plus-sign custom-size gly-spin" aria-hidden="true"></span>
-	  	</a>
-      <p>Agregue una nueva sucursal</p>
-    </div>
-    <div class="col-sm-6">
-      <h4>MODIFICAR</h4>
-      <a type="button" ng-click="IrAModificarInmuebles()" class="btn btn-default" style="color: #3F51B5" aria-label="Left Align">
-		<span href="#!/inicio/home" class="glyphicon glyphicon-asterisk custom-size gly-spin" aria-hidden="true"></span>
-	  </a>
-	  <p>Modificar Sucursal</p>
-    </div>
+    <div class="col-md-6">
+      <button class="btn btn-default purple-circle-button Frm animated bounceInRight" ng-click="redirectTo('inicio.altainmueble')">Cargar<br />Inmueble<br /><span class="orange-circle-greater-than" href="#!/inicio/altasucursales">></span></button>
+    </div>  
+
+    <div class="col-md-6">
+      <button class="btn btn-default orange-circle-button Frm animated bounceInLeft" ng-click="redirectTo('inicio.catalogo')">Modificar<br />Sucursal<br /><span class="orange-circle-greater-than" href="#!/inicio/altasucursales">></span></button>
+    </div>  
+
     </div>
 </div>
 

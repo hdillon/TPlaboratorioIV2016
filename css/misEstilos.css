@@ -668,9 +668,12 @@ body {
 }
 
 .sarasa{
-   position: absolute;
-
+  position: absolute;
   right: 0;
+}
+
+md-button.custom{
+  opacity: 0.5;
 }
 
 

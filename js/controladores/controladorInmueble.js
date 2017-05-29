@@ -16,6 +16,10 @@ app.controller('ControlInmueble', function($scope, $http, $state,jwtHelper, $aut
     $scope.flagLogueado = false;
   }
 
+  $scope.redirectTo=function(where){
+    $state.go(where);
+  }
+
   $scope.IrAModificarInmuebles=function(){
     $state.go('inicio.catalogo',{modificar : "true"});
   }

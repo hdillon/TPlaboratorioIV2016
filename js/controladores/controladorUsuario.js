@@ -16,6 +16,10 @@ app.controller('ControlUsuarios', function($scope, $http, $state, jwtHelper, $au
     $scope.flagLogueado = false;
   }
 
+  $scope.redirectTo=function(where){
+    $state.go(where);
+  }
+
   $scope.FormularioAltaUsuario=function(){
     $state.go("inicio.altausuario");
   }

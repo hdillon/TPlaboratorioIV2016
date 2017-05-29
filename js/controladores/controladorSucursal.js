@@ -16,6 +16,10 @@ app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $a
     $scope.flagLogueado = false;
   }
 
+  $scope.redirectTo=function(where){
+    $state.go(where);
+  }
+
 })
 
 app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM, ServicioGeocoding) {
