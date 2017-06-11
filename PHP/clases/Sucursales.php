@@ -112,7 +112,6 @@ class Sucursal
 				update sucursal 
 				set nombre=:nombre,
 				direccion=:direccion,
-				altura=:altura,
 				latitud=:latitud,
 				longitud=:longitud,
 				email=:email,
@@ -123,7 +122,6 @@ class Sucursal
 			$consulta->bindValue(':id',$sucursal->id, PDO::PARAM_INT);
 			$consulta->bindValue(':nombre',$sucursal->nombre, PDO::PARAM_STR);
 			$consulta->bindValue(':direccion', $sucursal->direccion, PDO::PARAM_STR);
-			$consulta->bindValue(':altura', $sucursal->altura, PDO::PARAM_INT);
 			$consulta->bindValue(':latitud', $sucursal->latitud, PDO::PARAM_INT);
 			$consulta->bindValue(':longitud', $sucursal->longitud, PDO::PARAM_INT);
 			$consulta->bindValue(':email', $sucursal->email, PDO::PARAM_STR);
@@ -139,10 +137,9 @@ class Sucursal
 	public static function InsertarSucursal($sucursal)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal (nombre,direccion,altura,latitud,longitud,email,telefono,foto,id_encargado)values(:nombre,:direccion,:altura,:latitud,:longitud,:email,:telefono,:foto,:id_encargado)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal (nombre,direccion,latitud,longitud,email,telefono,foto,id_encargado)values(:nombre,:direccion,:latitud,:longitud,:email,:telefono,:foto,:id_encargado)");
 		$consulta->bindValue(':nombre',$sucursal->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':direccion', $sucursal->direccion, PDO::PARAM_STR);
-		$consulta->bindValue(':altura', $sucursal->altura, PDO::PARAM_INT);
 		$consulta->bindValue(':latitud', $sucursal->latitud, PDO::PARAM_STR);
 		$consulta->bindValue(':longitud', $sucursal->longitud, PDO::PARAM_STR);
 		$consulta->bindValue(':email', $sucursal->email, PDO::PARAM_STR);

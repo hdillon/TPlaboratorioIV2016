@@ -30,7 +30,7 @@ app.controller('ControlInmueble', function($scope, $http, $state,jwtHelper, $aut
 
 })
 
-app.controller('ControlAltaInmueble', function($scope, $http, $state, $stateParams, jwtHelper, FileUploader, $auth, ServicioABM, ServicioGeocoding) {
+app.controller('ControlAltaInmueble', function($scope, $http, $state, $stateParams, jwtHelper, FileUploader,NgMap, $auth, ServicioABM, ServicioGeocoding) {
   $("#loadingModal").modal('show');
   $scope.accion = "Alta";
   $scope.accionFormulario = "AltaInmueble";
@@ -39,7 +39,6 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, $statePara
   $scope.inmueble.foto = "";
   $scope.inmueble.precio = "";
   $scope.inmueble.direccion = "";
-  $scope.inmueble.altura;
   $scope.inmueble.latitud;
   $scope.inmueble.longitud;
   $scope.inmueble.ambientes;
@@ -62,6 +61,11 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, $statePara
     $state.go('inicio.menuinicio', {sesionagotada : "true"});
   }
 
+  $scope.marker = new google.maps.Marker({title: 'default'});
+  $scope.mapa = {};
+  $scope.mapa.latitud = '-34.662716';
+  $scope.mapa.longitud = '-58.365113';
+
   if($stateParams.inmueble != "" && $stateParams.inmueble != undefined){
     console.info("inmu: ", $stateParams.inmueble );
     $scope.accion = "Editar";
@@ -72,7 +76,6 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, $statePara
     $scope.inmueble.foto = parametro_inmueble.foto;
     $scope.inmueble.precio = Number(parametro_inmueble.precio);
     $scope.inmueble.direccion = parametro_inmueble.direccion;
-    $scope.inmueble.altura = parametro_inmueble.altura;
     $scope.inmueble.latitud = parametro_inmueble.latitud;
     $scope.inmueble.longitud = parametro_inmueble.longitud;
     $scope.inmueble.ambientes = parametro_inmueble.ambientes;
@@ -97,7 +100,8 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, $statePara
       $scope.faltanFotos = true;
       return; 
     } 
-    $("#loadingModal").modal('show');
+    //TODO: Arreglar que no se rompa la vista cuando pasa de este modal al del catalogo
+    $("#loadingModal").modal('show'); 
 
     for (var i = 0; i < $scope.subidorDeArchivos.queue.length; i++) {
       if (i==0)
@@ -107,37 +111,22 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, $statePara
     };
     console.info("inmueble:",$scope.inmueble);
 
-    ServicioGeocoding.obtenerCoordenadasMapa($scope.inmueble.direccion, $scope.inmueble.altura).then(
+    ServicioABM.guardar("inmueble/alta/", $scope.inmueble).then(
       function(respuesta){
-        console.info("RESPUESTA (geocoding): ", respuesta);
+        console.info("RESPUESTA (ctrl alta inmueble): ", respuesta);
         $("#loadingModal").modal('hide');
-        if(respuesta.data.results[0] != undefined){
-          $scope.inmueble.latitud = respuesta.data.results[0].geometry.location.lat;
-          $scope.inmueble.longitud = respuesta.data.results[0].geometry.location.lng;
-          console.info("Lat: ",$scope.inmueble.latitud );
-          console.info("Long: ",$scope.inmueble.longitud );
-          //Si logró obtener las coordenadas de la dirección disparo el alta:
-          ServicioABM.guardar("inmueble/alta/", $scope.inmueble).then(
-            function(respuesta){
-              console.info("RESPUESTA (ctrl alta inmueble): ", respuesta);
-              $("#loadingModal").modal('hide');
-              $state.go('inicio.catalogo');
-            },
-            function(error){
-              console.info("ERROR! (ctrl alta inmueble): ", error);
-              $("#loadingModal").modal('hide');
-              alert("error al cargar inmueble");
-            }
-          );
-        }else{
-          alert("No se pudo obtener las coordenadas para la direccion ingresada");
-        }
+        setTimeout(function () {
+            $state.go('inicio.catalogo');
+        }, 500)
+        
       },
       function(error){
-        console.info("ERROR! (geocoding): ", error);
+        console.info("ERROR! (ctrl alta inmueble): ", error);
         $("#loadingModal").modal('hide');
-        alert("error al obtener coordenadas");
-      });
+        alert("error al cargar inmueble");
+      }
+    );
+
   }
 
   $scope.ModificarInmueble = function(){
@@ -165,6 +154,57 @@ app.controller('ControlAltaInmueble', function($scope, $http, $state, $statePara
           console.info(response);     
         });
     }
+
+    $scope.mostrarMapaModal = function(){
+      $scope.ModalHeader = "Cargar Direccion";
+      NgMap.getMap("miMapaModal").then(function(map) {
+        console.log(map.getCenter());
+        console.log(map);
+
+        var myLatLng = {lat: -34.397, lng: 150.644};
+        //elimino el marker anterior del mapa
+        $scope.marker.setMap(null);
+        var geocoder = new google.maps.Geocoder();
+
+        $("#myModal").on("shown.bs.modal", function(e) {
+        google.maps.event.trigger(map, "resize");
+         map.setCenter(myLatLng);// Set here center map coordinates
+        });
+
+        document.getElementById('submit').addEventListener('click', function() {
+          if(document.getElementById('address').value == ""){
+            alert("Debe ingresar una direccion");
+            return;
+          }
+          $scope.geocodeAddress(geocoder, map);
+        });
+      });
+    }
+
+    $scope.geocodeAddress = function(geocoder, resultsMap) {
+        $scope.marker.setMap(null);
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            $scope.inmueble.latitud = results[0].geometry.location.lat();
+            $scope.inmueble.longitud = results[0].geometry.location.lng();
+            resultsMap.setCenter(results[0].geometry.location);
+            $scope.marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location,
+              draggable: true,
+              animation: google.maps.Animation.DROP
+            });
+          } else {
+            alert('No se encontraron resultados: ' + status);
+          }
+        });
+      }
+
+    $scope.confirmarDireccion = function(){
+      $scope.inmueble.direccion = $scope.direccionMapa;
+    }
+
 })
 
 app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $stateParams, jwtHelper, $auth,NgMap, $window, ServicioABM, $mdDialog) {
@@ -264,7 +304,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
   }
 
   $scope.mostrarMapaModal = function(inmueble){
-      $scope.ModalHeader = inmueble.direccion + " " + inmueble.altura;
+      $scope.ModalHeader = inmueble.direccion;
       console.info("inmueble: ", inmueble);
 
         NgMap.getMap("miMapaModal").then(function(map) {

@@ -22,13 +22,12 @@ app.controller('ControlSucursales', function($scope, $http, $state,jwtHelper, $a
 
 })
 
-app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader, $auth, ServicioABM, ServicioGeocoding) {
+app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper, FileUploader,NgMap, $auth, ServicioABM, ServicioGeocoding) {
   $("#loadingModal").modal('show');
   $scope.sucursal = {};
   $scope.sucursal.nombre;
   $scope.sucursal.localidad;
   $scope.sucursal.direccion;
-  $scope.sucursal.altura;
   $scope.sucursal.latitud;
   $scope.sucursal.longitud;
   $scope.sucursal.email;
@@ -48,6 +47,11 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
     $("#loadingModal").modal('hide');
       $state.go('inicio.menuinicio', {sesionagotada : "true"});
   }
+
+  $scope.marker = new google.maps.Marker({title: 'default'});
+  $scope.mapa = {};
+  $scope.mapa.latitud = '-34.662716';
+  $scope.mapa.longitud = '-58.365113';
 
   //traigo los usuarios que no tienen un local asignado para llenar los select del formulario
   ServicioABM.traerPersonasSinLocal().then(function(rta){
@@ -73,51 +77,81 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
         $scope.sucursal.foto = $scope.sucursal.foto + ';' + $scope.arrayNombresFotos[i].data;
     };
 
-    ServicioGeocoding.obtenerCoordenadasMapa($scope.sucursal.direccion, $scope.sucursal.altura).then(
+    ServicioABM.guardar("sucursal/alta/", $scope.sucursal).then(
       function(respuesta){
-        console.info("RESPUESTA (geocoding): ", respuesta);
+        console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
         $("#loadingModal").modal('hide');
-        if(respuesta.data.results[0] != undefined){
-          $scope.sucursal.latitud = respuesta.data.results[0].geometry.location.lat;
-          $scope.sucursal.longitud = respuesta.data.results[0].geometry.location.lng;
-          console.info("Lat: ",$scope.sucursal.latitud );
-          console.info("Long: ",$scope.sucursal.longitud );
-          //Si logró obtener las coordenadas de la dirección disparo el alta:
-          ServicioABM.guardar("sucursal/alta/", $scope.sucursal).then(
-          function(respuesta){
-            console.info("RESPUESTA (ctrl alta sucursal): ", respuesta);
-            $("#loadingModal").modal('hide');
-            $state.go('inicio.menuinicio');
-          },
-          function(error){
-            console.info("ERROR! (ctrl alta sucursal): ", error);
-            $("#loadingModal").modal('hide');
-            alert("error al cargar sucursal");
-          });
-        }else{
-          alert("No se pudo obtener las coordenadas para la direccion ingresada");
-        }
+        $state.go('inicio.menuinicio');
       },
       function(error){
-        console.info("ERROR! (geocoding): ", error);
+        console.info("ERROR! (ctrl alta sucursal): ", error);
         $("#loadingModal").modal('hide');
-        alert("error al obtener coordenadas");
-      });
-
-    
+        alert("error al cargar sucursal");
+      }
+    );
   }
 
   $scope.subidorDeArchivos.onSuccessItem=function(item, response, status, headers){
-      //Obtengo el nombre de la foto al momento del upload
-      console.info("ITEM", item._file.name);
-      $scope.sucursal.foto = item._file.name;
-      $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",sucursal:$scope.sucursal}})
-        .then(function(respuesta) {         
-         console.info("respuesta", respuesta);
-         $scope.arrayNombresFotos.push(respuesta);//guardo en un array los nombres "finales" de las fotos cargadas a la sucursal
-      },function errorCallback(response) {        
-          console.info(response);     
+    //Obtengo el nombre de la foto al momento del upload
+    console.info("ITEM", item._file.name);
+    $scope.sucursal.foto = item._file.name;
+    $http.post('PHP/nexo.php', { datos: {accion :"uploadFoto",sucursal:$scope.sucursal}})
+      .then(function(respuesta) {         
+       console.info("respuesta", respuesta);
+       $scope.arrayNombresFotos.push(respuesta);//guardo en un array los nombres "finales" de las fotos cargadas a la sucursal
+    },function errorCallback(response) {        
+        console.info(response);     
+      });
+  }
+
+  $scope.mostrarMapaModal = function(){
+      $scope.ModalHeader = "Cargar Direccion";
+      NgMap.getMap("miMapaModal").then(function(map) {
+        console.log(map.getCenter());
+        console.log(map);
+
+        var myLatLng = {lat: -34.397, lng: 150.644};
+        //elimino el marker anterior del mapa
+        $scope.marker.setMap(null);
+        var geocoder = new google.maps.Geocoder();
+
+        $("#myModal").on("shown.bs.modal", function(e) {
+        google.maps.event.trigger(map, "resize");
+         map.setCenter(myLatLng);// Set here center map coordinates
         });
+
+        document.getElementById('submit').addEventListener('click', function() {
+          if(document.getElementById('address').value == ""){
+            alert("Debe ingresar una direccion");
+            return;
+          }
+          $scope.geocodeAddress(geocoder, map);
+        });
+      });
+    }
+
+    $scope.geocodeAddress = function(geocoder, resultsMap) {
+        $scope.marker.setMap(null);
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            $scope.sucursal.latitud = results[0].geometry.location.lat();
+            $scope.sucursal.longitud = results[0].geometry.location.lng();
+            resultsMap.setCenter(results[0].geometry.location);
+            $scope.marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location,
+              draggable: true,
+              animation: google.maps.Animation.DROP
+            });
+          } else {
+            alert('No se encontraron resultados: ' + status);
+          }
+        });
+      }
+
+    $scope.confirmarDireccion = function(){
+      $scope.sucursal.direccion = $scope.direccionMapa;
     }
 
 })
@@ -151,7 +185,7 @@ app.controller('ControlNuestrasSucursales', function($scope, $http, $state, Serv
     $scope.mapa.longitud = '-58.365113';
 
   $scope.mostrarMapaModal = function(sucursal){
-      $scope.ModalHeader = sucursal.direccion + " " + sucursal.altura;
+      $scope.ModalHeader = sucursal.direccion;
       console.info("sucursal: ", sucursal);
 
         NgMap.getMap("miMapaModal").then(function(map) {

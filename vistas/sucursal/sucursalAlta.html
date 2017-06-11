@@ -22,18 +22,19 @@
     <div class="form-group" show-errors>
       <div>
         <label class="control-label" for="direccion">Direcci&oacute;n:</label>
-        <input type="text" class="form-control" id="direccion" name="direccion" ng-model="sucursal.direccion" placeholder="Ingrese Direcci&oacute;n" required>
+        <input disabled type="text" class="form-control" id="direccion" name="direccion" ng-model="sucursal.direccion" placeholder="Ingrese Direcci&oacute;n" required>
         <p class="help-block" ng-if="formAltaSucursal.direccion.$error.required">Debe ingresar la direcci&oacute;n de la sucursal</p>
       </div>
     </div>
 
-    <div class="form-group" show-errors>
+    <div class="form-group">
       <div>
-        <label class="control-label" for="altura">Altura:</label>
-        <input type="number" class="form-control" id="altura" name="altura" ng-model="sucursal.altura" placeholder="Ingrese la Altura" required>
-        <p class="help-block" ng-if="formAltaSucursal.altura.$error.required">Debe ingresar la Altura de la direcci&oacute;n</p>
+       <div class="margenfix">
+        <md-button ng-click="mostrarMapaModal()" data-toggle="modal" data-target="#myModal" class="send-button md-accent md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-map-marker"></span> Cargar Direccion</md-button>
+        </div>
       </div>
-    </div>
+    </div>   
+
     <div class="form-group" show-errors>
       <div>
         <label class="control-label" for="telefono">Tel:</label>
@@ -135,3 +136,31 @@
 </div>
 <br><br><br><br><br><br>
 </section>
+
+<!-- MapaModal -->
+<div class="container">
+    <!--div class="modal modal-fullscreen fade" id="myModal" role="dialog"-->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{ModalHeader}}</h4>
+          </div>
+          <div class="modal-body">    
+            <div id="floating-panel">
+              <input id="address" ng-model="direccionMapa" type="textbox" value="Cerrito 740">
+              <button type="button" class="btn btn-primary" value="Geocode" id="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+            </div>
+            <ng-map center="{{mapa.latitud}}, {{mapa.longitud}}" ng-model="miMapa" id="miMapaModal"></ng-map>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" ng-click="confirmarDireccion()" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- fin MapaModal -->

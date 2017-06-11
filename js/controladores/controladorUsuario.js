@@ -272,7 +272,7 @@ app.controller('ControlMisReservas', function($scope, $http, $state, ServicioABM
     $scope.mapa.longitud = '-58.365113';
 
   $scope.mostrarMapaModal = function(sucursal){
-      $scope.ModalHeader = sucursal.direccion + " " + sucursal.altura;
+      $scope.ModalHeader = sucursal.direccion;
       console.info("sucursal: ", sucursal);
 
         NgMap.getMap("miMapaModal").then(function(map) {

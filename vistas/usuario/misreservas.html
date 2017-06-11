@@ -2,7 +2,7 @@
 <div class="container">
  <br><br> <br><br>
 <div id="container">
-    <img src="./img/susreservas.png" alt="" />
+    <img src="./img/susreservas2.png" alt="" />
 </div>
   <div class="row">
     <div ng-repeat="reserva in listaReservas" class="col-md-4">
@@ -23,7 +23,7 @@
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
-          <p>Ubicaci&oacute;n:{{reserva.direccion}} {{reserva.altura}}</p>
+          <p>Ubicaci&oacute;n:{{reserva.direccion}}</p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="center">
           <md-card-icon-actions>
@@ -33,7 +33,10 @@
           </md-card-icon-actions>
         </md-card-actions>
       </md-card>
-    </div>   
+    </div>  
+
+    <li ng-show="!listaReservas.length">Usted no posee reservas por el momento</li>
+
   </div>
 </div>  
 

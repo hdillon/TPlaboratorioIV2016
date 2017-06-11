@@ -145,14 +145,13 @@ class Inmueble
 	public static function InsertarInmueble($inmueble)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into inmueble (descripcion,tipo,precio,ambientes,oferta,direccion,altura,latitud,longitud,foto,id_sucursal,id_vendedor)values(:descripcion,:tipo,:precio,:ambientes,:oferta,:direccion,:altura,:latitud,:longitud,:foto,:id_sucursal,:id_vendedor)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into inmueble (descripcion,tipo,precio,ambientes,oferta,direccion,latitud,longitud,foto,id_sucursal,id_vendedor)values(:descripcion,:tipo,:precio,:ambientes,:oferta,:direccion,:latitud,:longitud,:foto,:id_sucursal,:id_vendedor)");
 		$consulta->bindValue(':descripcion',$inmueble->descripcion, PDO::PARAM_STR);
 		$consulta->bindValue(':tipo', $inmueble->tipo, PDO::PARAM_STR);
 		$consulta->bindValue(':precio', $inmueble->precio, PDO::PARAM_STR);
 		$consulta->bindValue(':ambientes', $inmueble->ambientes, PDO::PARAM_INT);
 		$consulta->bindValue(':oferta', $inmueble->tipoOferta, PDO::PARAM_STR);
 		$consulta->bindValue(':direccion', $inmueble->direccion, PDO::PARAM_STR);
-		$consulta->bindValue(':altura', $inmueble->altura, PDO::PARAM_INT);
 		$consulta->bindValue(':latitud', $inmueble->latitud, PDO::PARAM_STR);
 		$consulta->bindValue(':longitud', $inmueble->longitud, PDO::PARAM_STR);
 		$consulta->bindValue(':foto',$inmueble->foto, PDO::PARAM_STR);

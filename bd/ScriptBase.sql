@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `direccion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `altura` int(11) NOT NULL,
   `latitud` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `longitud` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
@@ -68,7 +67,6 @@ CREATE TABLE IF NOT EXISTS `inmueble` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `direccion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `altura` int(11) NOT NULL,
   `latitud` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `longitud` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `precio` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
@@ -133,3 +131,7 @@ ALTER TABLE `encuesta`
 
 ALTER TABLE `encuesta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+
+  INSERT INTO persona (nombre, apellido, email, password, telefono, foto, perfil, estado) VALUES ('Admin', 'Admin', 'admin@gmail.com', 'admin', '123123', 'foto.jpg', 'administrador', 'activo');
