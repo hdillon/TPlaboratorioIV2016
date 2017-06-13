@@ -32,10 +32,8 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
   $scope.usuario={};
   $scope.usuario.nombre = "";
   $scope.usuario.apellido = "";
-  $scope.usuario.telefono ;
   $scope.usuario.email = "";
   $scope.usuario.password = "";
-  $scope.usuario.foto = "foto.jpg";
   $scope.usuario.perfil = "";
   $scope.usuario.estado = "activo";
   $scope.listaSucursales;
@@ -55,7 +53,6 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
       $scope.usuario.id = pUsuario.id;
       $scope.usuario.nombre = pUsuario.nombre;
       $scope.usuario.apellido = pUsuario.apellido;
-      $scope.usuario.telefono = Number(pUsuario.telefono);
       $scope.usuario.email = pUsuario.email;
       $scope.usuario.password = pUsuario.password;
    }
@@ -168,7 +165,6 @@ app.controller('ControlGrillaUsuario', function($scope, $http, $state, $timeout,
         { field: 'apellido', name: 'apellido'},
         { field: 'nombre', name: 'nombre'},
         { field: 'email', name: 'email'},
-        { field: 'telefono', name: 'telefono', enableSorting: false},
         { field: 'perfil', name: 'perfil'},
         { field: 'estado', name: 'estado', },
         { name: 'Editar', enableFiltering: false,enableSorting: false,
@@ -296,16 +292,6 @@ app.controller('ControlMisReservas', function($scope, $http, $state, ServicioABM
           google.maps.event.trigger(map, "resize");
            map.setCenter(myLatLng);// Set here center map coordinates
           });
-
-
-          google.maps.event.addListener(map, 'dblclick', function(event) {
-            marker = new google.maps.Marker({position: event.latLng, map: map});
-            var latitude = marker.position.lat();
-            var longitude = marker.position.lng();
-            console.info("lat: ", latitude);
-            console.info("longitude: ", longitude);
-          });
-
         });
     }
 

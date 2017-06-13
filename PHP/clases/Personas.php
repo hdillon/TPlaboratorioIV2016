@@ -8,8 +8,6 @@ class Persona
  	public $apellido;
   	public $email;
   	public $password;
-  	public $telefono;
-  	public $foto;
   	public $perfil;
   	public $estado;
 
@@ -36,14 +34,6 @@ class Persona
 	public function GetPassword()
 	{
 		return $this->password;
-	}
-	public function GetTelefono()
-	{
-		return $this->telefono;
-	}
-	public function GetFoto()
-	{
-		return $this->foto;
 	}
 	public function Getperfil()
 	{
@@ -74,14 +64,6 @@ class Persona
 	{
 		$this->password = $valor;
 	}
-	public function SetTelefono($valor)
-	{
-		$this->telefono = $valor;
-	}
-	public function SetFoto($valor)
-	{
-		$this->foto = $valor;
-	}
 	public function Setperfil($valor)
 	{
 		$this->perfil = $valor;
@@ -100,8 +82,6 @@ class Persona
 			$this->nombre = $obj->nombre;
 			$this->email = $email;
 			$this->password = $password;
-			$this->telefono = $obj->telefono;
-			$this->foto = $obj->foto;
 			$this->perfil = $perfil;
 			$this->estado = $obj->estado;
 		}
@@ -164,7 +144,6 @@ class Persona
 				update persona 
 				set nombre=:nombre,
 				apellido=:apellido,
-				telefono=:telefono,
 				password=:password,
 				email=:email
 				WHERE id=:id");
@@ -172,7 +151,6 @@ class Persona
 			$consulta->bindValue(':id',$persona->id, PDO::PARAM_INT);
 			$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 			$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
-			$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_STR);
 			$consulta->bindValue(':password', $persona->password, PDO::PARAM_STR);
 			$consulta->bindValue(':email', $persona->email, PDO::PARAM_STR);
 			return $consulta->execute();
@@ -182,13 +160,11 @@ class Persona
 	public static function InsertarPersona($persona)
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,telefono,foto,perfil,estado)values(:nombre,:apellido,:email,:password,:telefono,:foto,:perfil,:estado)");
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into persona (nombre,apellido,email,password,perfil,estado)values(:nombre,:apellido,:email,:password,:perfil,:estado)");
 		$consulta->bindValue(':nombre',$persona->nombre, PDO::PARAM_STR);
 		$consulta->bindValue(':apellido', $persona->apellido, PDO::PARAM_STR);
 		$consulta->bindValue(':email', $persona->email, PDO::PARAM_INT);
 		$consulta->bindValue(':password', $persona->password, PDO::PARAM_INT);
-		$consulta->bindValue(':telefono', $persona->telefono, PDO::PARAM_INT);
-		$consulta->bindValue(':foto',$persona->foto, PDO::PARAM_STR);
 		$consulta->bindValue(':perfil',$persona->perfil, PDO::PARAM_STR);
 		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
 		$consulta->execute();		

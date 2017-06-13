@@ -5,15 +5,6 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
 	$scope.loginIncorrecto = false;
 	$scope.registroIncorrecto = false;
 	$scope.usuarioLogueado={};
-	$scope.usuarioLogueado.nombre = "";
-	$scope.usuarioLogueado.apellido = "";
-	$scope.usuarioLogueado.telefono = 12345678;
-	$scope.usuarioLogueado.email = "";
-	$scope.usuarioLogueado.password = "";
-	$scope.usuarioLogueado.foto = "foto.jpg";
-	$scope.usuarioLogueado.perfil = "cliente";
-	$scope.usuarioLogueado.estado = "activo";
-	$scope.usuarioLogueado.password2 = "";
 
 	if($auth.isAuthenticated()){
 		$scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
@@ -23,12 +14,14 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
 		console.log("USUARIO NO LOGUEADO INICIO");
 		$scope.flagLogueado = false;
 		console.info("session Agotada: ", $stateParams.sesionagotada);
+		$scope.usuarioLogueado={};
 		if($stateParams.sesionagotada != "" && $stateParams.sesionagotada != undefined){
 			$("#modalSesionAgotada").modal();
 		}
 	}
 
 	$scope.goToLogin=function(){
+		$scope.usuarioLogueado={};
 		$scope.loginIncorrecto = false;
 		$window.scrollTo(0, 0);
 		 $("#loginModal").modal('show');
@@ -36,6 +29,9 @@ app.controller('ControlInicio', function($scope, $state, $stateParams, $auth, jw
     }
 
     $scope.goToRegistrarse=function(){
+    	$scope.usuarioLogueado={};
+    	$scope.usuarioLogueado.perfil="cliente";
+    	$scope.usuarioLogueado.estado="activo";
     	$scope.registroIncorrecto = false;
     	$("#loginModal").modal('hide');
     	$("#registrarseModal").modal('show');
