@@ -283,13 +283,14 @@ app.controller('ControlEstadisticasEncuestas', function($scope, $http, $state,jw
 app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHelper, $auth, $timeout, ServicioABM) {
   $scope.mostrarSelect = "Usuarios";
   $scope.tipoDeReporte = "Ingresos al Sistema";
+  $scope.mostrarGrilla = "N";
 
   $scope.gridOptions = {
-    data: [],
+    data: [{id : "0", nombre : "DEFAULT", apellido : "DEFAULT", fecha : "DEFAULT"}],
     urlSync: false
   };
 
-  ServicioABM.traer("personas").then(function(rta){
+  ServicioABM.traer("personasconlogins").then(function(rta){
     $scope.listaPersonas = rta.data;
     setTimeout(function () {
       $("#loadingModal").modal('hide');
@@ -297,14 +298,14 @@ app.controller('ControlEstadisticasLogin', function($scope, $http, $state,jwtHel
   });
 
   $scope.loginsPorUsuario = function(idUsuario){
-//http://angular-data-grid.github.io/demo/material/
-ServicioABM.traerPorId("resgistroslogin/", idUsuario).then(function(rta){
-  $scope.gridOptions.data = rta.data;
-  setTimeout(function () {
-    $("#loadingModal").modal('hide');
-  }, 1000)
-});
-}
+    ServicioABM.traerPorId("resgistroslogin/", idUsuario).then(function(rta){
+      $scope.gridOptions.data = rta.data;
+      $scope.mostrarGrilla = "S";
+      setTimeout(function () {
+        $("#loadingModal").modal('hide');
+      }, 1000)
+    });
+  }
 
 });
 

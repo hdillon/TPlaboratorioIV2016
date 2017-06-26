@@ -117,6 +117,15 @@ class Persona
 		return $arrPersonas;
 	}
 
+	public static function TraerTodasLasPersonasConLogins()
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("select distinct p.id, p.nombre, p.apellido  from persona p inner join registros_login rl on p.id = rl.id_usuario");
+		$consulta->execute();			
+		$arrPersonas= $consulta->fetchAll(PDO::FETCH_CLASS, "persona");	
+		return $arrPersonas;
+	}
+
 	public static function TraerTodasLasPersonasSinLocal()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
@@ -167,6 +176,16 @@ class Persona
 		$consulta->bindValue(':password', $persona->password, PDO::PARAM_INT);
 		$consulta->bindValue(':perfil',$persona->perfil, PDO::PARAM_STR);
 		$consulta->bindValue(':estado',$persona->estado, PDO::PARAM_STR);
+		$consulta->execute();		
+		return $objetoAccesoDato->RetornarUltimoIdInsertado();		
+	}	
+
+	public static function InsertarSucursal_Empleado($obj)
+	{
+		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+		$consulta =$objetoAccesoDato->RetornarConsulta("INSERT into sucursal_empleado (id_sucursal, id_persona)values(:idsucursal,:idempleado)");
+		$consulta->bindValue(':idsucursal',$obj->idsucursal, PDO::PARAM_STR);
+		$consulta->bindValue(':idempleado', $obj->idempleado, PDO::PARAM_STR);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();		
 	}	

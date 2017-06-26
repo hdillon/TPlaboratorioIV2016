@@ -9,7 +9,7 @@
         <button class="btn btn-default green-circle-button Frm animated bounceInRight" ng-click="redirectTo('inicio.altausuario')">Crear<br />Usuario<br /><span class="orange-circle-greater-than">></span></button>
       </div>   
 
-      <div class="col-md-6">
+      <div class="col-md-6" ng-if="usuarioLogueado.perfil != 'empleado'">
         <button class="btn btn-default indigo-circle-button Frm animated bounceInLeft" ng-click="redirectTo('inicio.grillausuarios')">Listar<br />Usuarios<br /><span class="orange-circle-greater-than" href="#!/inicio/grillausuarios">></span></button>
       </div>   
     </div>

@@ -52,14 +52,28 @@
         <label class="control-label" for="perfil">Perfil:</label>
         <select class="form-control" id="perfil" name="perfil" ng-model="usuario.perfil" required>
           <option disabled selected value>Seleccione el Perfil</option>
-          <option value="encargado">Encargado</option>
-          <option value="empleado">Empleado</option>
-          <option value="cliente">Cliente</option>
-          <option value="administrador">Administrador</option>
+          <option value="encargado" ng-if="usuarioLogueado.perfil == 'administrador'">Encargado</option>
+          <option value="empleado" ng-if="usuarioLogueado.perfil == 'administrador' || usuarioLogueado.perfil == 'encargado'">Empleado</option>
+          <option value="cliente" ng-if="usuarioLogueado.perfil != 'cliente'">Cliente</option>
+          <option value="administrador" ng-if="usuarioLogueado.perfil == 'administrador'">Administrador</option>
         </select>
         <p class="help-block" ng-if="formAltaUsuario.perfil.$error.required">Debe seleccionar el perfil</p>
       </div>
     </div>
+
+    <div class="form-group" ng-if="usuario.perfil == 'empleado' && accion == 'Alta'">
+      <div>
+        <label class="control-label" for="idsucursalempleado">Sucursal:</label>
+       <select  class="form-control" id="idsucursalempleado" ng-model="sucursalEmpleado.idsucursal" required>
+       <option disabled selected value>Seleccione Sucursal</option>
+        <option ng-repeat="sucursal in listaSucursales" value="{{sucursal.id}}">
+            {{sucursal.nombre}}
+        </option>
+       </select>
+       <p class="help-block" ng-if="formAltaUsuario.idsucursalempleado.$error.required">Debe seleccionar la sucursal</p>
+      </div>
+    </div>
+
     <div class="form-group">
       <div>
        <div class="margenfix">

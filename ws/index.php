@@ -64,6 +64,12 @@ $app->get('/personas[/]', function ($request, $response, $args) {
     return $response;
 });
 
+$app->get('/personasconlogins[/]', function ($request, $response, $args) {
+    $datos = Persona::TraerTodasLasPersonasConLogins();
+    $response->write(json_encode($datos));//INTERNAL SERVER ERROR 500 -> Porque le es6taba devolviendo una referencia a memoria del 
+    
+    return $response;
+});
 
 $app->get('/personas/sinlocal/', function ($request, $response, $args) {
     $datos = Persona::TraerTodasLasPersonasSinLocal();
@@ -83,6 +89,13 @@ $app->get('/usuario[/{id}[/{name}]]', function ($request, $response, $args) {
 $app->post('/persona/alta/{objeto}', function ($request, $response, $args) {
     $persona = json_decode($args['objeto']);
     $datos = Persona::InsertarPersona($persona);
+    $response->write($datos);
+    return $response;
+});
+
+$app->post('/persona/altasucursalempleado/{objeto}', function ($request, $response, $args) {
+    $obj = json_decode($args['objeto']);
+    $datos = Persona::InsertarSucursal_Empleado($obj);
     $response->write($datos);
     return $response;
 });

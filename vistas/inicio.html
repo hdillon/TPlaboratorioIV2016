@@ -15,7 +15,7 @@
         <a href="" ng-click="IrAlMenuInicio()">Inicio</a>
       </li>
       <li ng-show="flagLogueado">
-        <a href="#!/inicio/sucursalmenu" ng-if="usuarioLogueado.perfil != 'cliente'">Sucursales</a>
+        <a href="#!/inicio/sucursalmenu" ng-if="usuarioLogueado.perfil == 'administrador'">Sucursales</a>
       </li>
       <li ng-if="flagLogueado">
         <a href="#!/inicio/usuariomenu" ng-if="usuarioLogueado.perfil != 'cliente'">Usuarios</a>

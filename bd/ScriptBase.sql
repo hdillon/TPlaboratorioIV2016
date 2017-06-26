@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `password` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `perfil` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `estado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+)  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`id`);
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   `id_encargado` int(11) NOT NULL,
   CONSTRAINT `fk_sucursal_encargado1`
   FOREIGN KEY (`id_encargado`)
-  REFERENCES `u942480002_inmob`.`persona` (`id`)
+  REFERENCES `u461912939_base`.`persona` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+)  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 ALTER TABLE `sucursal`
   ADD PRIMARY KEY (`id`);
@@ -49,15 +49,15 @@ INDEX `fk_sucursal_empleado_sucursal1_idx` (`id_sucursal` ASC),
 INDEX `fk_sucursal_empleado_empleado1_idx` (`id_persona` ASC),
 CONSTRAINT `fk_sucursal_empleado_sucursal1`
   FOREIGN KEY (`id_sucursal`)
-  REFERENCES `u942480002_inmob`.`sucursal` (`id`)
+  REFERENCES `u461912939_base`.`sucursal` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
 CONSTRAINT `fk_sucursal_empleado_empleado1`
   FOREIGN KEY (`id_persona`)
-  REFERENCES `u942480002_inmob`.`persona` (`id`)
+  REFERENCES `u461912939_base`.`persona` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION)
-ENGINE=InnoDB;
+;
 
 
 
@@ -76,10 +76,10 @@ CREATE TABLE IF NOT EXISTS `inmueble` (
   `id_vendedor` int(11) NOT NULL,
   CONSTRAINT `fk_sucursal_sucursal1`
   FOREIGN KEY (`id_sucursal`)
-  REFERENCES `u942480002_inmob`.`sucursal` (`id`)
+  REFERENCES `u461912939_base`.`sucursal` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+)  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 ALTER TABLE `inmueble`
   ADD PRIMARY KEY (`id`);
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `transaccion` (
   `id_sucursal` int(11) NOT NULL,
   `id_inmueble` int(11) NOT NULL,
   `importe` varchar(30) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+)  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 ALTER TABLE `transaccion`
   ADD PRIMARY KEY (`id`);
@@ -109,7 +109,7 @@ ALTER TABLE `transaccion`
 CREATE TABLE IF NOT EXISTS `registros_login` (
   `id_usuario` int(11) NOT NULL,
   `fecha` DATETIME NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+)  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 
 CREATE TABLE IF NOT EXISTS `encuesta` (
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `encuesta` (
   `sugerencias` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `recomendacion` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
 
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+)  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 ALTER TABLE `encuesta`
   ADD PRIMARY KEY (`id`);
@@ -132,4 +132,7 @@ ALTER TABLE `encuesta`
 
 
 
-  INSERT INTO persona (nombre, apellido, email, password, telefono, foto, perfil, estado) VALUES ('Admin', 'Admin', 'admin@gmail.com', 'admin', '123123', 'foto.jpg', 'administrador', 'activo');
+  INSERT INTO persona (nombre, apellido, email, password, perfil, estado) VALUES ('Admin', 'Admin', 'admin@gmail.com', 'admin', 'administrador', 'activo');
+  INSERT INTO persona (nombre, apellido, email, password, perfil, estado) VALUES ('Cliente', 'Gonzalez', 'cliente@gmail.com', '123456', 'cliente', 'activo');
+  INSERT INTO persona (nombre, apellido, email, password, perfil, estado) VALUES ('Empleado', 'Gonzalez', 'empleado@gmail.com', '123456', 'empleado', 'activo');
+  INSERT INTO persona (nombre, apellido, email, password, perfil, estado) VALUES ('Encargado', 'Gonzalez', 'encargado@gmail.com', '123456', 'encargado', 'activo');

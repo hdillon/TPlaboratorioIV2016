@@ -37,6 +37,8 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
   $scope.usuario.perfil = "";
   $scope.usuario.estado = "activo";
   $scope.listaSucursales;
+  $scope.sucursalEmpleado = {};
+  $scope.sucursalEmpleado.idsucursal = "";
 
   if($auth.isAuthenticated()){
     $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
@@ -57,12 +59,33 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
       $scope.usuario.password = pUsuario.password;
    }
 
+   //traigo los usuarios que no tienen un local asignado para llenar los select del formulario
+  ServicioABM.traerSucursales().then(function(rta){
+    console.info("SUCURSALESSS ", rta);
+      $scope.listaSucursales = rta.data;
+      setTimeout(function () {
+          $("#loadingModal").modal('hide');
+      }, 1000)
+    });
+
   $scope.CrearUsuario = function(){
     $scope.$broadcast('show-errors-check-validity');
     if ($scope.formAltaUsuario.$invalid) { return; }
     ServicioABM.guardar("personas/alta/", $scope.usuario).then(
       function(respuesta){
-      console.info("RESPUESTA (ctrl alta usuario): ", respuesta);
+        if($scope.usuario.perfil == "empleado"){
+          $scope.sucursalempleado={};
+          $scope.sucursalempleado.idempleado = respuesta.data.slice(1, -1);
+          $scope.sucursalempleado.idsucursal = $scope.sucursalEmpleado.idsucursal;
+          ServicioABM.guardar("persona/altasucursalempleado/", $scope.sucursalempleado).then(
+          function(respuesta){
+            console.info("ALTA OK");
+          },
+          function(error){
+            console.info("ERROR! (ctrl alta usuario): ", error);
+            alert("ERROR AL CREAR USUARIO");
+          });
+        }
       $state.go('inicio.menuinicio');
       },
       function(error){
@@ -76,7 +99,6 @@ app.controller('ControlAccesoUsuarios', function($scope, $http, $state, $statePa
     if ($scope.formAltaUsuario.$invalid) { return; }
     ServicioABM.modificar("modificarpersona/", $scope.usuario).then(
         function(respuesta){
-        console.info("RESPUESTA (modificar usuario): ", respuesta);
         $state.go("inicio.grillausuarios");
         },
         function(error){

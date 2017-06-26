@@ -157,9 +157,17 @@ app.controller('ControlAltaSucursal', function($scope, $http, $state, jwtHelper,
 })
 
 
-app.controller('ControlNuestrasSucursales', function($scope, $http, $state, ServicioABM, NgMap) {
+app.controller('ControlNuestrasSucursales', function($scope, $http, $state, ServicioABM, NgMap, jwtHelper, $auth) {
   $("#loadingModal").modal('show');
   $scope.listaSucursales = [];
+
+  if($auth.isAuthenticated()){
+    $scope.usuarioLogueado = jwtHelper.decodeToken($auth.getToken());
+      console.info("usuario", $scope.usuarioLogueado);
+  }else{
+    $("#loadingModal").modal('hide');
+      $state.go('inicio.menuinicio', {sesionagotada : "true"});
+  }
 
   ServicioABM.traerSucursales().then(function(rta){
       $scope.listaSucursales = rta.data;

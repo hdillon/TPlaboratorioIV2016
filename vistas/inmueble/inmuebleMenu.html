@@ -9,7 +9,7 @@
       <button class="btn btn-default purple-circle-button Frm animated bounceInRight" ng-click="redirectTo('inicio.altainmueble')">Cargar<br />Inmueble<br /><span class="orange-circle-greater-than" href="#!/inicio/altasucursales">></span></button>
     </div>  
 
-    <div class="col-md-6">
+    <div class="col-md-6" ng-if="usuarioLogueado.perfil != 'empleado'">
       <button class="btn btn-default orange-circle-button Frm animated bounceInLeft" ng-click="IrAModificarInmuebles()">Modificar<br />Inmueble<br /><span class="orange-circle-greater-than" href="#!/inicio/catalogo">></span></button>
     </div>  
 
