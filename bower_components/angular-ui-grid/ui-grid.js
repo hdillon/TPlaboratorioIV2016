@@ -12183,7 +12183,7 @@ module.filter('px', function() {
           totalItems: 'Total Items:',
           size: 'Page Size:',
           first: 'First Page',
-          next: 'Next Page',
+          next: 'Siguiente Page',
           previous: 'Previous Page',
           last: 'Last Page'
         },
@@ -13112,7 +13112,7 @@ module.filter('px', function() {
           totalItems: 'Total Items:',
           size: 'Page Size:',
           first: 'First Page',
-          next: 'Next Page',
+          next: 'Siguiente',
           previous: 'Previous Page',
           last: 'Last Page'
         },

@@ -36,7 +36,7 @@
       </li>
       <li class="dropdown" ng-if="flagLogueado">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-user"></span> 
+                <span class="glyphicon glyphicon-user"></span>
                 <strong>{{usuarioLogueado.nombre}}</strong>
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
@@ -98,9 +98,7 @@
             <input type="password" class="form-control" id="psw" name="password" ng-model="usuarioLogueado.password" placeholder="Enter password" required>
             <p class="help-block" ng-if="formLogin.password.$error.required">Debe ingresar su password</p>
           </div>
-          <div class="checkbox">
-            <label><input type="checkbox" value="" checked>Remember me</label>
-          </div>
+
           <div class="margenfix">
             <md-button ng-click="Login()" class="send-button md-primary md-raised btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</md-button>
           </div>
@@ -112,7 +110,7 @@
         <button ng-click="DatosEmpleado()" class="btn btn-primary btn-default pull-left" ><span ></span> Empleado</button>
         <button ng-click="DatosCliente()" class="btn btn-primary btn-default pull-left" ><span ></span> Cliente</button><br><br>
         <p>No posee una cuenta? <a href="#" ng-click="goToRegistrarse()">Registrese</a></p>
-        <p>Olvidó su <a href="#">Password?</a></p>
+        <p>Olvidó su <a href="#">Contraseña?</a></p>
       </div>
     </div>
 

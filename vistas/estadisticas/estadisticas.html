@@ -45,22 +45,6 @@
         <div class="md-toolbar-tools" flex-gt-md="60" flex-md="80" flex-sm="100">
             <span>Reporte de {{tipoDeReporte}}</span>
             <span flex></span>
-            <md-menu md-position-mode="target-right target">
-                <md-button ng-click="$mdOpenMenu($event)">
-                    <span layout="row" layout-align="center center">
-                        Descargar
-                        <i class="material-icons">arrow_drop_down</i>
-                    </span>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <a href="">PDF</a>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <a href="">PNG</a>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
         </div>
     </md-toolbar>
     <div id="miGrafico"></div>
@@ -71,7 +55,7 @@
     <md-content layout-padding layout="row" layout-align="center">
         <div flex-gt-md="60" flex-md="80" flex-xs="100">
             <div>
-                <h4>Listado de Logins</h4>
+                <h4>Listado de Ingresos al Sistema</h4>
             </div>
             <hr>
             
@@ -91,7 +75,7 @@
                                              ng-change="reloadGrid()"
                                              items-per-page="paginationOptions.itemsPerPage"></grid-pagination>
                             <md-input-container flex-offset-gt-xs="5" class="items-per-page">
-                                <md-select ng-init="paginationOptions.itemsPerPage = '10'" placeholder="Rows" ng-model="paginationOptions.itemsPerPage" ng-change="reloadGrid()">
+                                <md-select ng-init="paginationOptions.itemsPerPage = '10'" placeholder="Filas" ng-model="paginationOptions.itemsPerPage" ng-change="reloadGrid()">
                                     <md-option>10</md-option>
                                     <md-option>25</md-option>
                                     <md-option>50</md-option>
