@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   `id_encargado` int(11) NOT NULL,
   CONSTRAINT `fk_sucursal_encargado1`
   FOREIGN KEY (`id_encargado`)
-  REFERENCES `u461912939_base`.`persona` (`id`)
+  REFERENCES `id2188437_base`.`persona` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 )  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -49,12 +49,12 @@ INDEX `fk_sucursal_empleado_sucursal1_idx` (`id_sucursal` ASC),
 INDEX `fk_sucursal_empleado_empleado1_idx` (`id_persona` ASC),
 CONSTRAINT `fk_sucursal_empleado_sucursal1`
   FOREIGN KEY (`id_sucursal`)
-  REFERENCES `u461912939_base`.`sucursal` (`id`)
+  REFERENCES `id2188437_base`.`sucursal` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
 CONSTRAINT `fk_sucursal_empleado_empleado1`
   FOREIGN KEY (`id_persona`)
-  REFERENCES `u461912939_base`.`persona` (`id`)
+  REFERENCES `id2188437_base`.`persona` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION)
 ;
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `inmueble` (
   `id_vendedor` int(11) NOT NULL,
   CONSTRAINT `fk_sucursal_sucursal1`
   FOREIGN KEY (`id_sucursal`)
-  REFERENCES `u461912939_base`.`sucursal` (`id`)
+  REFERENCES `id2188437_base`.`sucursal` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 )  AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;

@@ -459,6 +459,17 @@ app.filter('startFrom', function() {
 })
 
 
+app.filter('filtroTipoTransaccion', function() {
+  return function(tipo) {
+    if(tipo == 'Venta')
+      return 'COMPRAR';
+    else
+      return 'ALQUILAR';
+  }
+})
+
+
+
 
 app.controller('ControlEncuesta', function($scope, $http, $state,jwtHelper, $auth, ServicioABM, $mdDialog, $mdStepper) {
   $scope.flagLogueado = false;

@@ -23,7 +23,7 @@
         </md-card-content>
         <md-card-actions layout="row" layout-align="end center">
         <md-button ng-click="IrAEditarInmueble(inmueble)" class="send-button md-accent" md-colors="{background: 'TEAL'}" ng-if="accion == 'editarInmuebles'">EDITAR</md-button>
-          <md-button ng-click="showConfirm($event, inmueble)" class="send-button md-accent md-raised" ng-if="accion == 'mostrarInmuebles'">{{inmueble.oferta=='Venta' ? 'COMPRAR' : 'ALQUILAR'}}</md-button>
+          <md-button ng-click="showConfirm($event, inmueble)" class="send-button md-accent md-raised" ng-if="accion == 'mostrarInmuebles'">{{inmueble.oferta | filtroTipoTransaccion}}</md-button>
           <md-button ng-click="mostrarMapaModal(inmueble)" ng-if="accion == 'mostrarInmuebles'" data-toggle="modal" data-target="#myModal" class="send-button md-accent md-raised">MAPA</md-button>
         </md-card-actions>
        </div>
