@@ -238,7 +238,7 @@ app.controller('ControlCatalogoInmueble', function($scope, $http, $state, $state
     $scope.mapa.latitud = '-34.662716';
     $scope.mapa.longitud = '-58.365113';
 
-  if($stateParams.sucursal != ""){//Si la sucursal viene por parámetro traigo sólo los inmuebles de esa sucursal, sino traigo todos
+  if($stateParams.sucursal != "" && 1 == 2){//Si la sucursal viene por parámetro traigo sólo los inmuebles de esa sucursal, sino traigo todos
     var _sucursal = JSON.parse($stateParams.sucursal);
     //traigo las inmuebles para llenar el catalogo
     ServicioABM.traerPorId("inmueblesporsucursal/", _sucursal.id).then(function(rta){
